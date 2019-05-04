@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="navbar" xmlns:th="http://www.thymeleaf.org/"><head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- Bootstrap stylesheet link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- For button images -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Bio Trio</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home </a>
+            </li>
+        </ul>
+        <span class="navbar-text">
+            <button class="btn active">
+                <a href="/log_in">Log in</a>
+            </button>
+
+        </span>
+        <span class="navbar-text">
+            <button class="btn active">
+                <a href="/create_Account">Create Account</a>
+            </button>
+
+        </span>
+    </div>
+</nav>
+
+</body>
+</html>
