@@ -8,17 +8,18 @@ package kea.dat18i.firstyear.finalproject.biotrio.entities;
 public class Employee extends User {
 
     private String password;
+    private String accessLevel;
 
     public Employee() {
 
     }
 
     // Constructor for testing purposes
-    public Employee(String firstName, String lastName, String username, String password) {
+    public Employee(String firstName, String lastName, String password, String accessLevel) {
         super.firstName = firstName;
         super.lastName = lastName;
-        super.username = username;
         this.password = password;
+        this.accessLevel = accessLevel;
     }
 
     public String getPassword() {
@@ -27,5 +28,24 @@ public class Employee extends User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAccessLevel() {
+        return accessLevel;
+    }
+
+    public void setAccessLevel(String accessLevel) {
+        this.accessLevel = accessLevel;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "password='" + password + '\'' +
+                ", accessLevel='" + accessLevel + '\'' +
+                ", id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }

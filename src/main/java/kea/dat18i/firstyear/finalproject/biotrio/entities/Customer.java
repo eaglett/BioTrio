@@ -15,11 +15,9 @@ public class Customer extends User {
     }
 
     // Constructor for testing purposes
-    public Customer(String firstName, String lastName, String username,
-                    String phoneNumber, String email, String password) {
+    public Customer(String firstName, String lastName, String phoneNumber, String email, String password) {
         super.firstName = firstName;
         super.lastName = lastName;
-        super.username = username;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
@@ -55,7 +53,6 @@ public class Customer extends User {
                 "phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", username='" + username + '\'' +
                 ", id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
