@@ -33,7 +33,6 @@ public class CustomerController {
         for(Customer customer : customerList) {
             System.out.println(customer.getFirstName());
             System.out.println(customer.getLastName());
-            System.out.println(customer.getUsername());
             System.out.println(customer.getPhoneNumber());
             System.out.println(customer.getEmail());
             System.out.println(customer.getPassword());
@@ -59,15 +58,15 @@ public class CustomerController {
     private ArrayList<Customer> makeTestList() {
         ArrayList<Customer> list = new ArrayList<>();
         list.add(new Customer
-                ("Bob", "Bobbers", "09080706", "Bobs",
+                ("Bob", "Bobbers", "09080706",
                         "bobs@hotmail.com", "1234")
         );
         list.add(new Customer
-                ("James", "Jamie", "12131415", "Jam",
+                ("James", "Jamie", "12131415",
                         "james@hotmail.com", "4321")
         );
         list.add(new Customer
-                ("Harris", "Ford", "12345678", "Mustang",
+                ("Harris", "Ford", "12345678",
                         "harris@hotmail.com", "0987")
         );
         return list;
