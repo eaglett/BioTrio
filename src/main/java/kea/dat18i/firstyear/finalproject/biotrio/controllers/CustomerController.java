@@ -3,6 +3,9 @@ package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 // import Customer entity
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Customer;
 
+import kea.dat18i.firstyear.finalproject.biotrio.repositories.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +17,12 @@ import java.util.List;
 
 @Controller
 public class CustomerController {
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    CustomerRepository customerRepo;
 
     private List<Customer> customerList = new ArrayList<>();
 
@@ -54,24 +63,6 @@ public class CustomerController {
 
 
 
-
-    // for creating test ArrayList to try and display information of customers
-    private ArrayList<Customer> makeTestList() {
-        ArrayList<Customer> list = new ArrayList<>();
-        list.add(new Customer
-                ("Bob", "Bobbers", "09080706",
-                        "bobs@hotmail.com", "1234")
-        );
-        list.add(new Customer
-                ("James", "Jamie", "12131415",
-                        "james@hotmail.com", "4321")
-        );
-        list.add(new Customer
-                ("Harris", "Ford", "12345678",
-                        "harris@hotmail.com", "0987")
-        );
-        return list;
-    }
 
 
 }
