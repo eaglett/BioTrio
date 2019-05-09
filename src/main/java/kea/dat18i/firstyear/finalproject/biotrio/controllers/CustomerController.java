@@ -41,6 +41,7 @@ public class CustomerController {
             System.out.println();
         }
 
+
         return "create-account-page";
     }
 
