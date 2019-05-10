@@ -19,11 +19,16 @@
     <th:block th:include="fragments/navbar :: navbar"></th:block>
 </div>
 
-<div class="jumbotron">
+<div class="jumbotron" style="align-content: center">
 
-    <div>
-        <a class="btn btn-primary" href="/customer-login" role="button">Customer</a>
-        <a class="btn btn-primary" href="/employee-login" role="button">Employee</a>
+    <table style="align-content: center">
+        <tr><td colspan="2"> Do you want to login as a Customer or as an Employee? </td></tr>
+        <tr>
+            <td><a class="btn btn-primary" href="/customer-login" role="button">Customer</a></td>
+            <td><a class="btn btn-primary" href="/employee-login" role="button">Employee</a></td>
+        </tr>
+
+    </table>
 
     </div>
 
