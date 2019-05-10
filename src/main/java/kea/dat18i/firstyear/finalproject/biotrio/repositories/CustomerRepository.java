@@ -18,10 +18,8 @@ public class CustomerRepository {
     @Autowired
     private JdbcTemplate jdbc;
 
-    // Inserting data into table theater by using a PreparedStatement
-    public Customer insertTheatre(Customer customer) throws NullPointerException{
-
-
+    // Inserting data into table customer by using a PreparedStatement
+    public Customer insertCustomer(Customer customer) throws NullPointerException{
         // trying with lambda expression
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
@@ -35,7 +33,6 @@ public class CustomerRepository {
             System.out.println("ps Inserted Successfully!");
             return ps;
         };
-
         try {
             KeyHolder keyholder = new GeneratedKeyHolder();
             jdbc.update(psc, keyholder);
@@ -43,10 +40,14 @@ public class CustomerRepository {
         } catch (NullPointerException e) {
             System.out.println(e + " at INSERT customer in our repository");
         }
-
         return customer;
-
     }
+
+    public static Customer findCustomer(Customer customer){
+        System.out.println(customer.toString());
+        return customer;
+    }
+
 
 
 }
