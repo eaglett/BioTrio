@@ -7,6 +7,7 @@ package kea.dat18i.firstyear.finalproject.biotrio.entities;
 // hence this class being used to classify the "Admin" actor
 public class Employee extends User {
 
+    private String username;
     private String password;
     private String accessLevel;
 
@@ -14,10 +15,16 @@ public class Employee extends User {
 
     }
 
-    // Constructor for testing purposes
-    public Employee(String firstName, String lastName, String password, String accessLevel) {
+    public Employee(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    // Constructor for testing purposes, add username and remove first and last name
+    public Employee(String firstName, String lastName, String username, String password, String accessLevel) {
         super.firstName = firstName;
         super.lastName = lastName;
+        this.username = username;
         this.password = password;
         this.accessLevel = accessLevel;
     }
@@ -38,9 +45,18 @@ public class Employee extends User {
         this.accessLevel = accessLevel;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
+                "username='" + username + '\'' +
                 "password='" + password + '\'' +
                 ", accessLevel='" + accessLevel + '\'' +
                 ", id=" + id +
