@@ -4,6 +4,7 @@ import kea.dat18i.firstyear.finalproject.biotrio.entities.Customer;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Employee;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.CustomerRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 // Trying to create a session controller for handling log ins and log outs
 @Controller
 public class CurrentUserController {
+
+    @Autowired
+    CustomerRepository customerRepo;
 
 
     @GetMapping(value ="/login")
@@ -32,7 +36,7 @@ public class CurrentUserController {
 //    @ResponseBody
     public String loginCustomer(@ModelAttribute Customer customer){
 
-        Customer logingCustomer = CustomerRepository.findCustomer(customer);
+        Customer logingCustomer = customerRepo.findCustomer(customer);
        /* Car carInserted = carRepo.insert(car);*/
 //        return "Your data is saved and secured don't worry about GDPR." + carInserted;
         return "redirect:/";
