@@ -11,6 +11,9 @@ public class Showing {
     private int theatre_id;
     private LocalDateTime start_date_time;
 
+    public Showing() {
+    }
+
     public int getShowing_id() {
         return showing_id;
     }

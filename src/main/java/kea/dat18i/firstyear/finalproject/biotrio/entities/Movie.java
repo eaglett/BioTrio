@@ -8,6 +8,10 @@ public class Movie {
     private int duration; //in minutes
 
 
+    public Movie() {
+
+    }
+
     //when cleaning the code in the end, delete the constructors that are not in use
 
 
@@ -33,15 +37,19 @@ public class Movie {
         this.movie_name = movie_name;
     }
 
-    public int getId() {
+    public int getMovie_id() {
         return movie_id;
     }
 
-    public String getName() {
+    public void setMovie_id(int movie_id) {
+        this.movie_id = movie_id;
+    }
+
+    public String getMovie_name() {
         return movie_name;
     }
 
-    public void setName(String movie_name) {
+    public void setMovie_name(String movie_name) {
         this.movie_name = movie_name;
     }
 

@@ -50,17 +50,6 @@ public class TheatreController {
         return "add-theatre-page";
     }
 
-    // View of editing a theatre
-    @GetMapping("/theatres/edit/{index}")
-    public String editTheatre(@PathVariable int index, Model model) {
-        Theatre editTheatre = theatreList.get(index);
-        model.addAttribute("index", index);
-        model.addAttribute("editTheatre", editTheatre);
-        return "edit-theatre-page";
-    }
-
-
-
     @PostMapping(value = "/theatres/add_theatre")
     public String handleAddTheatre(@ModelAttribute Theatre theatre) {
         theatre = theatreRepo.insertTheatre(theatre);
@@ -70,11 +59,13 @@ public class TheatreController {
     }
 
 
-    @GetMapping(value = "/theatres/delete/{index}")
-    public String handleDeleteTheatre(@PathVariable int index) {
-        theatreRepo.deleteTheatre(theatreList.get(index));
 
-        return "redirect:/theatres";
+    // View of editing a theatre
+    @GetMapping("/theatres/edit/{index}")
+    public String editTheatre(@PathVariable int index, Model model) {
+        model.addAttribute("index", index);
+        model.addAttribute("editTheatre", theatreList.get(index));
+        return "edit-theatre-page";
     }
 
 
@@ -82,6 +73,13 @@ public class TheatreController {
     @PostMapping(value = "/theatres/edit/{index}")
     public String handleEditTheatre(@PathVariable int index, @ModelAttribute Theatre theatre) {
         theatreRepo.editTheatre(theatre, theatreList.get(index).getId());
+        return "redirect:/theatres";
+    }
+
+    @GetMapping(value = "/theatres/delete/{index}")
+    public String handleDeleteTheatre(@PathVariable int index) {
+        theatreRepo.deleteTheatre(theatreList.get(index));
+
         return "redirect:/theatres";
     }
 

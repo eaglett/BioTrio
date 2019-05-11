@@ -65,7 +65,7 @@ public class TheatreRepository {
 
     }
 
-    // Deleting a theatre inside the MySQL database with JDBCtemplate.update
+    // Deleting a theatre inside the MySQL database with JDBCtemplate.update(String query)
     public void deleteTheatre(Theatre theatre) {
         String query = "DELETE FROM theater WHERE theater_id = " + theatre.getId();
         jdbc.update(query);
