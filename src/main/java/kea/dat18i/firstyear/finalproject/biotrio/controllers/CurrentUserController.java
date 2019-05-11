@@ -38,7 +38,7 @@ public class CurrentUserController {
 
         Customer logingCustomer = customerRepo.findCustomer(customer);
        /* Car carInserted = carRepo.insert(car);*/
-//        return "Your data is saved and secured don't worry about GDPR." + carInserted;
+//        return "Your data is saved and secured don't worry about GDPR." + customerInserted;
         return "redirect:/";
     }
 
@@ -53,7 +53,7 @@ public class CurrentUserController {
     public String loginEmployee(@ModelAttribute Employee employee){
         Employee logingEmployee = EmployeeRepository.findEmployee(employee);
         /* Car carInserted = carRepo.insert(car);*/
-//        return "Your data is saved and secured don't worry about GDPR." + carInserted;
+//        return "Your data is saved and secured don't worry about GDPR." + employeeInserted;
         return "redirect:/";
     }
 

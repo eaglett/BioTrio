@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
-    <title>Bio Trio</title>
+    <title>Bio Trio Home</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -20,21 +20,23 @@
 
 <div class="jumbotron">
 
-    <form th:action="@{/movies/add_movie}" th:object="${newMovie}" method="POST">
+    <form th:action="@{/employees/add_employee}" th:object="${newEmployee}" method="POST">
         <div class="form-group">
-            <label for="name">Movie Name</label>
-            <input type="text" class="form-control" th:placeholder="'Movie'" minlength="1" maxlength="50"
-                   id="name" aria-describedby="name" th:field="*{movie_name}"/>
+            <label for="username">Employee Username</label>
+            <input type="text" class="form-control" th:placeholder="'Employee Username'" minlength="1" maxlength="50"
+                   id="username" aria-describedby="username" th:field="*{username}"/>
         </div>
+
         <div class="form-group">
-            <label for="year_of_production">Number of Rows</label>
-            <input type="number" class="form-control" th:placeholder="2000" minlength="4" maxlength="4"
-                   id="year_of_production" aria-describedby="year_of_production" th:field="*{year_of_production}"/>
+            <label for="password">Employee Password</label>
+            <input type="password" class="form-control" th:placeholder="'Employee Password'" minlength="1" maxlength="50"
+                   id="password" aria-describedby="password" th:field="*{password}"/>
         </div>
+
         <div class="form-group">
-            <label for="duration">Number of seats each row</label>
-            <input type="number" class="form-control" th:placeholder="0" minlength="1" maxlength="3"
-                   id="duration" aria-describedby="duration" th:field="*{duration}"/>
+            <label for="access_level">Employee Access-Level</label>
+            <input type="text" class="form-control" th:placeholder="'Employee Access-Level'" minlength="1" maxlength="50"
+                   id="access_level" aria-describedby="access_level" th:field="*{accessLevel}"/>
         </div>
 
         <input class="btn btn-info" type="submit" value="Submit" />
@@ -44,7 +46,6 @@
 </div>
 
 
-<!-- Check what this does -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
