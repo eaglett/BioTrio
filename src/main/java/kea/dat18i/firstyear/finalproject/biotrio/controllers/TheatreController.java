@@ -73,7 +73,7 @@ public class TheatreController {
     // Edit theatre from MySQL database and redirect back to /theatres
     @PostMapping(value = "/theatres/edit/{index}")
     public String handleEditTheatre(@PathVariable int index, @ModelAttribute Theatre theatre) {
-        theatreRepo.editTheatre(theatre, theatre.getId());
+        theatreRepo.editTheatre(theatre, theatreList.get(index).getId());
         return "redirect:/theatres";
     }
 

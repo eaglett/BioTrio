@@ -62,7 +62,7 @@ public class EmployeeController {
 
     @PostMapping(value = "/employees/edit/{index}")
     public String handleEditEmployee(@PathVariable int index, @ModelAttribute Employee employee) {
-        employeeRepo.editEmployee(employee, employee.getId());
+        employeeRepo.editEmployee(employee, employeeList.get(index).getId());
         return "redirect:/employees";
     }
 
