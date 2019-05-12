@@ -66,7 +66,7 @@ public class EmployeeRepository {
 
     // Delete an employee inside the db
     public void deleteEmployee(Employee employee) {
-        String query = "DELETE FROM employee WHERE username = " + employee.getUsername();
+        String query = "DELETE FROM employee WHERE employee_id = " + employee.getId();
         jdbc.update(query);
     }
 
@@ -75,10 +75,11 @@ public class EmployeeRepository {
 
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
-                    "UPDATE employee SET username = ?, password = ?, access_level = ? WHERE employee_id = " + id);
+                    "UPDATE employee SET username = ?, employee_password = ?, access_level = ? WHERE employee_id = "
+                            + id);
             ps.setString(1, employee.getUsername());
-            ps.setString(1, employee.getPassword());
-            ps.setString(1, employee.getAccessLevel());
+            ps.setString(2, employee.getPassword());
+            ps.setString(3, employee.getAccessLevel());
 
             return ps;
         };

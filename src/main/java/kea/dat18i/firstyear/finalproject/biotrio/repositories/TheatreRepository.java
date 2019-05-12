@@ -28,7 +28,7 @@ public class TheatreRepository {
         while (rs.next()) {
             Theatre theatre = new Theatre();
             theatre.setId(rs.getInt("theater_id"));
-            theatre.setName(rs.getString("name"));
+            theatre.setName(rs.getString("theater_name"));
             theatre.setRows(rs.getInt("nb_of_rows"));
             theatre.setSeatsPerRow(rs.getInt("seats_per_row"));
             theatreList.add(theatre);
@@ -76,7 +76,7 @@ public class TheatreRepository {
 
         PreparedStatementCreator psc = Connection -> {
                 PreparedStatement ps = Connection.prepareStatement(
-                        "UPDATE theater SET name = ?, nb_of_rows = ?, seats_per_row = ? WHERE theater_id = " + id);
+                        "UPDATE theater SET theater_name = ?, nb_of_rows = ?, seats_per_row = ? WHERE theater_id = " + id);
                 ps.setString(1, theatre.getName());
 
                 ps.setInt(2, theatre.getRows());

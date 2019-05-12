@@ -27,8 +27,9 @@ public class MovieController {
 
     @GetMapping(value = "/movies")
     public String movies(Model model) {
-        model.addAttribute("movieList", movieList);
         movieList = movieRepo.findAllMovies();
+        model.addAttribute("movieList", movieList);
+
 
         return "movies-page";
 
@@ -54,22 +55,23 @@ public class MovieController {
 
 
     // render the html template edit-movie-page.html and create a view for editing a movie
-    @GetMapping(value = "/movies/edit_movie/{index}")
+    @GetMapping(value = "/movies/edit/{index}")
     public String editMovie(@PathVariable int index, Model model) {
+        Movie editMovie = movieList.get(index);
         model.addAttribute("index", index);
-        model.addAttribute("editMovie", movieList.get(index));
+        model.addAttribute("editMovie", editMovie);
 
         return "edit-movie-page";
     }
 
     @PostMapping(value = "/movies/edit/{index}")
     public String handleEditMovie(@ModelAttribute Movie movie, @PathVariable int index) {
-        movieRepo.editMovie(movie, index);
+        movieRepo.editMovie(movie, movieList.get(index).getMovie_id());
+//        movieList.set(index, movie);
 
 
         return "redirect:/movies";
     }
-
 
     @GetMapping(value = "/movies/delete/{index}")
     public String deleteMovie(@PathVariable int index) {

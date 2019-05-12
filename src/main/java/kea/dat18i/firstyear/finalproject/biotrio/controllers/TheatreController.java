@@ -63,8 +63,9 @@ public class TheatreController {
     // View of editing a theatre
     @GetMapping("/theatres/edit/{index}")
     public String editTheatre(@PathVariable int index, Model model) {
+        Theatre editTheatre = theatreList.get(index);
         model.addAttribute("index", index);
-        model.addAttribute("editTheatre", theatreList.get(index));
+        model.addAttribute("editTheatre", editTheatre);
         return "edit-theatre-page";
     }
 
@@ -72,7 +73,7 @@ public class TheatreController {
     // Edit theatre from MySQL database and redirect back to /theatres
     @PostMapping(value = "/theatres/edit/{index}")
     public String handleEditTheatre(@PathVariable int index, @ModelAttribute Theatre theatre) {
-        theatreRepo.editTheatre(theatre, theatreList.get(index).getId());
+        theatreRepo.editTheatre(theatre, theatre.getId());
         return "redirect:/theatres";
     }
 

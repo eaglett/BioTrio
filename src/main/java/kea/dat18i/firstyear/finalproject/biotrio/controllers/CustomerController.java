@@ -57,7 +57,9 @@ public class CustomerController {
 
     @PostMapping(value = "/create_Account")
     public String handleCreateAccount(@ModelAttribute Customer customer) {
+        customerRepo.insertCustomer(customer);
         customerList.add(customer);
+
         return "redirect:/";
     }
 

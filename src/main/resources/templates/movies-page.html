@@ -19,6 +19,7 @@
 </div>
 
 <div class="jumbotron">
+    <a th:href="@{'/movies/add_movie'}" class="btn btn-success">Add Movie</a>
     <table class="table table-striped">
         <thead>
         <th class="col">Movie Name</th>
@@ -26,7 +27,7 @@
         <th class="col">Duration in minutes</th>
         </thead>
         <tr th:each="movie, iter : ${movieList}">
-            <td th:text="${movie.name}" ></td>
+            <td th:text="${movie.movie_name}" ></td>
             <td th:text="${movie.year_of_production}"></td>
             <td th:text="${movie.duration}"></td>
             <td><a th:href="@{'/movies/edit/' + ${iter.index}}" class="btn btn-info fas fa-pen"></a></td>
