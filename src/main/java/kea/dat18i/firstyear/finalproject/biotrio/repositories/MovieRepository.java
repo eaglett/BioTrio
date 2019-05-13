@@ -22,6 +22,22 @@ public class MovieRepository {
     private JdbcTemplate jdbc;
 
 
+    // Finds a specific movie in movie table from database biotrio by movie_id = id
+    public Movie findMovie(int id){
+        // Create query for sql and parse an object into class
+        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM movie WHERE movie_id = " + id);
+
+        Movie movie = new Movie();
+        while (rs.next()) {
+            movie.setMovie_id(rs.getInt("movie_id"));
+            movie.setMovie_name(rs.getString("movie_name"));
+            movie.setYear_of_production(rs.getInt("year_of_production"));
+            movie.setDuration(rs.getInt("duration"));
+        }
+
+        return movie;
+    }
+
     // Finds and stores all data from our movie table in our MySQL database
     // into an ArrayList of Movie objects to pass to our MovieController
     public List<Movie> findAllMovies() {

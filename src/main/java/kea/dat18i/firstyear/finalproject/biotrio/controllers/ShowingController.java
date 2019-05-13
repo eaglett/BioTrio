@@ -3,6 +3,7 @@ package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Movie;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Showing;
+import kea.dat18i.firstyear.finalproject.biotrio.repositories.MovieRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.ShowingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,24 +28,31 @@ public class ShowingController {
     @Autowired
     ShowingRepository showingRepo;
 
+    @Autowired
+    MovieRepository movieRepo;
+
     private List<Showing> showingList = new ArrayList<>();
 
-    @GetMapping(value = "/showings")
-    public String showings(Model model) {
-        // showingList = showingRepo.findShowings();
-        model.addAttribute("showingsList", showingList);
-        model.addAttribute("movie", new Movie());
+    // Will probably delete this
+//    private List<Movie> movieList = new ArrayList<>();
 
-        return "showings-page";
-    }
+//    @GetMapping(value = "/movies/showings")
+//    public String showings(Model model) {
+//        showingList = showingRepo.findAllShowings();
+//        movieList = movieRepo.findAllMovies();
+//        model.addAttribute("showingsList", showingList);
+//        model.addAttribute("movie", new Movie());
+//        model.addAttribute("movieList", movieList);
+//
+//        return "showings-page";
+//    }
 
 
-    @GetMapping(value = "/showings/add_showing")
+    @GetMapping(value = "/movies/showings/add_showing")
     public String addShowing(Model model) {
         model.addAttribute("newShowing", new Showing());
 
-
-        return "showings-page";
+        return "add-showing-page";
     }
 
     @PostMapping(value = "/showings/add_showing")
@@ -52,31 +60,55 @@ public class ShowingController {
         // showingRepo.insertShowing(showing);
 
 
-        return "redirect:/showings";
+        return "redirect:/movies/showings/{movieId}";
     }
 
-    @GetMapping(value = "/showings/edit/{index}")
+    @GetMapping(value = "/movies/showings/{movieId}/edit/{index}")
     public String editShowing(@PathVariable int index, Model model) {
         model.addAttribute("editShowing", showingList.get(index));
 
 
-        return "redirect:/showings";
+        return "redirect:/movies/showings/{movieId}";
     }
 
-    @PostMapping(value = "/showings/edit{index}")
+    @PostMapping(value = "/movies/showings/{movieId}/edit/{index}")
     public String handleEditShowing(@PathVariable int index, @ModelAttribute Showing showing) {
         // showingRepo.updateShowing(showing);
 
 
-        return "redirect:/showings";
+        return "redirect:/movies/showings/{movieId}";
     }
 
 
-    @GetMapping(value = "/showings/delete/{index}")
+    @GetMapping(value = "/movies/showings/{movieId}/delete/{index}")
     public String deleteShowing(@PathVariable int index) {
         // showingRepo.deleteShowing(showingsList.get(index).getId());
 
-        return "redirect:/showings";
+        return "redirect:/movies/showings/{movieId}";
+    }
+
+
+    @GetMapping(value = "/movies/showings/{movieId}")
+    public String specificShowingList(Model model, @PathVariable int movieId) {
+        showingList = getShowingsById(showingRepo.findAllShowings(), movieId);
+        model.addAttribute("showingsList", showingList);
+
+        // have to polish this
+        return "showings-page";
+
+    }
+
+
+
+    private List<Showing> getShowingsById(List<Showing> showingsList, int movieId) {
+        List<Showing> showings = new ArrayList<>();
+
+        for(Showing showing : showingsList) {
+            if(movieRepo.findMovie(showing.getMovie_id()).getMovie_id() == movieId) {
+                showings.add(showing);
+            }
+        }
+        return showings;
     }
 
 

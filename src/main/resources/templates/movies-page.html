@@ -22,14 +22,21 @@
     <a th:href="@{'/movies/add_movie'}" class="btn btn-success">Add Movie</a>
     <table class="table table-striped">
         <thead>
-        <th class="col">Movie Name</th>
-        <th class="col">Year of production</th>
-        <th class="col">Duration in minutes</th>
+            <tr>
+                <th class="col">Movie Name</th>
+                <th class="col">Year of production</th>
+                <th class="col">Duration in minutes</th>
+                <th class="col">Select </th>
+                <th class="col">Edit</th>
+                <th class="col">Delete</th>
+            </tr>
+
         </thead>
         <tr th:each="movie, iter : ${movieList}">
             <td th:text="${movie.movie_name}" ></td>
             <td th:text="${movie.year_of_production}"></td>
             <td th:text="${movie.duration}"></td>
+            <td><a th:href="@{'/movies/showings/' + ${movie.movie_id}}" class="btn btn-info fa fa-align-justify"></a></td>
             <td><a th:href="@{'/movies/edit/' + ${iter.index}}" class="btn btn-info fas fa-pen"></a></td>
             <td><a th:href="@{'/movies/delete/' + ${iter.index}}" class="btn btn-danger fas fa-trash"></a></td>
         </tr>

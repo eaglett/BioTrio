@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
-    <title>Bio Trio Movies</title>
+    <title>Bio Trio Showings</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -18,19 +18,22 @@
     <th:block th:include="fragments/navbar :: navbar"></th:block>
 </div>
 
-<!-- Still working on this -->
 <div class="jumbotron">
-    <a th:href="@{'/showins/add_showings'}" class="btn btn-success">Add Showing</a>
+    <a th:href="@{'/movies/showings/{movieId}/add_showing'}" class="btn btn-success">Add Movie</a>
     <table class="table table-striped">
         <thead>
-        <th class="col">Showing</th>
-        <th class="col"></th>
-        <th class="col">Duration in minutes</th>
+            <tr>
+                <th class="col">Movie</th>
+                <th class="col">Showing</th>
+                <th class="col">Theatre</th>
+                <th class="col">Playing Date and Time</th>
+            </tr>
         </thead>
         <tr th:each="showing, iter : ${showingsList}">
-            <td th:text="${movie.name}" ></td>
-            <td th:text="${movie.year_of_production}"></td>
-            <td th:text="${movie.duration}"></td>
+            <td th:text="${showing.movie_id}" ></td>
+            <td th:text="${showing.showing_id}"></td>
+            <td th:text="${showing.theatre_id}"></td>
+            <td th:text="${showing.start_date_time}"></td>
             <td><a th:href="@{'/showings/edit/' + ${iter.index}}" class="btn btn-info fas fa-pen"></a></td>
             <td><a th:href="@{'/showings/delete/' + ${iter.index}}" class="btn btn-danger fas fa-trash"></a></td>
         </tr>
