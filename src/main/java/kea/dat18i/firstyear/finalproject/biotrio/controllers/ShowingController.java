@@ -57,7 +57,7 @@ public class ShowingController {
 
     @PostMapping(value = "/showings/add_showing")
     public String handleAddShowing(@ModelAttribute Showing showing) {
-        // showingRepo.insertShowing(showing);
+        showingRepo.insertShowing(showing);
 
 
         return "redirect:/movies/showings/{movieId}";
@@ -73,7 +73,7 @@ public class ShowingController {
 
     @PostMapping(value = "/movies/showings/{movieId}/edit/{index}")
     public String handleEditShowing(@PathVariable int index, @ModelAttribute Showing showing) {
-        // showingRepo.updateShowing(showing);
+        showingRepo.updateShowing(showing);
 
 
         return "redirect:/movies/showings/{movieId}";
@@ -82,7 +82,7 @@ public class ShowingController {
 
     @GetMapping(value = "/movies/showings/{movieId}/delete/{index}")
     public String deleteShowing(@PathVariable int index) {
-        // showingRepo.deleteShowing(showingsList.get(index).getId());
+        showingRepo.deleteShowing(showingList.get(index));
 
         return "redirect:/movies/showings/{movieId}";
     }
@@ -93,7 +93,7 @@ public class ShowingController {
         showingList = getShowingsById(showingRepo.findAllShowings(), movieId);
         model.addAttribute("showingsList", showingList);
 
-        // have to polish this
+        
         return "showings-page";
 
     }

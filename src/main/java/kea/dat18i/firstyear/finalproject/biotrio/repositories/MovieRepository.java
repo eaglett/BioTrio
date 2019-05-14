@@ -96,7 +96,7 @@ public class MovieRepository {
         jdbc.update(query);
     }
 
-    public void deleteShowingsByMovie(Movie movie) {
+    private void deleteShowingsByMovie(Movie movie) {
         String query = "DELETE FROM showing WHERE movie_id = " + movie.getMovie_id();
         jdbc.update(query);
     }

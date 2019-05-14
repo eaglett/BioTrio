@@ -1,7 +1,7 @@
 package kea.dat18i.firstyear.finalproject.biotrio.entities;
 
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 // An entity defined as a "Showing" which has a name that describes which movie is showing,
 // a date and time of the showing, and the ticket price
@@ -9,7 +9,7 @@ public class Showing {
     private int showing_id;
     private int movie_id;
     private int theatre_id;
-    private LocalDateTime start_date_time;
+    private Timestamp start_date_time;
 
     public Showing() {
     }
@@ -38,11 +38,11 @@ public class Showing {
         this.theatre_id = theatre_id;
     }
 
-    public LocalDateTime getStart_date_time() {
+    public Timestamp getStart_date_time() {
         return start_date_time;
     }
 
-    public void setStart_date_time(LocalDateTime start_date_time) {
+    public void setStart_date_time(Timestamp start_date_time) {
         this.start_date_time = start_date_time;
     }
 

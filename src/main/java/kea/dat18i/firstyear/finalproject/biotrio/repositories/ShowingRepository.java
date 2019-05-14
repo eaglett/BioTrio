@@ -39,7 +39,7 @@ public class ShowingRepository {
             showing.setShowing_id(rs.getInt("showing_ID"));
             showing.setMovie_id(rs.getInt("movie_id"));
             showing.setTheatre_id(rs.getInt("theater_id"));
-            showing.setStart_date_time(rs.getTimestamp("start_date_time").toLocalDateTime());
+            showing.setStart_date_time(rs.getTimestamp("start_date_time"));
             showings.add(showing);
 
         }
@@ -69,6 +69,51 @@ public class ShowingRepository {
         } catch (NullPointerException e) {
             System.out.println(e + " at INSERT showing in our repository");
         }
+
+    }
+
+
+
+    // Deleting a movie inside the MySQL database with JDBCTemplate.update(String query)
+    public void deleteShowing(Showing showing) {
+        deleteTicketsByShowing(showing);
+
+        PreparedStatementCreator psc = Connection -> {
+            PreparedStatement ps = Connection.prepareStatement(
+                    "DELETE FROM showing WHERE showing_id = ?");
+            ps.setInt(1, showing.getShowing_id());
+
+            return ps;
+        };
+
+        jdbc.update(psc);
+    }
+
+    private void deleteTicketsByShowing(Showing showing) {
+        PreparedStatementCreator psc = Connection -> {
+            PreparedStatement ps = Connection.prepareStatement(
+                    "DELETE FROM ticket WHERE showing_id = ?");
+            ps.setInt(1, showing.getShowing_id());
+
+            return ps;
+        };
+
+        jdbc.update(psc);
+    }
+
+
+    public void updateShowing(Showing showing) {
+        PreparedStatementCreator psc = Connection -> {
+            PreparedStatement ps = Connection.prepareStatement(
+                    "UPDATE ticket SET movie_id = ?, theater_id = ?, start_date_time = ?");
+            ps.setInt(1, showing.getMovie_id());
+            ps.setInt(2, showing.getTheatre_id());
+            ps.setTimestamp(3, showing.getStart_date_time());
+
+            return ps;
+        };
+
+        jdbc.update(psc);
 
     }
 
