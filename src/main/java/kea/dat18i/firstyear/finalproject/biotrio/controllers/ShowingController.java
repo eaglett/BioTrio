@@ -31,22 +31,18 @@ public class ShowingController {
     @Autowired
     MovieRepository movieRepo;
 
+
     private List<Showing> showingList = new ArrayList<>();
 
-    // Will probably delete this
-//    private List<Movie> movieList = new ArrayList<>();
+    // View for showings of one particular showing
+    @GetMapping(value = "/movies/showings/{movieId}")
+    public String showings(Model model, @PathVariable int movieId) {
+        showingList = getShowingsById(showingRepo.findAllShowings(), movieId);
+        model.addAttribute("showingsList", showingList);
 
-//    @GetMapping(value = "/movies/showings")
-//    public String showings(Model model) {
-//        showingList = showingRepo.findAllShowings();
-//        movieList = movieRepo.findAllMovies();
-//        model.addAttribute("showingsList", showingList);
-//        model.addAttribute("movie", new Movie());
-//        model.addAttribute("movieList", movieList);
-//
-//        return "showings-page";
-//    }
+        return "showings";
 
+    }
 
     @GetMapping(value = "/movies/showings/add_showing")
     public String addShowing(Model model) {
@@ -60,46 +56,40 @@ public class ShowingController {
         showingRepo.insertShowing(showing);
 
 
-        return "redirect:/movies/showings/{movieId}";
+        return "redirect:/movies";
     }
 
-    @GetMapping(value = "/movies/showings/{movieId}/edit/{index}")
+    @GetMapping(value = "/movies/showings/edit/{index}")
     public String editShowing(@PathVariable int index, Model model) {
         model.addAttribute("editShowing", showingList.get(index));
 
 
-        return "redirect:/movies/showings/{movieId}";
+        return "redirect:/movies";
     }
 
-    @PostMapping(value = "/movies/showings/{movieId}/edit/{index}")
+    @PostMapping(value = "/movies/showings/edit/{index}")
     public String handleEditShowing(@PathVariable int index, @ModelAttribute Showing showing) {
         showingRepo.updateShowing(showing);
 
 
-        return "redirect:/movies/showings/{movieId}";
+        return "redirect:/movies";
     }
 
 
-    @GetMapping(value = "/movies/showings/{movieId}/delete/{index}")
+    @GetMapping(value = "/movies/showings/delete/{index}")
     public String deleteShowing(@PathVariable int index) {
         showingRepo.deleteShowing(showingList.get(index));
 
-        return "redirect:/movies/showings/{movieId}";
-    }
-
-
-    @GetMapping(value = "/movies/showings/{movieId}")
-    public String specificShowingList(Model model, @PathVariable int movieId) {
-        showingList = getShowingsById(showingRepo.findAllShowings(), movieId);
-        model.addAttribute("showingsList", showingList);
-
-        
-        return "showings-page";
-
+        return "redirect:/movies";
     }
 
 
 
+
+
+    // Might be able to replace with an INNER JOIN
+    // Finds all showings with the same movie_id that is passed in the method parameter
+    // and stores them into a new ArrayList to display in our showings() view
     private List<Showing> getShowingsById(List<Showing> showingsList, int movieId) {
         List<Showing> showings = new ArrayList<>();
 

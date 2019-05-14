@@ -67,7 +67,6 @@ public class MovieController {
     @PostMapping(value = "/movies/edit/{index}")
     public String handleEditMovie(@ModelAttribute Movie movie, @PathVariable int index) {
         movieRepo.editMovie(movie, movieList.get(index).getMovie_id());
-//        movieList.set(index, movie);
 
 
         return "redirect:/movies";
@@ -79,6 +78,9 @@ public class MovieController {
 
         return "redirect:/movies";
     }
+
+
+
 
 
 }
