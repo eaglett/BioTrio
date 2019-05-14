@@ -1,7 +1,6 @@
 package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 
 
-import kea.dat18i.firstyear.finalproject.biotrio.entities.Movie;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Showing;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.MovieRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.ShowingRepository;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-// STILL FIGURING "Manage Showing" USE CASE OUT
+
 @Controller
 public class ShowingController {
 
@@ -37,10 +36,12 @@ public class ShowingController {
     // View for showings of one particular showing
     @GetMapping(value = "/movies/showings/{movieId}")
     public String showings(Model model, @PathVariable int movieId) {
+
         showingList = getShowingsById(showingRepo.findAllShowings(), movieId);
         model.addAttribute("showingsList", showingList);
+        model.addAttribute("movie", movieRepo.findMovie(movieId));
 
-        return "showings";
+        return "/showing/showings";
 
     }
 
@@ -48,7 +49,7 @@ public class ShowingController {
     public String addShowing(Model model) {
         model.addAttribute("newShowing", new Showing());
 
-        return "add-showing-page";
+        return "/showing/add-showing";
     }
 
     @PostMapping(value = "/showings/add_showing")

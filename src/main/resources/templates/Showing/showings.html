@@ -20,6 +20,7 @@
 
 <div class="jumbotron">
     <a th:href="@{'/movies/showings/add_showing'}" class="btn btn-success">Add Showing</a>
+    <h1>Still have to polish this part by displaying the actual theatre name</h1>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -29,8 +30,8 @@
                 <th class="col">Playing Date and Time</th>
             </tr>
         </thead>
-        <tr th:each="showing, iter : ${showingsList}">
-            <td th:text="${showing.movie_id}" ></td>
+        <tr th:each="showing, iter : ${showingsList}" th:object="${movie}">
+            <td th:text="${movie.movie_name}" ></td>
             <td th:text="${showing.showing_id}"></td>
             <td th:text="${showing.theatre_id}"></td>
             <td th:text="${showing.start_date_time}"></td>
