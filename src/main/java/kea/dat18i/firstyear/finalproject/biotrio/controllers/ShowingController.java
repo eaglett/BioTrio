@@ -4,6 +4,7 @@ package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Showing;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.MovieRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.ShowingRepository;
+import kea.dat18i.firstyear.finalproject.biotrio.repositories.TheatreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,11 @@ public class ShowingController {
     @Autowired
     MovieRepository movieRepo;
 
+    @Autowired
+    TheatreRepository theatreRepo;
+
+
+
 
     private List<Showing> showingList = new ArrayList<>();
 
@@ -47,15 +53,17 @@ public class ShowingController {
 
     @GetMapping(value = "/movies/showings/add_showing")
     public String addShowing(Model model) {
+        model.addAttribute("movies", movieRepo.findAllMovies());
+        model.addAttribute("theatres", theatreRepo.findAllTheatres());
         model.addAttribute("newShowing", new Showing());
 
         return "/showing/add-showing";
     }
 
-    @PostMapping(value = "/showings/add_showing")
+    @PostMapping(value = "/movies/showings/add_showing")
     public String handleAddShowing(@ModelAttribute Showing showing) {
-        showingRepo.insertShowing(showing);
-
+        //showingRepo.insertShowing(showing);
+        System.out.println(showing.toString());
 
         return "redirect:/movies";
     }

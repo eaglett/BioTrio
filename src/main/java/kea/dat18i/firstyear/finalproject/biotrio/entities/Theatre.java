@@ -4,7 +4,7 @@ package kea.dat18i.firstyear.finalproject.biotrio.entities;
 // as well as has a specific name
 public class Theatre {
 
-    private int id;
+    private int theatre_id;
     private String name;
     private int rows;
     private int seatsPerRow;
@@ -12,12 +12,12 @@ public class Theatre {
     public Theatre() {
     }
 
-    public int getId() {
-        return id;
+    public int getTheatre_id() {
+        return theatre_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTheatre_id(int theatre_id) {
+        this.theatre_id = theatre_id;
     }
 
     public String getName() {

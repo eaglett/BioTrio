@@ -21,13 +21,15 @@ public class TheatreRepository {
 
 
 
+
+
     // Find all Theatres from database BioTrio and table theater
     public List<Theatre> findAllTheatres() {
         SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM theater");
         List<Theatre> theatreList = new ArrayList<>();
         while (rs.next()) {
             Theatre theatre = new Theatre();
-            theatre.setId(rs.getInt("theater_id"));
+            theatre.setTheatre_id(rs.getInt("theater_id"));
             theatre.setName(rs.getString("theater_name"));
             theatre.setRows(rs.getInt("nb_of_rows"));
             theatre.setSeatsPerRow(rs.getInt("seats_per_row"));
@@ -56,7 +58,7 @@ public class TheatreRepository {
         try {
             KeyHolder keyholder = new GeneratedKeyHolder();
             jdbc.update(psc, keyholder);
-            theatre.setId(keyholder.getKey().intValue());
+            theatre.setTheatre_id(keyholder.getKey().intValue());
         } catch (NullPointerException e) {
             System.out.println(e + " at INSERT theatre in our repository");
         }
@@ -67,7 +69,7 @@ public class TheatreRepository {
 
     // Deleting a theatre inside the MySQL database with JDBCtemplate.update(String query)
     public void deleteTheatre(Theatre theatre) {
-        String query = "DELETE FROM theater WHERE theater_id = " + theatre.getId();
+        String query = "DELETE FROM theater WHERE theater_id = " + theatre.getTheatre_id();
         jdbc.update(query);
     }
 

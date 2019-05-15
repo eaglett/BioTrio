@@ -46,4 +46,14 @@ public class Showing {
         this.start_date_time = start_date_time;
     }
 
+
+    @Override
+    public String toString() {
+        return "Showing{" +
+                "showing_id=" + showing_id +
+                ", movie_id=" + movie_id +
+                ", theatre_id=" + theatre_id +
+                ", start_date_time=" + start_date_time +
+                '}';
+    }
 }
