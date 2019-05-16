@@ -17,15 +17,6 @@ CREATE TABLE IF NOT EXISTS customer(
     phone_nb VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS ticket(
-	ticket_id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    showing_id INT(10) NOT NULL,
-    customer_id INT(10) NOT NULL,
-    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
-    seat_row VARCHAR(2) NOT NULL,
-    seat_nb VARCHAR(2) NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS theater(
 	theater_id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     theater_name VARCHAR(50) NOT NULL,
@@ -47,4 +38,14 @@ CREATE TABLE IF NOT EXISTS showing(
     theater_id INT(10) NOT NULL,
     FOREIGN KEY (theater_id) REFERENCES theater(theater_id),
     start_date_time DATETIME NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS ticket(
+	ticket_id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    showing_id INT(10) NOT NULL,
+    FOREIGN KEY (showing_id) REFERENCES showing(showing_id),
+    customer_id INT(10) NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
+    seat_row INT(2) NOT NULL,
+    seat_nb INT(2) NOT NULL
 );

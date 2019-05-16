@@ -138,4 +138,4 @@ INSERT INTO ticket (showing_id, customer_id, seat_row, seat_nb) VALUES
             WHERE phone_nb = '00456783465'),
 		8,
         17);
- 
+        

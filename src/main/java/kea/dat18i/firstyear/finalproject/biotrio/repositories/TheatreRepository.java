@@ -1,5 +1,7 @@
 package kea.dat18i.firstyear.finalproject.biotrio.repositories;
 
+import kea.dat18i.firstyear.finalproject.biotrio.entities.Movie;
+import kea.dat18i.firstyear.finalproject.biotrio.entities.Showing;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Theatre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,6 +21,8 @@ public class TheatreRepository {
     @Autowired // Handle this field and create the object that needs to be created
     private JdbcTemplate jdbc;
 
+    @Autowired
+    ShowingRepository showingRepo;
 
 
 
@@ -36,6 +40,24 @@ public class TheatreRepository {
             theatreList.add(theatre);
         }
         return theatreList;
+    }
+
+    // Find Theaters by IDfrom database BioTrio and table theater
+    public Theatre findTheatreByShowingId(int id) {
+        Showing showing = showingRepo.findShowingById(id);
+
+        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM theater WHERE theater_id=" + showing.getTheatre_id());
+        List<Theatre> theatreList = new ArrayList<>();
+
+        Theatre theatre = new Theatre();
+        while (rs.next()) {
+            theatre.setTheatre_id(rs.getInt("theater_id"));
+            theatre.setName(rs.getString("theater_name"));
+            theatre.setRows(rs.getInt("nb_of_rows"));
+            theatre.setSeatsPerRow(rs.getInt("seats_per_row"));
+            theatreList.add(theatre);
+        }
+        return theatre;
     }
 
 

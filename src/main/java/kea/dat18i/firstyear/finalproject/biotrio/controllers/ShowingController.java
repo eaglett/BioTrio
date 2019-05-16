@@ -51,6 +51,15 @@ public class ShowingController {
 
     }
 
+    @GetMapping(value = "/movies/showings/reserve/{showingId}")
+    public String reserve(Model model, @PathVariable int showingId) {
+
+        model.addAttribute("movie", movieRepo.findMovieByShowingId(showingId));
+        model.addAttribute("theater", theatreRepo.findTheatreByShowingId(showingId));
+        model.addAttribute("seatList", showingRepo.findSeats(showingId));
+        return "/showing/reserve-ticket"; //add "you've reserved a ticket" page
+    }
+
     @GetMapping(value = "/movies/showings/add_showing")
     public String addShowing(Model model) {
         model.addAttribute("movies", movieRepo.findAllMovies());

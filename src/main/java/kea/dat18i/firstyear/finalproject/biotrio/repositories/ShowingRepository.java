@@ -1,6 +1,8 @@
 package kea.dat18i.firstyear.finalproject.biotrio.repositories;
 
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Showing;
+import kea.dat18i.firstyear.finalproject.biotrio.entities.Theatre;
+import kea.dat18i.firstyear.finalproject.biotrio.entities.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -21,6 +23,8 @@ public class ShowingRepository {
 
     @Autowired
     private JdbcTemplate jdbc;
+    @Autowired
+    private TheatreRepository theatreRepo;
 
 
 
@@ -46,6 +50,66 @@ public class ShowingRepository {
 
         return showings;
 
+    }
+
+    public Showing findShowingById(int id) {
+        List<Showing> showings = new ArrayList<>();
+        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM showing WHERE showing_id=" + id);
+        // Iterate over every row in our showing table by using a while loop
+        // and checking if next row exists
+        Showing showing = new Showing();
+        while(rs.next()) {
+            showing.setShowing_id(rs.getInt("showing_ID"));
+            showing.setMovie_id(rs.getInt("movie_id"));
+            showing.setTheatre_id(rs.getInt("theater_id"));
+            showing.setStart_date_time(rs.getTimestamp("start_date_time"));
+            showings.add(showing);
+
+        }
+
+        return showing;
+
+    }
+
+
+    public ArrayList<ArrayList<String>> findSeats(int showing_id){
+        ArrayList<ArrayList<String>> seatsMatrix = new ArrayList<ArrayList<String>>();
+        Theatre theatre = theatreRepo.findTheatreByShowingId(showing_id);
+
+        List<Ticket> tickets = findTickets(showing_id);
+
+        //inicialization of all seats to available
+        for(int i=0; i< theatre.getRows(); i++){
+            seatsMatrix.add(new ArrayList<String>());
+            for(int j=0; j<theatre.getSeatsPerRow(); j++){
+                seatsMatrix.get(i).add("Available");
+            }
+        }
+
+        //modifying reserved seats
+        for (int i=0; i<tickets.size(); i++){
+            Ticket ticket= tickets.get(i);
+            seatsMatrix.get(ticket.getSeat_row()).set(ticket.getSeat_nb(), "Reserved");
+        }
+
+        return seatsMatrix;
+    }
+
+    public List<Ticket> findTickets(int showing_id){
+        List<Ticket> tickets = new ArrayList<>();
+        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM ticket WHERE showing_id=" + showing_id);
+        // Iterate over every row in our ticket table by using a while loop
+        // and checking if next row exists
+        while(rs.next()) {
+            Ticket ticket = new Ticket();
+            ticket.setTicket_id(rs.getInt("ticket_id"));
+            ticket.setCustomer_id(rs.getInt("customer_id"));
+            ticket.setShowing_id(rs.getInt("showing_id"));
+            ticket.setSeat_row(rs.getInt("seat_row"));
+            ticket.setSeat_nb(rs.getInt("seat_nb"));
+            tickets.add(ticket);
+        }
+        return tickets;
     }
 
     // have to turn LocalDateTime into a TIMESTAMP as well as in database

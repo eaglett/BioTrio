@@ -2,6 +2,7 @@ package kea.dat18i.firstyear.finalproject.biotrio.repositories;
 
 
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Movie;
+import kea.dat18i.firstyear.finalproject.biotrio.entities.Showing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -34,6 +35,21 @@ public class MovieRepository {
             movie.setYear_of_production(rs.getInt("year_of_production"));
             movie.setDuration(rs.getInt("duration"));
         }
+
+        return movie;
+    }
+
+    // Finds a specific movie in movie table from database biotrio by showing_id = id
+    public Movie findMovieByShowingId(int id){
+        // Create query for sql and parse an object into class
+        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM showing WHERE showing_id = " + id);
+
+        Showing showing = new Showing();
+        while (rs.next()) {
+            showing.setMovie_id(rs.getInt("movie_id"));
+        }
+
+        Movie movie = findMovie(showing.getMovie_id());
 
         return movie;
     }
