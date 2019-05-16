@@ -56,7 +56,7 @@ public class ShowingController {
 
         model.addAttribute("movie", movieRepo.findMovieByShowingId(showingId));
         model.addAttribute("theater", theatreRepo.findTheatreByShowingId(showingId));
-        model.addAttribute("seatList", showingRepo.findSeats(showingId));
+        model.addAttribute("seatMatrix", showingRepo.findSeats(showingId));
         return "/showing/reserve-ticket"; //add "you've reserved a ticket" page
     }
 

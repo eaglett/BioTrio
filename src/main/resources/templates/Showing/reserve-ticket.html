@@ -20,7 +20,11 @@
 
 <div class="jumbotron">
     <table>
-
+        <tr th:each="row: ${seatMatrix}">
+            <td th:each="seat: ${row}">
+                <input th:type="button" class="btn">
+            </td>
+        </tr>
 
     </table>
 

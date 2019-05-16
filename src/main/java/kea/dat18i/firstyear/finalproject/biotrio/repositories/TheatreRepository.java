@@ -4,6 +4,7 @@ import kea.dat18i.firstyear.finalproject.biotrio.entities.Movie;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Showing;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Theatre;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -18,11 +19,15 @@ import java.util.List;
 @Repository
 public class TheatreRepository {
 
+    private ShowingRepository showingRepo;
+
     @Autowired // Handle this field and create the object that needs to be created
     private JdbcTemplate jdbc;
 
     @Autowired
-    ShowingRepository showingRepo;
+    public TheatreRepository(@Lazy ShowingRepository showingRepo) {
+        this.showingRepo=showingRepo;
+    }
 
 
 
