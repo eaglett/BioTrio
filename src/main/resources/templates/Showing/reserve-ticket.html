@@ -19,19 +19,30 @@
 </div>
 
 <div class="jumbotron">
-    <table>
-        <tr th:each="row: ${seatMatrix}">
+
+<!--    <h2 th:text=${movie.movie_name}></h2>
+    <h4 th:text="Starting at: #{showing.starte_date_time}"></h4>
+    <h4 th:text="Duration: ${movie.duration}"></h4>
+    <h4 th:text="Year of Production: ${movie.year_of_production}"></h4>-->
+
+    <table >
+        <tr>
+            <td></td> <!--empty for that corner left empty cell-->
+            <td th:each="chair, iter: ${seatMatrix[0]}" th:text=${iter.count}></td> <!-- first row, seat numbers-->
+        </tr>
+        <tr th:each="row, iter2 : ${seatMatrix}" >
+            <td th:text=${iter2.count}></td> <!--first cell in each row, row number-->
             <td th:each="seat: ${row}">
                 <input th:type="button" class="btn">
             </td>
-        </tr>
+
+        </ tr>
 
     </table>
 
 </div>
 
 
-<!-- Check what this does -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
