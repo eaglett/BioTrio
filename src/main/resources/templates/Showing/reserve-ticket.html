@@ -33,7 +33,8 @@
         <tr th:each="row, iter2 : ${seatMatrix}" >
             <td th:text=${iter2.count}></td> <!--first cell in each row, row number-->
             <td th:each="seat: ${row}">
-                <input th:type="button" class="btn">
+                <input th:if="${seat == 'Available'}" th:type="button" class="btn btn-outline-primary">
+                <input th:unless="${seat == 'Available'}" th:type="button" class="btn btn-outline-danger" disabled>
             </td>
 
         </ tr>
