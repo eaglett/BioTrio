@@ -1,6 +1,7 @@
 package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Employee;
+
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -48,7 +49,7 @@ public class EmployeeController {
 
     @GetMapping(value = "/employees/delete/{index}")
     public String handleDeleteEmployee (@PathVariable int index) {
-        employeeRepo.deleteEmployee (employeeList.get(index));
+        employeeRepo.deleteEmployee(employeeList.get(index));
         return "redirect:/employees";
     }
 

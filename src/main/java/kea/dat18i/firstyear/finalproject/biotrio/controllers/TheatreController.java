@@ -2,7 +2,6 @@ package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Theatre;
 
-
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.TheatreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -39,13 +38,6 @@ public class TheatreController {
     @GetMapping(value = "/theatres/add_theatre")
     public String addTheatre(Model model) {
         model.addAttribute("newTheatre", new Theatre());
-
-        // testing to see if we actually create a Theatre object and add to the ArrayList
-        // lambda expression for printing out elements of theatreList
-        theatreList.forEach((t) -> System.out.println("\nAdded theatre:\n" + t.getName() + "\n"
-                                                          + t.getRows() + "\n"
-                                                          + t.getSeatsPerRow())
-        );
 
         return "add-theatre-page";
     }

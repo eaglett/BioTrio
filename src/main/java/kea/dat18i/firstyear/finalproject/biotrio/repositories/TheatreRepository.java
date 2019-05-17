@@ -1,6 +1,6 @@
 package kea.dat18i.firstyear.finalproject.biotrio.repositories;
 
-import kea.dat18i.firstyear.finalproject.biotrio.entities.Movie;
+
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Showing;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Theatre;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +24,11 @@ public class TheatreRepository {
     @Autowired // Handle this field and create the object that needs to be created
     private JdbcTemplate jdbc;
 
+
+    // Lazy initialization to create Bean when called and not on build time
     @Autowired
     public TheatreRepository(@Lazy ShowingRepository showingRepo) {
-        this.showingRepo=showingRepo;
+        this.showingRepo = showingRepo;
     }
 
 
@@ -47,7 +49,7 @@ public class TheatreRepository {
         return theatreList;
     }
 
-    // Find Theaters by IDfrom database BioTrio and table theater
+    // Find Theaters by ID from database BioTrio and table theater
     public Theatre findTheatreByShowingId(int id) {
         Showing showing = showingRepo.findShowingById(id);
 
@@ -94,11 +96,28 @@ public class TheatreRepository {
 
     }
 
-    // Deleting a theatre inside the MySQL database with JDBCtemplate.update(String query)
+
+    // Deleting a theatre inside the MySQL database with JDBCTemplate.update(String query)
     public void deleteTheatre(Theatre theatre) {
-        String query = "DELETE FROM theater WHERE theater_id = " + theatre.getTheatre_id();
-        jdbc.update(query);
+
+        // Iterate over showings with the same theatre_id as the theatre we are deleting
+        // and delete each showing after the tickets for that showing have been deleted
+        showingRepo.findShowingsByTheatreId(theatre).forEach(showing ->
+                    showingRepo.deleteShowing(showing)
+        );
+
+        PreparedStatementCreator psc = Connection -> {
+            PreparedStatement ps = Connection.prepareStatement(
+                    "DELETE FROM theater WHERE theater_id = ?");
+            ps.setInt(1, theatre.getTheatre_id());
+
+            return ps;
+        };
+
+        jdbc.update(psc);
     }
+
+
 
     // Editing a theatre inside the MySQL database with JDBCtemplate.update
     public void editTheatre(Theatre theatre, int id) {
@@ -107,16 +126,12 @@ public class TheatreRepository {
                 PreparedStatement ps = Connection.prepareStatement(
                         "UPDATE theater SET theater_name = ?, nb_of_rows = ?, seats_per_row = ? WHERE theater_id = " + id);
                 ps.setString(1, theatre.getName());
-
                 ps.setInt(2, theatre.getRows());
                 ps.setInt(3, theatre.getSeatsPerRow());
 
-                System.out.println("ps Updated Successfully!");
                 return ps;
         };
 
-
         jdbc.update(psc);
-
     }
 }

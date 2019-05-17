@@ -33,6 +33,20 @@ public class ShowingRepository {
     public List<Showing> findAllShowings() {
         List<Showing> showings = new ArrayList<>();
         SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM showing");
+
+        return iterateOverShowings(rs, showings);
+
+    }
+
+    public List<Showing> findShowingsByTheatreId(Theatre theatre) {
+        List<Showing> showings = new ArrayList<>();
+        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM showing WHERE theater_id = " + theatre.getTheatre_id());
+
+        return iterateOverShowings(rs, showings);
+
+    }
+
+    private List<Showing> iterateOverShowings(SqlRowSet rs, List<Showing> showings) {
         // Iterate over every row in our showing table by using a while loop
         // and checking if next row exists
         while(rs.next()) {
@@ -45,25 +59,21 @@ public class ShowingRepository {
             showing.setTheatre_id(rs.getInt("theater_id"));
             showing.setStart_date_time(rs.getTimestamp("start_date_time"));
             showings.add(showing);
-
         }
 
         return showings;
-
     }
 
     public Showing findShowingById(int id) {
-        List<Showing> showings = new ArrayList<>();
+
         SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM showing WHERE showing_id=" + id);
-        // Iterate over every row in our showing table by using a while loop
-        // and checking if next row exists
+
         Showing showing = new Showing();
         while(rs.next()) {
             showing.setShowing_id(rs.getInt("showing_ID"));
             showing.setMovie_id(rs.getInt("movie_id"));
             showing.setTheatre_id(rs.getInt("theater_id"));
             showing.setStart_date_time(rs.getTimestamp("start_date_time"));
-            showings.add(showing);
 
         }
 
@@ -79,7 +89,7 @@ public class ShowingRepository {
         List<Ticket> tickets = findTickets(showing_id);
 
         //inicialization of all seats to available
-        for(int i=0; i< theatre.getRows(); i++){
+        for(int i=0; i<  theatre.getRows(); i++){
             seatsMatrix.add(new ArrayList<String>());
             for(int j=0; j<theatre.getSeatsPerRow(); j++){
                 seatsMatrix.get(i).add("Available");

@@ -15,6 +15,7 @@ import java.util.List;
 
 @Repository
 public class EmployeeRepository {
+
     @Autowired // Handle this field and create the object that needs to be created
     private JdbcTemplate jdbc;
 
@@ -66,8 +67,14 @@ public class EmployeeRepository {
 
     // Delete an employee inside the db
     public void deleteEmployee(Employee employee) {
-        String query = "DELETE FROM employee WHERE employee_id = " + employee.getId();
-        jdbc.update(query);
+        PreparedStatementCreator psc = Connection -> {
+            PreparedStatement ps = Connection.prepareStatement(
+                    "DELETE FROM employee WHERE employee_id = ?");
+            ps.setInt(1, employee.getId());
+
+            return ps;
+        };
+        jdbc.update(psc);
     }
 
     //edit an employee inside the db
@@ -75,8 +82,7 @@ public class EmployeeRepository {
 
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
-                    "UPDATE employee SET username = ?, employee_password = ?, access_level = ? WHERE employee_id = "
-                            + id);
+                    "UPDATE employee SET username = ?, employee_password = ?, access_level = ? WHERE employee_id = " + id);
             ps.setString(1, employee.getUsername());
             ps.setString(2, employee.getPassword());
             ps.setString(3, employee.getAccessLevel());
@@ -85,11 +91,10 @@ public class EmployeeRepository {
         };
 
         jdbc.update(psc);
-
     }
 
 
-    // For Spring Security  authentication validation
+    // For Spring Security authentication validation
     // we need to find an employee by their username
     public Employee findEmployeeByUsername(String username) {
         SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM employee WHERE username = '" + username + "';" );

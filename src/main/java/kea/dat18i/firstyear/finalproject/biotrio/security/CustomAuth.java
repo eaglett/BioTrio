@@ -12,15 +12,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 // Custom configuration to authenticate a user
 @Configuration
 public class CustomAuth implements AuthenticationProvider {
-
 
 
     // For getting an employee from our database by their username
@@ -52,7 +49,6 @@ public class CustomAuth implements AuthenticationProvider {
 
 
         // Create new HashSet that holds SimpleGrantedAuthority objects; authoritative roles.
-
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
         // Create new authoritative role based on the currently logging in user's access_level and add to authorities
         authorities.add(new SimpleGrantedAuthority(employee.getAccessLevel().toUpperCase()));
