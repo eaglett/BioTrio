@@ -51,11 +51,16 @@ public class CustomAuth implements AuthenticationProvider {
         }
 
 
+        // Create new HashSet that holds SimpleGrantedAuthority objects; authoritative roles.
+
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        // Create new authoritative role based on the currently logging in user's access_level and add to authorities
         authorities.add(new SimpleGrantedAuthority(employee.getAccessLevel().toUpperCase()));
 
         /* Have to come up with something to add any customer role by name for checking their own account */
 
+
+        // return the currently logging in user for authentication processing
         return new UsernamePasswordAuthenticationToken(username, password, authorities);
 
 
