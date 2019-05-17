@@ -88,4 +88,27 @@ public class EmployeeRepository {
 
     }
 
+
+    // For Spring Security  authentication validation
+    // we need to find an employee by their username
+    public Employee findEmployeeByUsername(String username) {
+        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM employee WHERE username = '" + username + "';" );
+
+        // Create an employee object of null value which will be
+        // returned if no employee with specified username exists
+        Employee employee = null;
+
+        // Our CustomAuth (AuthenticationProvider) only needs username, password, and access_level
+        // to be able to authenticate a user
+        if(rs.first()) {
+            employee = new Employee();
+            employee.setUsername(rs.getString("username"));
+            employee.setPassword(rs.getString("employee_password"));
+            employee.setAccessLevel(rs.getString("access_level"));
+        }
+
+        return employee;
+
+    }
+
 }

@@ -19,11 +19,18 @@ public class CurrentUserController {
     CustomerRepository customerRepo;
 
 
+    @GetMapping(value ="/login_check")
+    public String loginCheck() {
+
+
+        return "login-page";
+    }
+
     @GetMapping(value ="/login")
     public String login() {
 
 
-        return "login-page";
+        return "login";
     }
 
     @GetMapping (value="/customer-login")
@@ -48,14 +55,15 @@ public class CurrentUserController {
         return "employee-login";
     }
 
-    @PostMapping("/loginEmployee")
-//    @ResponseBody
-    public String loginEmployee(@ModelAttribute Employee employee){
-        Employee logingEmployee = EmployeeRepository.findEmployee(employee);
-        /* Car carInserted = carRepo.insert(car);*/
-//        return "Your data is saved and secured don't worry about GDPR." + employeeInserted;
-        return "redirect:/";
-    }
+    // Don't need this with our new login - but let's keep it here for now
+//    @PostMapping("/loginEmployee")
+////    @ResponseBody
+//    public String loginEmployee(@ModelAttribute Employee employee){
+//        Employee logingEmployee = EmployeeRepository.findEmployee(employee);
+//        /* Car carInserted = carRepo.insert(car);*/
+////        return "Your data is saved and secured don't worry about GDPR." + employeeInserted;
+//        return "redirect:/";
+//    }
 
     @PostMapping(value ="/logout")
     public String logout() {
