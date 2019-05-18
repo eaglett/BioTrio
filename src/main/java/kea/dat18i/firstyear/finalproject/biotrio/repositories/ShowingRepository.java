@@ -54,7 +54,7 @@ public class ShowingRepository {
             // row exists and store data from our showing table per row
             // into the object which we add into our showings ArrayList
             Showing showing = new Showing();
-            showing.setShowing_id(rs.getInt("showing_ID"));
+            showing.setShowing_id(rs.getInt("showing_Id"));
             showing.setMovie_id(rs.getInt("movie_id"));
             showing.setTheatre_id(rs.getInt("theater_id"));
             showing.setStart_date_time(rs.getTimestamp("start_date_time"));

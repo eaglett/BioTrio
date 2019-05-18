@@ -31,6 +31,7 @@ public class EmployeeRepository {
         List<Employee> employeeList = new ArrayList<>();
         while (rs.next()) {
             Employee employee = new Employee();
+            employee.setId(rs.getInt("employee_id"));
             employee.setUsername(rs.getString("username"));
             employee.setPassword(rs.getString("employee_password"));
             employee.setAccessLevel(rs.getString("access_level"));
@@ -79,6 +80,7 @@ public class EmployeeRepository {
 
     //edit an employee inside the db
     public void editEmployee(Employee employee, int id) {
+
 
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
