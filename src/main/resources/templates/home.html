@@ -18,12 +18,16 @@
         <th:block th:include="fragments/navbar :: navbar"></th:block>
     </div>
 
+
     <div class="jumbotron">
 
         <h1>Welcome to Bio Trio</h1>
         <i>Movies for our customer rubies</i>
 
     </div>
+    <div th:if="${param.logout}" class="alert alert-success">Successfully logged out!</div>
+    <div th:if="${param.unauthorized}" class="alert alert-warning">Unauthorized access</div>
+
 
     <ul>
         <li><b>Temporary links for testing</b></li>
@@ -31,8 +35,11 @@
         <li><a href="/movies">Movies link</a></li>
         <li><a href="/employees">Employees link</a></li>
         <li><a href="/theatres">Theatres link</a></li>
-        <li><a href="/logout">Logout link</a></li>
+        <li><a href="/logout" >Logout link</a></li>
     </ul>
+
+
+
 
 
 

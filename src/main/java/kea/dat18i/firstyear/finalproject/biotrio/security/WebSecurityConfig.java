@@ -60,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Have to make logout redirect to /login or /home with an and().logout().logoutSuccessUrl().
         http.authorizeRequests().and().formLogin()
                 .loginProcessingUrl("/login").loginPage("/login")
-                .defaultSuccessUrl("/").failureUrl("/login")
+                .defaultSuccessUrl("/").failureUrl("/login?error")
                 .usernameParameter("username").passwordParameter("password");
 
 
@@ -71,10 +71,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .usernameParameter("username").passwordParameter("password");
 
 
-        // Next to make work, dynamic customer authorities afterwards
+        // For logging user out of system and deleting and cookies that might
+        // keep the user further authenticated in the system
         http.authorizeRequests().and().logout().
                 deleteCookies("remove").logoutUrl("/logout").
-                logoutSuccessUrl("/login");
+                logoutSuccessUrl("/home?logout");
+
+
+        //Handling Access Denied Request
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/home?unauthorized");
 
 
     }

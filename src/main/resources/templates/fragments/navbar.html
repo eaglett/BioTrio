@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" th:fragment="navbar" xmlns:th="http://www.thymeleaf.org/"><head>
+<html lang="en" th:fragment="navbar" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
     <meta charset="UTF-8">
     <title>Title</title>
 
@@ -29,7 +31,7 @@
                 <a class="nav-link" href="/">Home </a>
             </li>
         </ul>
-        <span class="navbar-text active">
+        <span class="navbar-text active" >
             <a href="/login_check">Log in</a>
             </button>
 

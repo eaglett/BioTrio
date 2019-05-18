@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head>
     <meta charset="UTF-8">
@@ -22,6 +23,9 @@
 <div class="jumbotron" style="align-content: center">
 
     <form th:action="@{/login}" method="post">
+        <div th:if="${param.error}">
+            Invalid user input, please try again
+        </div>
         <div><label> Email/Username <input id="username" type="text" name="username"/> </label></div>
         <div><label> Password <input id="password" type="password" name="password"/> </label></div>
         <div><input type="submit" value="Sign In"/></div>
