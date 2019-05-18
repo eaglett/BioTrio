@@ -20,6 +20,12 @@ import java.util.Set;
 public class CustomAuth implements AuthenticationProvider {
 
 
+    // testing dynamic roles //
+    private String o;
+    private int i;
+
+
+
     // For getting an employee from our database by their username
     @Autowired
     EmployeeRepository employeeRepo;
@@ -27,9 +33,19 @@ public class CustomAuth implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
 
+
         // Get username and password from our login form
         String username = auth.getName();
         String password = auth.getCredentials().toString();
+
+
+        // Testing dynamic roles
+        if(!auth.getName().equals(null)) {
+            String o = username;
+        }
+        int i = 1;
+
+
 
         // Get an employee object from our database that matches the current user's username
         Employee employee = employeeRepo.findEmployeeByUsername(username);
@@ -62,7 +78,6 @@ public class CustomAuth implements AuthenticationProvider {
 
     }
 
-
     // Implementing AuthenticationProvider means we have to override this method.
     // Returning true indicates that the AuthenticationProvider will support a closer evaluation of
     // of authenticating the presented instance of the Authentication class.
@@ -72,4 +87,13 @@ public class CustomAuth implements AuthenticationProvider {
     }
 
 
+
+    // Testing dynamic roles
+    public String getO() {
+        return o;
+    }
+
+    public int getI() {
+        return i;
+    }
 }

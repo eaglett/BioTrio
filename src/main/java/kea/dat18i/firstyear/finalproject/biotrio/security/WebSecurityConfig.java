@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -21,6 +22,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
 
+        // Testing dynamic roles
+        System.out.println(customAuth.getI() + " AND " + customAuth.getO());
+
+
         // Spring Security Cross-Site Request Forgery disabled.
         // Have to check if it will mess anything up if enabled
         http.csrf().disable();
@@ -31,22 +36,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Grant access for specified URLs to all users
         http.authorizeRequests().antMatchers(
                 "/", "/home", "/movies", "/movies/showings/**",
-                "/create_account", "/login", "/logout")
+                "/movies/showings/reserve/**", "/create_account", "/login", "/logout")
                 .permitAll();
 
         // Grant CRUD operation access for movies and showings
         // to all employees with BASIC and ADMIN level authority
         http.authorizeRequests().antMatchers(
-                "/movies/**", "/movies/**/**"
-        ).hasAnyAuthority("ADMIN", "BASIC");
+                "/movies/**", "/movies/**/**")
+                .hasAnyAuthority("ADMIN", "BASIC");
 
 
         // Grant CRUD operation access for theatres and employees
         // to all employees with ADMIN level authority
         http.authorizeRequests().antMatchers(
                 "/theatres", "/theatres/**", "/theatres/**/**",
-                          "/employees", "/employees/**", "/employees/**/**"
-        ).hasAuthority("ADMIN");
+                          "/employees", "/employees/**", "/employees/**/**")
+                .hasAuthority("ADMIN");
 
 
         // Login and logout configuration
@@ -67,11 +72,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         // Next to make work, dynamic customer authorities afterwards
-        /*
         http.authorizeRequests().and().logout().
                 deleteCookies("remove").logoutUrl("/logout").
-                logoutSuccessUrl("/logout_success");
-        */
+                logoutSuccessUrl("/login");
+
 
     }
 
