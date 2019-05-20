@@ -25,7 +25,7 @@ public class CustomerRepository {
         // to set each field's data to the passed Customer object's data
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
-                    "INSERT INTO theater VALUES (null, ?, ?, ?, ?, ?)", new String[]{"customer_id"});
+                    "INSERT INTO customer VALUES (null, ?, ?, ?, ?, ?)", new String[]{"customer_id"});
 
             // first parameter is the column number. The column numbers are indexed.
             ps.setString(1, customer.getFirstName());
@@ -50,7 +50,7 @@ public class CustomerRepository {
     // Finds a specific customer in customer table from database biotrio by customer.getId()
     // Can also replace customer.getId() by putting an "int id" parameter instead of
     // "Customer customer" in the method parameters
-    public Customer findCustomer(Customer customer){
+    public Customer findCustomer(Customer customer) {
         // Create query for sql and parse an object into class
         SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM customer WHERE customer_id = " + customer.getId());
 
@@ -67,7 +67,28 @@ public class CustomerRepository {
         }
 
         return customer1;
+
     }
+
+        // For Spring Security authentication validation
+        // we need to find an customer by their email
+        public Customer findCustomerByEmail(String email) {
+            SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM customer WHERE email = '" + email + "';" );
+
+            // Create an employee object of null value which will be
+            // returned if no customer with specified email exists
+            Customer customer = null;
+
+            // Our CustomAuth (AuthenticationProvider) only needs email and password for authenticating customers
+            if(rs.first()) {
+                customer = new Customer();
+                customer.setId(rs.getInt("customer_id"));
+                customer.setEmail(rs.getString("email"));
+                customer.setPassword(rs.getString("customer_password"));
+            }
+
+            return customer;
+        }
 
 
 }

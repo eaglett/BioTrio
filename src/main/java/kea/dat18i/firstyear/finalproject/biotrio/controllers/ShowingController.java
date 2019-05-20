@@ -61,7 +61,7 @@ public class ShowingController {
         return "/showing/reserve-ticket"; //add "you've reserved a ticket" page
     }
 
-    @GetMapping(value = "/movies/showings/add_showing")
+    @GetMapping(value = "/movies/add_showing")
     public String addShowing(Model model) {
         model.addAttribute("movies", movieRepo.findAllMovies());
         model.addAttribute("theatres", theatreRepo.findAllTheatres());
@@ -70,7 +70,7 @@ public class ShowingController {
         return "/showing/add-showing";
     }
 
-    @PostMapping(value = "/movies/showings/add_showing")
+    @PostMapping(value = "/movies/add_showing")
     public String handleAddShowing(@ModelAttribute Showing showing) {
         //showingRepo.insertShowing(showing);
         System.out.println(showing.toString());

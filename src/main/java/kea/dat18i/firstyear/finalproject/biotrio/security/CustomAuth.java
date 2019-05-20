@@ -1,8 +1,11 @@
 package kea.dat18i.firstyear.finalproject.biotrio.security;
 
 
+import kea.dat18i.firstyear.finalproject.biotrio.entities.Customer;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Employee;
+import kea.dat18i.firstyear.finalproject.biotrio.repositories.CustomerRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.EmployeeRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -20,46 +23,48 @@ import java.util.Set;
 public class CustomAuth implements AuthenticationProvider {
 
 
-    // testing dynamic roles //
-    private String o;
-    private int i;
-
-
 
     // For getting an employee from our database by their username
     @Autowired
     EmployeeRepository employeeRepo;
 
+    @Autowired
+    CustomerRepository customerRepo;
+
     @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
 
+        Logger logger = new Logger();
 
         // Get username and password from our login form
         String username = auth.getName();
         String password = auth.getCredentials().toString();
 
-
-        // Testing dynamic roles
-        if(!auth.getName().equals(null)) {
-            String o = username;
-        }
-        int i = 1;
-
-
-
         // Get an employee object from our database that matches the current user's username
         Employee employee = employeeRepo.findEmployeeByUsername(username);
 
+        // Get a customer object from our database that matches the current user's username
+        Customer customer = customerRepo.findCustomerByEmail(username);
 
-        // Have to add user verification for customers as well - will be similar
-
-        // Check if employee/user exists
-        if(employee == null) {
-            throw new BadCredentialsException("Username not found");
+        if(employee != null) {
+            logger.setLogger_id(employee.getId());
+            logger.setUsername(employee.getUsername());
+            logger.setPassword(employee.getPassword());
+            logger.setPhonenumber(null);
+            logger.setAccessLevel(employee.getAccessLevel());
+        } else if (customer != null) {
+            logger.setLogger_id(customer.getId());
+            logger.setUsername(customer.getEmail());
+            logger.setPassword(customer.getPassword());
+            logger.setPhonenumber(customer.getPhoneNumber());
+            logger.setAccessLevel("CUSTOMER");
+        } else {
+            logger = null;
+            throw new BadCredentialsException("Invalid username");
         }
 
-        // Check if password from login form matches password in our database
-        if(!password.equals(employee.getPassword())) {
+        // Check if user exists
+        if(!password.equals(logger.getPassword())) {
             throw new BadCredentialsException("Invalid password");
         }
 
@@ -67,14 +72,15 @@ public class CustomAuth implements AuthenticationProvider {
         // Create new HashSet that holds SimpleGrantedAuthority objects; authoritative roles.
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
         // Create new authoritative role based on the currently logging in user's access_level and add to authorities
-        authorities.add(new SimpleGrantedAuthority(employee.getAccessLevel().toUpperCase()));
+        authorities.add(new SimpleGrantedAuthority(logger.getAccessLevel().toUpperCase()));
+
+
 
         /* Have to come up with something to add any customer role by name for checking their own account */
 
 
         // return the currently logging in user for authentication processing
         return new UsernamePasswordAuthenticationToken(username, password, authorities);
-
 
     }
 
@@ -88,12 +94,4 @@ public class CustomAuth implements AuthenticationProvider {
 
 
 
-    // Testing dynamic roles
-    public String getO() {
-        return o;
-    }
-
-    public int getI() {
-        return i;
-    }
 }

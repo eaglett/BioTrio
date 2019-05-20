@@ -22,9 +22,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
 
-        // Testing dynamic roles
-        System.out.println(customAuth.getI() + " AND " + customAuth.getO());
-
 
         // Spring Security Cross-Site Request Forgery disabled.
         // Have to check if it will mess anything up if enabled
@@ -54,6 +51,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAuthority("ADMIN");
 
 
+//        // Works; need to create an html file for editing the customer account
+//        http.authorizeRequests().antMatchers(
+//                "/edit_account")
+//                .hasAuthority("CUSTOMER");
+
+
         // Login and logout configuration
         // username and password parameters must match the username and password parameter in the
         // login form in our login html file(s).
@@ -75,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // keep the user further authenticated in the system
         http.authorizeRequests().and().logout().
                 deleteCookies("remove").logoutUrl("/logout").
-                logoutSuccessUrl("/home?logout");
+                logoutSuccessUrl("/?logout");
 
 
         //Handling Access Denied Request
