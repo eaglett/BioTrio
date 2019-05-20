@@ -69,7 +69,7 @@ public class TheatreRepository {
 
 
     // Inserting data into table theater by using a PreparedStatement
-    public Theatre insertTheatre(Theatre theatre) throws NullPointerException{
+    public Theatre insertTheatre(Theatre theatre) throws NullPointerException {
 
 
         // trying with lambda expression

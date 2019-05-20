@@ -83,8 +83,11 @@ public class CustomerRepository {
             if(rs.first()) {
                 customer = new Customer();
                 customer.setId(rs.getInt("customer_id"));
-                customer.setEmail(rs.getString("email"));
+                customer.setFirstName(rs.getString("first_name"));
+                customer.setLastName(rs.getString("last_name"));
                 customer.setPassword(rs.getString("customer_password"));
+                customer.setEmail(rs.getString("email"));
+                customer.setPhoneNumber(rs.getString("phone_nb"));
             }
 
             return customer;

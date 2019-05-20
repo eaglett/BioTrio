@@ -31,10 +31,12 @@ public class CustomAuth implements AuthenticationProvider {
     @Autowired
     CustomerRepository customerRepo;
 
+    private Principal principal = new Principal();
+
     @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
 
-        Logger logger = new Logger();
+
 
         // Get username and password from our login form
         String username = auth.getName();
@@ -46,37 +48,38 @@ public class CustomAuth implements AuthenticationProvider {
         // Get a customer object from our database that matches the current user's username
         Customer customer = customerRepo.findCustomerByEmail(username);
 
+        // Check if user is recognized as either an employee or customer
+        // in our database and store information into our Logger.
         if(employee != null) {
-            logger.setLogger_id(employee.getId());
-            logger.setUsername(employee.getUsername());
-            logger.setPassword(employee.getPassword());
-            logger.setPhonenumber(null);
-            logger.setAccessLevel(employee.getAccessLevel());
+            principal.setPrincipal_id(employee.getId());
+            principal.setUsername(employee.getUsername());
+            principal.setPassword(employee.getPassword());
+            principal.setPhonenumber(null);
+            principal.setAccessLevel(employee.getAccessLevel());
         } else if (customer != null) {
-            logger.setLogger_id(customer.getId());
-            logger.setUsername(customer.getEmail());
-            logger.setPassword(customer.getPassword());
-            logger.setPhonenumber(customer.getPhoneNumber());
-            logger.setAccessLevel("CUSTOMER");
+            principal.setPrincipal_id(customer.getId());
+            principal.setUsername(customer.getEmail());
+            principal.setPassword(customer.getPassword());
+            principal.setPhonenumber(customer.getPhoneNumber());
+            principal.setAccessLevel("CUSTOMER");
+
         } else {
-            logger = null;
+            principal.clearAttributes();
             throw new BadCredentialsException("Invalid username");
         }
 
-        // Check if user exists
-        if(!password.equals(logger.getPassword())) {
+        // Check if user password matches password of
+        // corresponding user in the database
+        if(!password.equals(principal.getPassword())) {
+            principal.clearAttributes();
             throw new BadCredentialsException("Invalid password");
         }
 
 
         // Create new HashSet that holds SimpleGrantedAuthority objects; authoritative roles.
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-        // Create new authoritative role based on the currently logging in user's access_level and add to authorities
-        authorities.add(new SimpleGrantedAuthority(logger.getAccessLevel().toUpperCase()));
-
-
-
-        /* Have to come up with something to add any customer role by name for checking their own account */
+        // Create new authoritative role based on the currently logging in user's access level and add to authorities
+        authorities.add(new SimpleGrantedAuthority(principal.getAccessLevel().toUpperCase()));
 
 
         // return the currently logging in user for authentication processing

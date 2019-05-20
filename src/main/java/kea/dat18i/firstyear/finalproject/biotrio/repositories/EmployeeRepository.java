@@ -109,6 +109,7 @@ public class EmployeeRepository {
         // to be able to authenticate a user
         if(rs.first()) {
             employee = new Employee();
+            employee.setId(rs.getInt("employee_id"));
             employee.setUsername(rs.getString("username"));
             employee.setPassword(rs.getString("employee_password"));
             employee.setAccessLevel(rs.getString("access_level"));
