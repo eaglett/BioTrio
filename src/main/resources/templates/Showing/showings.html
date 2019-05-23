@@ -27,14 +27,16 @@
                 <th class="col">Movie</th>
                 <th class="col">Showing</th>
                 <th class="col">Theatre</th>
-                <th class="col">Playing Date and Time</th>
+                <th class="col">Date and Time</th>
+                <th class="col">Playing Time</th>
             </tr>
         </thead>
         <tr th:each="showing, iter : ${showingsList}" th:object="${movie}">
             <td th:text="${movie.movie_name}" ></td>
             <td th:text="${showing.showing_id}"></td>
             <td th:text="${showing.theatre_id}"></td>
-            <td th:text="${showing.start_date_time}"></td>
+            <td th:text="${showing.date}"></td>
+            <td th:text="${showing.time}"></td>
             <td><a th:href="@{'/movies/showings/reserve/' + ${movie.movie_id}}" class="btn btn-info">reserve</a></td>
             <td><a th:href="@{'/movies/showings/edit/' + ${iter.index}}" class="btn btn-info fas fa-pen"></a></td>
             <td><a th:href="@{'/movies/showings/delete/' + ${iter.index}}" class="btn btn-danger fas fa-trash"></a></td>

@@ -2,6 +2,7 @@ package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 
 
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Showing;
+import kea.dat18i.firstyear.finalproject.biotrio.entities.ShowingFormObject;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Ticket;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.TicketReservationForm;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.MovieRepository;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +43,11 @@ public class ShowingController {
 
     @Autowired
     TicketRepository ticketRepo;
+
+
+    // Formatters for LocalDate and LocalTime
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
 
 
@@ -84,31 +93,74 @@ public class ShowingController {
     public String addShowing(Model model) {
         model.addAttribute("movies", movieRepo.findAllMovies());
         model.addAttribute("theatres", theatreRepo.findAllTheatres());
-        model.addAttribute("newShowing", new Showing());
+        model.addAttribute("newShowing", new ShowingFormObject());
 
         return "/showing/add-showing";
     }
 
     @PostMapping(value = "/movies/add_showing")
-    public String handleAddShowing(@ModelAttribute Showing showing) {
-        //showingRepo.insertShowing(showing);
-        System.out.println(showing.toString());
+    public String handleAddShowing(@ModelAttribute ShowingFormObject showingFormObject) {
+
+        Showing showing = new Showing();
+        try {
+            // Setting values of a Showing to the values passed in the form of the view
+            showing.setTheatre_id(showingFormObject.getTheatre_id());
+            showing.setMovie_id((showingFormObject.getMovie_id()));
+            showing.setDate(LocalDate.parse(showingFormObject.getStart_date(), dateFormatter));
+            showing.setTime(LocalTime.parse(showingFormObject.getStart_time(), timeFormatter));
+            System.out.println(showing.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/movies/add_showing?error";
+        }
+        showingRepo.insertShowing(showing);
 
         return "redirect:/movies";
     }
 
     @GetMapping(value = "/movies/showings/edit/{index}")
     public String editShowing(@PathVariable int index, Model model) {
-        model.addAttribute("editShowing", showingList.get(index));
 
 
-        return "redirect:/movies";
+        Showing showing = showingList.get(index);
+        ShowingFormObject showingFormObject = new ShowingFormObject();
+        System.out.println(showing.toString() + "  a showing for editing");
+        try {
+            showingFormObject.setMovie_id(showing.getMovie_id());
+            showingFormObject.setTheatre_id(showing.getTheatre_id());
+            showingFormObject.setStart_date(showing.getDate().toString());
+            showingFormObject.setStart_time(showing.getTime().toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Editing showing -> " + showingFormObject.toString());
+
+        model.addAttribute("movies", movieRepo.findAllMovies());
+        model.addAttribute("theatres", theatreRepo.findAllTheatres());
+        model.addAttribute("editShowing", showingFormObject);
+
+
+        return "/showing/edit-showing";
     }
 
     @PostMapping(value = "/movies/showings/edit/{index}")
-    public String handleEditShowing(@PathVariable int index, @ModelAttribute Showing showing) {
-        showingRepo.updateShowing(showing);
+    public String handleEditShowing(@PathVariable int index, @ModelAttribute ShowingFormObject showingFormObject) {
 
+        Showing showing = showingList.get(index);
+        try {
+            // Setting values of a Showing to the values passed in the form of the view
+            showing.setTheatre_id(showingFormObject.getTheatre_id());
+            showing.setMovie_id((showingFormObject.getMovie_id()));
+            showing.setDate(LocalDate.parse(showingFormObject.getStart_date(), dateFormatter));
+            showing.setTime(LocalTime.parse(showingFormObject.getStart_time(), timeFormatter));
+            System.out.println("EDITING ERROR -> " + showing.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/movies?error";
+        }
+        System.out.println("Edited showing -> " + showing.toString());
+
+        showingRepo.updateShowing(showing);
 
         return "redirect:/movies";
     }
