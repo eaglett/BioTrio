@@ -59,4 +59,8 @@ public class Ticket {
     public void setSeat_nb(int seat_nb) {
         this.seat_nb = seat_nb;
     }
+
+    public String toString(){
+        return "row: " + this.seat_row + " seat: " + this.seat_nb;
+    }
 }

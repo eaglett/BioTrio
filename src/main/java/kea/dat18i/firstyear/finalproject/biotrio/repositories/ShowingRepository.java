@@ -4,6 +4,7 @@ import kea.dat18i.firstyear.finalproject.biotrio.entities.Showing;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Theatre;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -25,6 +26,14 @@ public class ShowingRepository {
     private JdbcTemplate jdbc;
     @Autowired
     private TheatreRepository theatreRepo;
+    // Lazy initialization to create Bean when called and not on build time
+
+    private TicketRepository ticketRepo;
+
+    @Autowired
+    public ShowingRepository(@Lazy TicketRepository ticketRepo) {
+        this.ticketRepo = ticketRepo;
+    }
 
 
 
@@ -86,7 +95,7 @@ public class ShowingRepository {
         ArrayList<ArrayList<String>> seatsMatrix = new ArrayList<ArrayList<String>>();
         Theatre theatre = theatreRepo.findTheatreByShowingId(showing_id);
 
-        List<Ticket> tickets = findTickets(showing_id);
+        List<Ticket> tickets = ticketRepo.findTickets(showing_id);
 
         //inicialization of all seats to available
         for(int i=0; i<  theatre.getRows(); i++){
@@ -105,22 +114,7 @@ public class ShowingRepository {
         return seatsMatrix;
     }
 
-    public List<Ticket> findTickets(int showing_id){
-        List<Ticket> tickets = new ArrayList<>();
-        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM ticket WHERE showing_id=" + showing_id);
-        // Iterate over every row in our ticket table by using a while loop
-        // and checking if next row exists
-        while(rs.next()) {
-            Ticket ticket = new Ticket();
-            ticket.setTicket_id(rs.getInt("ticket_id"));
-            ticket.setCustomer_id(rs.getInt("customer_id"));
-            ticket.setShowing_id(rs.getInt("showing_id"));
-            ticket.setSeat_row(rs.getInt("seat_row"));
-            ticket.setSeat_nb(rs.getInt("seat_nb"));
-            tickets.add(ticket);
-        }
-        return tickets;
-    }
+
 
     // have to turn LocalDateTime into a TIMESTAMP as well as in database
     public void insertShowing(Showing showing) throws NullPointerException {

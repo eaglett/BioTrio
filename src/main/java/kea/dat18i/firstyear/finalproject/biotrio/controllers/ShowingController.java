@@ -2,9 +2,12 @@ package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 
 
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Showing;
+import kea.dat18i.firstyear.finalproject.biotrio.entities.Ticket;
+import kea.dat18i.firstyear.finalproject.biotrio.entities.TicketReservationForm;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.MovieRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.ShowingRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.TheatreRepository;
+import kea.dat18i.firstyear.finalproject.biotrio.repositories.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -34,6 +37,9 @@ public class ShowingController {
     @Autowired
     TheatreRepository theatreRepo;
 
+    @Autowired
+    TicketRepository ticketRepo;
+
 
 
 
@@ -58,8 +64,21 @@ public class ShowingController {
         model.addAttribute("theater", theatreRepo.findTheatreByShowingId(showingId));
         model.addAttribute("seatMatrix", showingRepo.findSeats(showingId));
         model.addAttribute("showing", showingRepo.findShowingById(showingId));
+        model.addAttribute("tickets", new TicketReservationForm());
         return "/showing/reserve-ticket"; //add "you've reserved a ticket" page
     }
+
+
+    @PostMapping(value = "/movies/showings/reserve/{showingId}")
+    public String handleReserve(@ModelAttribute TicketReservationForm tickets, @PathVariable int showingId) {
+
+        System.out.print(tickets.getTicket1().toString());
+        System.out.print(tickets.getTicket2().toString());
+        System.out.print(tickets.getTicket3().toString());
+        System.out.print(tickets.getTicket4().toString());
+        return "redirect:/movies"; //add "you've reserved a ticket" page
+    }
+
 
     @GetMapping(value = "/movies/add_showing")
     public String addShowing(Model model) {
