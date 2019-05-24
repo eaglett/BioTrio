@@ -1,8 +1,6 @@
 package kea.dat18i.firstyear.finalproject.biotrio.repositories;
 
-import kea.dat18i.firstyear.finalproject.biotrio.entities.Showing;
-import kea.dat18i.firstyear.finalproject.biotrio.entities.Theatre;
-import kea.dat18i.firstyear.finalproject.biotrio.entities.Ticket;
+import kea.dat18i.firstyear.finalproject.biotrio.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -46,54 +44,48 @@ public class ShowingRepository {
 
     // Finds and stores all data from our showing table from our MySQL database
     // into an ArrayList of Showing objects to pass to our ShowingController
-    public List<Showing> findAllShowings() {
+    public List<Showing> findAllShowings(int id) {
         List<Showing> showings = new ArrayList<>();
-        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM showing");
+        SqlRowSet rs = jdbc.queryForRowSet("SELECT "
+                + "showing.showing_id, m.movie_id, t.theater_id, showing.start_date_time FROM showing "
+                + "INNER JOIN theater t ON showing.theater_id = t.theater_id "
+                + "INNER JOIN movie m ON showing.movie_id = m.movie_id "
+                + "WHERE m.movie_id = " + id);
 
-        return iterateOverShowings(rs, showings);
-
-    }
-
-    public List<Showing> findShowingsByTheatreId(Theatre theatre) {
-        List<Showing> showings = new ArrayList<>();
-        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM showing WHERE theater_id = " + theatre.getTheatre_id());
-
-        return iterateOverShowings(rs, showings);
-
-    }
-
-    private List<Showing> iterateOverShowings(SqlRowSet rs, List<Showing> showings) {
         // Iterate over every row in our showing table by using a while loop
         // and checking if next row exists
         while(rs.next()) {
-            // Create new Showing object every iteration while next
-            // row exists and store data from our showing table per row
-            // into the object which we add into our showings ArrayList
-            Showing showing = new Showing();
-            showing.setShowing_id(rs.getInt("showing_Id"));
-            showing.setMovie_id(rs.getInt("movie_id"));
-            showing.setTheatre_id(rs.getInt("theater_id"));
-            String dateTime = (rs.getTimestamp("start_date_time").toString());
-            showing.setDate(LocalDate.parse(dateTime.substring(0,10), dateFormatter));
-            showing.setTime(LocalTime.parse(dateTime.substring(11,16), timeFormatter));
-            showings.add(showing);
-        }
+            showings.add(iterateOverShowings(rs));
 
+        }
         return showings;
+
+    }
+
+    private Showing iterateOverShowings(SqlRowSet rs) {
+
+        // Create new Showing object every iteration while next
+        // row exists and store data from our showing table per row
+        // into the object which we add into our showings ArrayList
+        Showing showing = new Showing();
+
+        showing.setShowing_id(rs.getInt("showing_Id"));
+        showing.setMovie_id(rs.getInt("movie_id"));
+        showing.setTheatre_id(rs.getInt("theater_id"));
+        String dateTime = (rs.getTimestamp("start_date_time").toString());
+        showing.setDate(LocalDate.parse(dateTime.substring(0,10), dateFormatter));
+        showing.setTime(LocalTime.parse(dateTime.substring(11,16), timeFormatter));
+
+        return showing;
     }
 
     public Showing findShowingById(int id) {
 
-        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM showing WHERE showing_id=" + id);
+        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM showing WHERE showing_id = " + id);
 
         Showing showing = new Showing();
         while(rs.next()) {
-            showing.setShowing_id(rs.getInt("showing_Id"));
-            showing.setMovie_id(rs.getInt("movie_id"));
-            showing.setTheatre_id(rs.getInt("theater_id"));
-            String dateTime = (rs.getTimestamp("start_date_time").toString());
-            showing.setDate(LocalDate.parse(dateTime.substring(0,10), dateFormatter));
-            showing.setTime(LocalTime.parse(dateTime.substring(11,16), timeFormatter));
+            showing = iterateOverShowings(rs);
 
         }
 
@@ -183,6 +175,30 @@ public class ShowingRepository {
 
         jdbc.update(psc);
 
+    }
+
+
+    // Find all showings by movie_name and properly display using our ShowingDisplayForm objects in our view
+    public ArrayList<ShowingDisplayForm> findShowingsByMovieId(int id) {
+        ArrayList<ShowingDisplayForm> showings = new ArrayList<>();
+        SqlRowSet rs = jdbc.queryForRowSet("SELECT "
+                + "showing.showing_id, m.movie_name, t.theater_name, duration, showing.start_date_time FROM showing "
+                + "INNER JOIN theater t ON showing.theater_id = t.theater_id "
+                + "INNER JOIN movie m ON showing.movie_id = m.movie_id "
+                + "WHERE m.movie_id = " + id);
+
+        while(rs.next()) {
+            ShowingDisplayForm showing = new ShowingDisplayForm();
+            showing.setShowing_id(rs.getInt("showing_Id"));
+            showing.setMovie_name(rs.getString("movie_name"));
+            showing.setTheatre_name(rs.getString("theater_name"));
+            showing.setDuration(rs.getInt("duration"));
+            String dateTime = (rs.getTimestamp("start_date_time").toString());
+            showing.setDate(LocalDate.parse(dateTime.substring(0,10), dateFormatter));
+            showing.setTime(LocalTime.parse(dateTime.substring(11,16), timeFormatter));
+            showings.add(showing);
+        }
+        return showings;
     }
 
 

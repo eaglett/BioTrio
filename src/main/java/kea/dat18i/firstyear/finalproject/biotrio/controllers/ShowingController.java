@@ -1,10 +1,6 @@
 package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 
-
-import kea.dat18i.firstyear.finalproject.biotrio.entities.Showing;
-import kea.dat18i.firstyear.finalproject.biotrio.entities.ShowingFormObject;
-import kea.dat18i.firstyear.finalproject.biotrio.entities.Ticket;
-import kea.dat18i.firstyear.finalproject.biotrio.entities.TicketReservationForm;
+import kea.dat18i.firstyear.finalproject.biotrio.entities.*;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.MovieRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.ShowingRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.TheatreRepository;
@@ -50,15 +46,18 @@ public class ShowingController {
     private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
     private List<Showing> showingList = new ArrayList<>();
+    private List<ShowingDisplayForm> showingDisplayForms = new ArrayList<>();
 
     // View for showings of one particular showing
     @GetMapping(value = "/movies/showings/{movieId}")
     public String showings(Model model, @PathVariable int movieId) {
 
-        showingList = getShowingsById(showingRepo.findAllShowings(), movieId);
-        model.addAttribute("showingsList", showingList);
-        model.addAttribute("movie", movieRepo.findMovie(movieId));
 
+        showingDisplayForms = showingRepo.findShowingsByMovieId(movieId);
+        showingList = showingRepo.findAllShowings(movieId);
+
+        model.addAttribute("showingsList", showingDisplayForms);
+        model.addAttribute("movie", movieRepo.findMovie(movieId));
         return "/showing/showings";
 
     }
@@ -108,7 +107,6 @@ public class ShowingController {
             showing.setMovie_id((showingFormObject.getMovie_id()));
             showing.setDate(LocalDate.parse(showingFormObject.getStart_date(), dateFormatter));
             showing.setTime(LocalTime.parse(showingFormObject.getStart_time(), timeFormatter));
-            System.out.println(showing.toString());
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/movies/add_showing?error";
@@ -124,7 +122,6 @@ public class ShowingController {
 
         Showing showing = showingList.get(index);
         ShowingFormObject showingFormObject = new ShowingFormObject();
-        System.out.println(showing.toString() + "  a showing for editing");
         try {
             showingFormObject.setMovie_id(showing.getMovie_id());
             showingFormObject.setTheatre_id(showing.getTheatre_id());
@@ -133,12 +130,10 @@ public class ShowingController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Editing showing -> " + showingFormObject.toString());
 
         model.addAttribute("movies", movieRepo.findAllMovies());
         model.addAttribute("theatres", theatreRepo.findAllTheatres());
         model.addAttribute("editShowing", showingFormObject);
-
 
         return "/showing/edit-showing";
     }
@@ -153,14 +148,16 @@ public class ShowingController {
             showing.setMovie_id((showingFormObject.getMovie_id()));
             showing.setDate(LocalDate.parse(showingFormObject.getStart_date(), dateFormatter));
             showing.setTime(LocalTime.parse(showingFormObject.getStart_time(), timeFormatter));
-            System.out.println("EDITING ERROR -> " + showing.toString());
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/movies?error";
         }
-        System.out.println("Edited showing -> " + showing.toString());
 
-        showingRepo.updateShowing(showing);
+        try {
+            showingRepo.updateShowing(showing);
+        } catch (Exception e) {
+            return "redirect:/movies?error";
+        }
 
         return "redirect:/movies";
     }
@@ -168,27 +165,13 @@ public class ShowingController {
 
     @GetMapping(value = "/movies/showings/delete/{index}")
     public String deleteShowing(@PathVariable int index) {
-        showingRepo.deleteShowing(showingList.get(index));
+        try {
+            showingRepo.deleteShowing(showingList.get(index));
+        } catch (Exception e) {
+            return "redirect:/movies?error";
+        }
 
         return "redirect:/movies";
-    }
-
-
-
-
-
-    // Might be able to replace with an INNER JOIN
-    // Finds all showings with the same movie_id that is passed in the method parameter
-    // and stores them into a new ArrayList to display in our showings() view
-    private List<Showing> getShowingsById(List<Showing> showingsList, int movieId) {
-        List<Showing> showings = new ArrayList<>();
-
-        for(Showing showing : showingsList) {
-            if(movieRepo.findMovie(showing.getMovie_id()).getMovie_id() == movieId) {
-                showings.add(showing);
-            }
-        }
-        return showings;
     }
 
 

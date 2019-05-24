@@ -41,7 +41,7 @@
             </td>
             <td style="padding: 20px;">
                     <h2 th:text=${movie.movie_name}></h2>
-                    <span th:text="${'Starting at:' + showing.start_date_time}"></span><br/>
+                    <span th:text="${'Starting at: ' + #temporals.format(showing.date, 'dd-MM-yyyy') + ' ' + showing.time}"></span><br/>
                     <span th:text="${'Duration: ' + movie.duration + ' minutes'}"></span><br/>
                     <span th:text="${'Year of Production: ' + movie.year_of_production}"></span><br/>
 
