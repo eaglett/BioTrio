@@ -106,44 +106,26 @@ public class MovieRepository {
 
     // Deleting a movie inside the MySQL database with JDBCtemplate.update(String query)
     public void deleteMovie(Movie movie) {
-        deleteShowingsByMovie(movie);
         String query = "DELETE FROM movie WHERE movie_id = " + movie.getMovie_id();
         jdbc.update(query);
     }
 
-    private void deleteShowingsByMovie(Movie movie) {
-        String query = "DELETE FROM showing WHERE movie_id = " + movie.getMovie_id();
-        jdbc.update(query);
-    }
 
+    public void editMovie(Movie movie) {
 
-    public void editMovie(Movie movie, int id) {
+        PreparedStatementCreator psc = Connection -> {
+            PreparedStatement ps = Connection.prepareStatement(
+                    "UPDATE movie SET movie_name = ?, duration = ?, year_of_production = ? WHERE movie_id = ?");
+            ps.setString(1, movie.getMovie_name());
+            ps.setInt(2, movie.getYear_of_production());
+            ps.setInt(3, movie.getDuration());
+            ps.setInt(4, movie.getMovie_id());
 
-//        PreparedStatementCreator psc = Connection -> {
-//            PreparedStatement ps = Connection.prepareStatement(
-//                    "UPDATE movie SET movie_name = ?, year_of_production = ?, duration = ? WHERE movie_id = "
-//                            + id);
-//            ps.setString(1, movie.getMovie_name());
-//            ps.setInt(2, movie.getYear_of_production());
-//            ps.setInt(3, movie.getDuration());
-//
-//            return ps;
-//        };
-//
-//        jdbc.update(psc);
+            return ps;
+        };
 
+        jdbc.update(psc);
 
-        // working MySQL UPDATE query
-        String query = String.format(("UPDATE movie "
-                        + "SET movie_name = '%s', "
-                        + "year_of_production = %s, "
-                        + "duration = %s "
-                        + "WHERE movie_id = %s"),
-                            movie.getMovie_name(),
-                            movie.getYear_of_production(),
-                            movie.getDuration(),
-                            id);
-        jdbc.update(query);
     }
 
 

@@ -155,23 +155,10 @@ public class ShowingRepository {
 
     // Deleting a movie inside the MySQL database with JDBCTemplate.update(String query)
     public void deleteShowing(Showing showing) {
-        deleteTicketsByShowing(showing);
 
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
                     "DELETE FROM showing WHERE showing_id = ?");
-            ps.setInt(1, showing.getShowing_id());
-
-            return ps;
-        };
-
-        jdbc.update(psc);
-    }
-
-    private void deleteTicketsByShowing(Showing showing) {
-        PreparedStatementCreator psc = Connection -> {
-            PreparedStatement ps = Connection.prepareStatement(
-                    "DELETE FROM ticket WHERE showing_id = ?");
             ps.setInt(1, showing.getShowing_id());
 
             return ps;

@@ -79,15 +79,16 @@ public class EmployeeRepository {
     }
 
     //edit an employee inside the db
-    public void editEmployee(Employee employee, int id) {
+    public void editEmployee(Employee employee) {
 
 
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
-                    "UPDATE employee SET username = ?, employee_password = ?, access_level = ? WHERE employee_id = " + id);
+                    "UPDATE employee SET username = ?, employee_password = ?, access_level = ? WHERE employee_id = ?");
             ps.setString(1, employee.getUsername());
             ps.setString(2, employee.getPassword());
             ps.setString(3, employee.getAccessLevel());
+            ps.setInt(4, employee.getId());
 
             return ps;
         };

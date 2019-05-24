@@ -1,3 +1,5 @@
+DROP DATABASE BioTrio;
+
 CREATE DATABASE IF NOT EXISTS BioTrio;
 USE BioTrio;
 
@@ -34,18 +36,18 @@ CREATE TABLE IF NOT EXISTS movie(
 CREATE TABLE IF NOT EXISTS showing(
 	showing_id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     movie_id INT(10) NOT NULL,
-    FOREIGN KEY (movie_id) REFERENCES movie(movie_id),
+    FOREIGN KEY (movie_id) REFERENCES movie(movie_id) ON DELETE CASCADE,
     theater_id INT(10) NOT NULL,
-    FOREIGN KEY (theater_id) REFERENCES theater(theater_id),
+    FOREIGN KEY (theater_id) REFERENCES theater(theater_id) ON DELETE CASCADE,
     start_date_time DATETIME NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS ticket(
 	ticket_id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     showing_id INT(10) NOT NULL,
-    FOREIGN KEY (showing_id) REFERENCES showing(showing_id),
+    FOREIGN KEY (showing_id) REFERENCES showing(showing_id) ON DELETE CASCADE,
     customer_id INT(10) NOT NULL,
-    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE,
     seat_row INT(2) NOT NULL,
     seat_nb INT(2) NOT NULL
 );
