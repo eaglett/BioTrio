@@ -41,8 +41,6 @@ public class ShowingController {
     TicketRepository ticketRepo;
 
 
-
-
     private List<Showing> showingList = new ArrayList<>();
 
     // View for showings of one particular showing
@@ -64,6 +62,8 @@ public class ShowingController {
         model.addAttribute("theater", theatreRepo.findTheatreByShowingId(showingId));
         model.addAttribute("seatMatrix", showingRepo.findSeats(showingId));
         model.addAttribute("showing", showingRepo.findShowingById(showingId));
+        //we decided to create an TicketReservaationForm object that contains 4 ticket objects instead of an array because
+        //thymeleaf was creating some problems when we wanted to modify the objects inside the array
         model.addAttribute("tickets", new TicketReservationForm());
         return "/showing/reserve-ticket"; //add "you've reserved a ticket" page
     }
@@ -72,6 +72,7 @@ public class ShowingController {
     @PostMapping(value = "/movies/showings/reserve/{showingId}")
     public String handleReserve(@ModelAttribute TicketReservationForm tickets, @PathVariable int showingId) {
 
+        ticketRepo.insertTickets(tickets, showingId);
         System.out.print(tickets.getTicket1().toString());
         System.out.print(tickets.getTicket2().toString());
         System.out.print(tickets.getTicket3().toString());
