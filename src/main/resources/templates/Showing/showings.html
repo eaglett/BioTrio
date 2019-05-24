@@ -35,7 +35,7 @@
             <td th:text="${movie.movie_name}" ></td>
             <td th:text="${showing.showing_id}"></td>
             <td th:text="${showing.theatre_id}"></td>
-            <td th:text="${showing.date}"></td>
+            <td th:text="${#temporals.format(showing.date, 'MM-yyyy')}"></td>
             <td th:text="${showing.time}"></td>
             <td><a th:href="@{'/movies/showings/reserve/' + ${movie.movie_id}}" class="btn btn-info">reserve</a></td>
             <td><a th:href="@{'/movies/showings/edit/' + ${iter.index}}" class="btn btn-info fas fa-pen"></a></td>
