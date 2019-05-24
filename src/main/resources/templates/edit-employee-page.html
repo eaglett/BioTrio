@@ -35,8 +35,16 @@
 
         <div class="form-group">
             <label for="access_level">Employee Access-Level</label>
-            <input type="text" class="form-control" th:placeholder="'Employee Access-Level'" minlength="1" maxlength="50"
-                   id="access_level" aria-describedby="access_level" th:field="*{accessLevel}"/>
+            <select id="access_level" name="access_level" aria-describedby="access_level" th:field="*{accessLevel}">
+                <option th:type="text"
+                        th:text="'Basic'"
+                        th:value="'Basic'">
+                </option>
+                <option th:type="text"
+                        th:text="'Admin'"
+                        th:value="'Admin'">
+                </option>
+            </select>
         </div>
 
         <input class="btn btn-info" type="submit" value="Submit" />

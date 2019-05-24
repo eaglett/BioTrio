@@ -66,7 +66,8 @@ public class MovieController {
 
     @PostMapping(value = "/movies/edit/{index}")
     public String handleEditMovie(@ModelAttribute Movie movie, @PathVariable int index) {
-        movieRepo.editMovie(movie, movieList.get(index).getMovie_id());
+        movie.setMovie_id(movieList.get(index).getMovie_id());
+        movieRepo.editMovie(movie);
 
 
         return "redirect:/movies";

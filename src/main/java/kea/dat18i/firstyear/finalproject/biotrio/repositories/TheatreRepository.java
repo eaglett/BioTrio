@@ -33,7 +33,6 @@ public class TheatreRepository {
 
 
 
-
     // Find all Theatres from database BioTrio and table theater
     public List<Theatre> findAllTheatres() {
         SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM theater");
@@ -100,12 +99,6 @@ public class TheatreRepository {
     // Deleting a theatre inside the MySQL database with JDBCTemplate.update(String query)
     public void deleteTheatre(Theatre theatre) {
 
-        // Iterate over showings with the same theatre_id as the theatre we are deleting
-        // and delete each showing after the tickets for that showing have been deleted
-        showingRepo.findShowingsByTheatreId(theatre).forEach(showing ->
-                    showingRepo.deleteShowing(showing)
-        );
-
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
                     "DELETE FROM theater WHERE theater_id = ?");
@@ -120,14 +113,15 @@ public class TheatreRepository {
 
 
     // Editing a theatre inside the MySQL database with JDBCtemplate.update
-    public void editTheatre(Theatre theatre, int id) {
+    public void editTheatre(Theatre theatre) {
 
         PreparedStatementCreator psc = Connection -> {
                 PreparedStatement ps = Connection.prepareStatement(
-                        "UPDATE theater SET theater_name = ?, nb_of_rows = ?, seats_per_row = ? WHERE theater_id = " + id);
+                        "UPDATE theater SET theater_name = ?, nb_of_rows = ?, seats_per_row = ? WHERE theater_id = ?");
                 ps.setString(1, theatre.getName());
                 ps.setInt(2, theatre.getRows());
                 ps.setInt(3, theatre.getSeatsPerRow());
+                ps.setInt(4, theatre.getTheatre_id());
 
                 return ps;
         };

@@ -41,7 +41,7 @@
             <td><a th:href="@{'/movies/delete/' + ${iter.index}}" class="btn btn-danger fas fa-trash"></a></td>
         </tr>
     </table>
-
+    <div th:if="${param.error}" class="alert alert-warning">Something went wrong, please try again.</div>
 
 </div>
 

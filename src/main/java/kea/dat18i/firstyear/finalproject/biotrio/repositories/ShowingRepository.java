@@ -14,7 +14,8 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class ShowingRepository {
     private JdbcTemplate jdbc;
     @Autowired
     private TheatreRepository theatreRepo;
+
     // Lazy initialization to create Bean when called and not on build time
 
     private TicketRepository ticketRepo;
@@ -34,6 +36,11 @@ public class ShowingRepository {
     public ShowingRepository(@Lazy TicketRepository ticketRepo) {
         this.ticketRepo = ticketRepo;
     }
+
+
+    // Formatters for LocalDate and LocalTime
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
 
 
@@ -66,7 +73,9 @@ public class ShowingRepository {
             showing.setShowing_id(rs.getInt("showing_Id"));
             showing.setMovie_id(rs.getInt("movie_id"));
             showing.setTheatre_id(rs.getInt("theater_id"));
-            showing.setStart_date_time(rs.getTimestamp("start_date_time"));
+            String dateTime = (rs.getTimestamp("start_date_time").toString());
+            showing.setDate(LocalDate.parse(dateTime.substring(0,10), dateFormatter));
+            showing.setTime(LocalTime.parse(dateTime.substring(11,16), timeFormatter));
             showings.add(showing);
         }
 
@@ -79,10 +88,12 @@ public class ShowingRepository {
 
         Showing showing = new Showing();
         while(rs.next()) {
-            showing.setShowing_id(rs.getInt("showing_ID"));
+            showing.setShowing_id(rs.getInt("showing_Id"));
             showing.setMovie_id(rs.getInt("movie_id"));
             showing.setTheatre_id(rs.getInt("theater_id"));
-            showing.setStart_date_time(rs.getTimestamp("start_date_time"));
+            String dateTime = (rs.getTimestamp("start_date_time").toString());
+            showing.setDate(LocalDate.parse(dateTime.substring(0,10), dateFormatter));
+            showing.setTime(LocalTime.parse(dateTime.substring(11,16), timeFormatter));
 
         }
 
@@ -121,11 +132,11 @@ public class ShowingRepository {
 
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
-                    "INSERT INTO movie VALUES (null, ?, ?, ?, ?)", new String[]{"movie_id"});
-            ps.setInt(1, showing.getShowing_id());
-            ps.setInt(2, showing.getMovie_id());
-            ps.setInt(3, showing.getTheatre_id());
-            ps.setTimestamp(4, showing.getStart_date_time());
+                    "INSERT INTO showing VALUES (null, ?, ?, ?)", new String[]{"showing_id"});
+            ps.setInt(1, showing.getMovie_id());
+            ps.setInt(2, showing.getTheatre_id());
+            String start_date_time = showing.getDate().toString() + " " + showing.getTime().toString() + ":00";
+            ps.setTimestamp(3, Timestamp.valueOf(start_date_time));
 
             return ps;
         };
@@ -144,7 +155,6 @@ public class ShowingRepository {
 
     // Deleting a movie inside the MySQL database with JDBCTemplate.update(String query)
     public void deleteShowing(Showing showing) {
-        deleteTicketsByShowing(showing);
 
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
@@ -157,26 +167,16 @@ public class ShowingRepository {
         jdbc.update(psc);
     }
 
-    private void deleteTicketsByShowing(Showing showing) {
-        PreparedStatementCreator psc = Connection -> {
-            PreparedStatement ps = Connection.prepareStatement(
-                    "DELETE FROM ticket WHERE showing_id = ?");
-            ps.setInt(1, showing.getShowing_id());
-
-            return ps;
-        };
-
-        jdbc.update(psc);
-    }
-
 
     public void updateShowing(Showing showing) {
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
-                    "UPDATE ticket SET movie_id = ?, theater_id = ?, start_date_time = ?");
+                    "UPDATE showing SET movie_id = ?, theater_id = ?, start_date_time = ? WHERE showing_id = ?");
             ps.setInt(1, showing.getMovie_id());
             ps.setInt(2, showing.getTheatre_id());
-            ps.setTimestamp(3, showing.getStart_date_time());
+            String start_date_time = showing.getDate().toString() + " " + showing.getTime().toString() + ":00";
+            ps.setTimestamp(3, Timestamp.valueOf(start_date_time));
+            ps.setInt(4, showing.getShowing_id());
 
             return ps;
         };

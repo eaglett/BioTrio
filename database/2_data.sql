@@ -1,7 +1,7 @@
 USE BioTrio;
 
 INSERT INTO employee (username, employee_password, access_level) VALUES 
-	( 'managerTom', 'IamTheBest', 'admin'),
+	( 'tom', '123', 'admin'),
     ( 'jane1990', 'puppies', 'basic'),
     ( 'marcSmith', '123456', 'basic');
     
