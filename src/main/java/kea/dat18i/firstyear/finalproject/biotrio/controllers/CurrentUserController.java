@@ -24,13 +24,11 @@ public class CurrentUserController {
     @GetMapping(value ="/login_check")
     public String loginCheck() {
 
-
         return "login-page";
     }
 
     @GetMapping(value ="/login")
     public String login() {
-        System.out.println(principal.toString());
 
         return "login";
     }
@@ -42,12 +40,9 @@ public class CurrentUserController {
     }
 
     @PostMapping("/loginCustomer")
-//    @ResponseBody
     public String loginCustomer(@ModelAttribute Customer customer){
 
-        Customer logingCustomer = customerRepo.findCustomer(customer);
-       /* Car carInserted = carRepo.insert(car);*/
-//        return "Your data is saved and secured don't worry about GDPR." + customerInserted;
+
         return "redirect:/";
     }
 
@@ -67,13 +62,24 @@ public class CurrentUserController {
 //        return "redirect:/";
 //    }
 
-    @PostMapping(value ="/logout")
+
+//  Useless for now
+/*
+    @GetMapping(value = "/logout")
     public String logout() {
+
+        return "logout";
+    }
+*/
+
+/*
+    @PostMapping(value ="/logout")
+    public String handleLogout() {
 
 
         return "redirect:/login";
     }
-
+*/
 
 
 }

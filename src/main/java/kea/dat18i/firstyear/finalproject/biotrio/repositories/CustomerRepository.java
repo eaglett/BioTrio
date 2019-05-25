@@ -50,23 +50,23 @@ public class CustomerRepository {
     // Finds a specific customer in customer table from database biotrio by customer.getId()
     // Can also replace customer.getId() by putting an "int id" parameter instead of
     // "Customer customer" in the method parameters
-    public Customer findCustomer(Customer customer) {
+    public Customer findCustomer(int id) {
         // Create query for sql and parse an object into class
-        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM customer WHERE customer_id = " + customer.getId());
+        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM customer WHERE customer_id = " + id);
 
         // Can change this to "customer" if we change the method parameter
-        Customer customer1 = new Customer();
+        Customer customer = new Customer();
         while (rs.next()) {
-            customer1.setId(rs.getInt("customer_id"));
-            customer1.setFirstName(rs.getString("first_name"));
-            customer1.setLastName(rs.getString("last_name"));
-            customer1.setPassword(rs.getString("customer_password"));
-            customer1.setEmail(rs.getString("email"));
-            customer1.setPhoneNumber(rs.getString("phone_nb"));
+            customer.setId(rs.getInt("customer_id"));
+            customer.setFirstName(rs.getString("first_name"));
+            customer.setLastName(rs.getString("last_name"));
+            customer.setPassword(rs.getString("customer_password"));
+            customer.setEmail(rs.getString("email"));
+            customer.setPhoneNumber(rs.getString("phone_nb"));
 
         }
 
-        return customer1;
+        return customer;
 
     }
 
@@ -92,6 +92,28 @@ public class CustomerRepository {
 
             return customer;
         }
+
+    public void updateCustomer(Customer customer) {
+
+        PreparedStatementCreator psc = Connection -> {
+            PreparedStatement ps = Connection.prepareStatement(
+                    "UPDATE customer SET " +
+                            "first_name = ?, last_name = ?, customer_password = ?,  email = ?, phone_nb = ? " +
+                            "WHERE customer_id = ?");
+            ps.setString(1, customer.getFirstName());
+            ps.setString(2, customer.getLastName());
+            ps.setString(3, customer.getPassword());
+            ps.setString(4, customer.getEmail());
+            ps.setString(5, customer.getPhoneNumber());
+            ps.setInt(6, customer.getId());
+
+
+            return ps;
+        };
+
+        jdbc.update(psc);
+
+    }
 
 
 }

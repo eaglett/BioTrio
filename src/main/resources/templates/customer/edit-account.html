@@ -2,9 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
-    <title>Bio Trio Account Creation</title>
+    <title>Bio Trio</title>
 
-    <!-- Bootstrap stylesheet link -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -14,12 +13,14 @@
 
 </head>
 <body>
+
 <div>
     <th:block th:include="fragments/navbar :: navbar"></th:block>
 </div>
 
 <div class="jumbotron">
-    <form th:action="@{/create_Account}" th:object="${newCustomer}" method="POST">
+
+    <form th:action="@{'/customers/account/edit'}" th:object="${editCustomer}" method="POST">
         <div class="form-group">
             <label for="firstName">First Name</label>
             <input type="text" class="form-control" th:placeholder="'First Name'" minlength="1"
@@ -32,7 +33,7 @@
         </div>
         <div class="form-group">
             <label for="phoneNumber">Phone Number</label>
-            <input type="text" class="form-control" th:placeholder="'10101010'" th:maxlength="15"
+            <input type="text" class="form-control" th:placeholder="'Phone Number'" th:maxlength="15"
                    id="phoneNumber" aria-describedby="phoneNumber" th:field="*{phoneNumber}"/>
         </div>
         <div class="form-group">
@@ -42,19 +43,20 @@
         </div>
         <div class="form-group">
             <label for="password">Password - <i>must be between 4 to 20 characters long</i></label>
-            <input type="text" class="form-control" th:placeholder="'Password'"
-                   th:minlength="4" th:maxlength="20"
+            <input type="text" class="form-control" th:placeholder="'Password'" th:minlength="4" th:maxlength="20"
                    id="password" aria-describedby="password" th:field="*{password}"/>
         </div>
         <input class="btn btn-info" type="submit" value="Submit" />
         <input class="btn btn-danger" type="reset" value="Reset"/>
+
     </form>
+
 </div>
 
 
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<!-- Check what this does -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 
 </body>

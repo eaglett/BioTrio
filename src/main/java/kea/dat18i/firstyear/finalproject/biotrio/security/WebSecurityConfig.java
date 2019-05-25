@@ -51,10 +51,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAuthority("ADMIN");
 
 
-//        // Works; need to create an html file for editing the customer account
-//        http.authorizeRequests().antMatchers(
-//                "/edit_account")
-//                .hasAuthority("CUSTOMER");
+        // Works; need to create an html file for editing the customer account
+        http.authorizeRequests().antMatchers(
+                "/customers/account", "/customers/account/edit")
+                .hasAuthority("CUSTOMER");
 
 
         // Login and logout configuration

@@ -14,34 +14,27 @@
 </head>
 <body>
 
+<div>
+    <th:block th:include="fragments/navbar :: navbar"></th:block>
+</div>
+
+<div class="jumbotron">
     <div>
-        <th:block th:include="fragments/navbar :: navbar"></th:block>
+        <a th:href="@{'/customers/account/edit'}" class="btn btn-info">Edit Account Information</a>
     </div>
 
+    <div th:object="${customer}">
 
-    <div class="jumbotron">
-
-        <h1>Welcome to Bio Trio</h1>
-        <i>Movies for our customer rubies</i>
+        <p th:text="${'First name: ' + customer.firstName}"></p>
+        <p th:text="${'Last name: ' + customer.lastName}"></p>
+        <p th:text="${'Phone number: ' + customer.phoneNumber}"></p>
+        <p th:text="${'Email: ' + customer.email}"></p>
+        <p th:text="${'Password: ' + customer.password}"></p>
 
     </div>
-    <div th:if="${param.logout}" class="alert alert-success">Successfully logged out!</div>
 
-    <div th:if="${param.unauthorized}" class="alert alert-warning">Unauthorized access</div>
-
-
-    <ul>
-        <li><b>Temporary links for testing</b></li>
-        <li>Showings are located through a movie's "Select" button - Select the movies link for it</li>
-        <li><a href="/movies">Movies link</a></li>
-        <li><a href="/employees">Employees link</a></li>
-        <li><a href="/theatres">Theatres link</a></li>
-        <li><a href="/logout" >Logout link</a></li>
-        <li><a href="/customers/account">Customer account link - a customer needs to be logged in</a></li>
-    </ul>
-
-
-
+    <div th:if="${param.error}" class="alert alert-warning">Something went wrong! Please try again.</div>
+</div>
 
 
 

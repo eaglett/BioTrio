@@ -4,12 +4,14 @@ package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Customer;
 
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.CustomerRepository;
+import kea.dat18i.firstyear.finalproject.biotrio.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
@@ -19,12 +21,14 @@ import java.util.List;
 public class CustomerController {
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    CustomerRepository customerRepo;
+    private CustomerRepository customerRepo = new CustomerRepository();
 
     private List<Customer> customerList = new ArrayList<>();
+
+    private Principal principal = new Principal();
 
 
     @GetMapping(value = "/customers")
@@ -38,19 +42,6 @@ public class CustomerController {
     public String createAccount(Model model) {
         model.addAttribute("newCustomer", new Customer());
 
-        // test to check in terminal if customer values get passed from HTML to controller console
-        for(Customer customer : customerList) {
-            System.out.println(customer.getFirstName());
-            System.out.println(customer.getLastName());
-            System.out.println(customer.getPhoneNumber());
-            System.out.println(customer.getEmail());
-            System.out.println(customer.getPassword());
-
-
-            System.out.println();
-        }
-
-
         return "create-account-page";
     }
 
@@ -61,6 +52,46 @@ public class CustomerController {
         customerList.add(customer);
 
         return "redirect:/";
+    }
+
+    @GetMapping(value = "/customers/account")
+    public String customerAccount(Model model){
+
+        try {
+            Customer customer = customerRepo.findCustomer(principal.getPrincipal_id());
+            model.addAttribute("customer", customer);
+        } catch (Exception e) {
+            return "home-page";
+        }
+
+        return "/customer/customer-account";
+    }
+
+    @GetMapping(value = "/customers/account/edit")
+    public String editAccount(Model model){
+
+        try {
+            Customer customer = customerRepo.findCustomer(principal.getPrincipal_id());
+            model.addAttribute("editCustomer", customer);
+        } catch (Exception e) {
+            return "home-page";
+        }
+        return "/customer/edit-account";
+    }
+
+
+    @PostMapping(value = "/customers/account/edit")
+    public String handleEditAccount(@ModelAttribute Customer customer) {
+
+        try {
+            customer.setId(principal.getPrincipal_id());
+            customerRepo.updateCustomer(customer);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/customers/account?error";
+        }
+
+        return "redirect:/customers/account";
     }
 
 
