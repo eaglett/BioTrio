@@ -57,6 +57,7 @@ public class CustomerController {
     @GetMapping(value = "/customers/account")
     public String customerAccount(Model model){
 
+        // Get account information of currently logged in user
         try {
             Customer customer = customerRepo.findCustomer(principal.getPrincipal_id());
             model.addAttribute("customer", customer);
@@ -70,6 +71,7 @@ public class CustomerController {
     @GetMapping(value = "/customers/account/edit")
     public String editAccount(Model model){
 
+        // Get account information of currently logged in user
         try {
             Customer customer = customerRepo.findCustomer(principal.getPrincipal_id());
             model.addAttribute("editCustomer", customer);
