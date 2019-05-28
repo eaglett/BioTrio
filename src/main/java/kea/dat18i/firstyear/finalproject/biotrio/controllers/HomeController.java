@@ -19,7 +19,7 @@ public class HomeController {
         QRsender qRsender = new QRsender();
 
         String[] recipients = { "madalina.pascariu0305@gmail.com", "saidalisic@gmail.com" };
-        qRsender.sendEmail( recipients, "D:\\QRCODEWORKS.png");
+//        qRsender.sendEmail( recipients, "QRdir\\QRCODE5.png";);
 
 
 

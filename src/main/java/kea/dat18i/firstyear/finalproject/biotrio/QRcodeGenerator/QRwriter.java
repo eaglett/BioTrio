@@ -22,11 +22,11 @@ public class QRwriter {
 
         createDirForQR("QRdir");
 
-        String fileName = "QRCODEWORKS";
+        String fileName = "QRCODE5";
 
         try {
 //            String filePath = "QRdir\\" + fileName + ".png";
-            String filePath = "D:\\" + fileName +".png";
+            String filePath = "QRdir\\QRCODE5.png";
             String charset = "UTF-8"; // or "ISO-8859-1"
             Map < EncodeHintType, ErrorCorrectionLevel > hintMap = new HashMap < EncodeHintType, ErrorCorrectionLevel > ();
             hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
