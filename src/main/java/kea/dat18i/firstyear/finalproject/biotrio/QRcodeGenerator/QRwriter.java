@@ -3,6 +3,7 @@ package kea.dat18i.firstyear.finalproject.biotrio.QRcodeGenerator;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -14,13 +15,18 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 public class QRwriter {
 
 
+    private Random random = new Random(75656);
+
     // Takes a String parameter to store text inside a QR encoding
     public void writeQR(String QRmsg) {
 
         createDirForQR("QRdir");
 
+        String fileName = "QRCODEWORKS";
+
         try {
-            String filePath = "QRdir\\QRCODE5.png";
+//            String filePath = "QRdir\\" + fileName + ".png";
+            String filePath = "D:\\" + fileName +".png";
             String charset = "UTF-8"; // or "ISO-8859-1"
             Map < EncodeHintType, ErrorCorrectionLevel > hintMap = new HashMap < EncodeHintType, ErrorCorrectionLevel > ();
             hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);

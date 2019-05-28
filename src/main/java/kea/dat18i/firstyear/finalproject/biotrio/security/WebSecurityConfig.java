@@ -67,12 +67,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username").passwordParameter("password");
 
 
-        // Doesn't work like this, looking for solution
-//        http.authorizeRequests().and().formLogin()
-//                .loginProcessingUrl("/employee-login").loginPage("/employee-login")
-//                .defaultSuccessUrl("/").failureUrl("/employee-login")
-//                .usernameParameter("username").passwordParameter("password");
-
 
         // For logging user out of system and deleting and cookies that might
         // keep the user further authenticated in the system
