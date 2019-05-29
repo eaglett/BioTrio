@@ -14,6 +14,7 @@ public class Principal {
     public Principal() {
     }
 
+
     public int getPrincipal_id() {
         return principal_id;
     }

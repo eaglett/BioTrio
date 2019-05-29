@@ -100,6 +100,7 @@ public class ShowingRepository {
 
         List<Ticket> tickets = ticketRepo.findTickets(showing_id);
 
+
         //inicialization of all seats to available
         for(int i=0; i<  theatre.getRows(); i++){
             seatsMatrix.add(new ArrayList<String>());
@@ -107,6 +108,7 @@ public class ShowingRepository {
                 seatsMatrix.get(i).add("Available");
             }
         }
+
 
         //modifying reserved seats
         for (int i=0; i<tickets.size(); i++){
