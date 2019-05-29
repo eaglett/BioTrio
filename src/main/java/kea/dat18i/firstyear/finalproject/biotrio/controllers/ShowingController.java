@@ -67,7 +67,7 @@ public class ShowingController {
 
         model.addAttribute("movie", movieRepo.findMovieByShowingId(showingId));
         model.addAttribute("theater", theatreRepo.findTheatreByShowingId(showingId));
-        model.addAttribute("seatMatrix", showingRepo.findSeats(showingId));
+        model.addAttribute("seatMatrix", showingRepo.findTakenSeats(showingId));
         model.addAttribute("showing", showingRepo.findShowingById(showingId));
         //we decided to create an TicketReservaationForm object that contains 4 ticket objects instead of an array because
         //thymeleaf was creating some problems when we wanted to modify the objects inside the array
@@ -78,13 +78,44 @@ public class ShowingController {
 
     @PostMapping(value = "/movies/showings/reserve/{showingId}")
     public String handleReserve(@ModelAttribute TicketReservationForm tickets, @PathVariable int showingId) {
+        //we cannot use a loop (which would be more elegant) because of TicketReservationForm format and that is made the way it is
+        //because we had problems with modifying arrays through forms
 
-        ticketRepo.insertTickets(tickets, showingId);
-        System.out.print(tickets.getTicket1().toString());
-        System.out.print(tickets.getTicket2().toString());
-        System.out.print(tickets.getTicket3().toString());
-        System.out.print(tickets.getTicket4().toString());
-        return "redirect:/movies"; //add "you've reserved a ticket" page
+        boolean allOK = true;
+        //first 2 conditions are checking if anything was selected and the 3rd checks if it's already reserved
+        if(tickets.getTicket1().getSeat_row() != 0 &&
+                tickets.getTicket1().getSeat_nb() != 0 &&
+                ticketRepo.validateTicketAvailability(tickets.getTicket1(), showingId)){
+
+            ticketRepo.insertTicketInDB(tickets.getTicket1(), showingId);
+        } else
+            allOK = false ;
+        if (tickets.getTicket2().getSeat_row() != 0 &&
+                tickets.getTicket2().getSeat_nb() != 0 &&
+                ticketRepo.validateTicketAvailability(tickets.getTicket2(), showingId)){
+
+            ticketRepo.insertTicketInDB(tickets.getTicket2(), showingId);
+        } else
+            allOK = false ;
+        if (tickets.getTicket3().getSeat_row() != 0 &&
+                tickets.getTicket3().getSeat_nb() != 0 &&
+                ticketRepo.validateTicketAvailability(tickets.getTicket3(), showingId)){
+
+            ticketRepo.insertTicketInDB(tickets.getTicket3(), showingId);
+        } else
+            allOK = false ;
+        if (tickets.getTicket4().getSeat_row() != 0 &&
+                tickets.getTicket4().getSeat_nb() != 0 &&
+                ticketRepo.validateTicketAvailability(tickets.getTicket4(), showingId)){
+
+            ticketRepo.insertTicketInDB(tickets.getTicket4(), showingId);
+        } else
+            allOK = false ;
+        if( allOK ) {
+            return "redirect:/movies"; //add "you've reserved a ticket" page
+        } else {
+            return "redirect:/movies/showings/reserve/{showingId}?fail=true";
+        }
     }
 
 

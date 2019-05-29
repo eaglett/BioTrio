@@ -94,7 +94,7 @@ public class ShowingRepository {
     }
 
 
-    public ArrayList<ArrayList<String>> findSeats(int showing_id){
+    public ArrayList<ArrayList<String>> findTakenSeats(int showing_id){
         ArrayList<ArrayList<String>> seatsMatrix = new ArrayList<ArrayList<String>>();
         Theatre theatre = theatreRepo.findTheatreByShowingId(showing_id);
 
