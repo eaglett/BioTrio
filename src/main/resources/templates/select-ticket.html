@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:ticket="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Find Ticket</title>
@@ -13,8 +13,8 @@
 </div>
 
 <div class="jumbotron">
-
-    <table class="table table-hover" th:if="${ticketListSize} > 0">
+    <div th:if="${ticketListSize != 0}">
+    <table class="table table-hover" >
         <thead>
         <tr>
             <th scope="col">First</th>
@@ -29,30 +29,37 @@
         </tr>
         </thead>
         <tbody>
-        <form>
+
             <tr  th:each="ticket: ${ticketList}">
-                <div class="form-group">
-                    <td th:text="${ticket.first_name}"></td>
-                    <td th:text="${ticket.last_name}"></td>
-                    <td th:text="${ticket.phone_nb}"></td>
-                    <td th:text="${ticket.movie_name}"></td>
-                    <td th:text="${ticket.date}"></td>
-                    <td th:text="${ticket.time}"></td>
-                    <td th:text="${ticket.theatre_name}"></td>
-                    <td th:text="${ticket.seat_row}"></td>
-                    <td th:text="${ticket.seat_nb}"></td>
-                </div>
-                    <td><button type="submit" class="btn btn-primary">use</button></td>
+                <form th:action="@{'select-ticket'}" method="post">
+                    <div class="form-group">
+                        <td th:text="${ticket.first_name}"></td>
+                        <td th:text="${ticket.last_name}"></td>
+                        <td th:text="${ticket.phone_nb}"></td>
+                        <td th:text="${ticket.movie_name}"></td>
+                        <td th:text="${ticket.date}"></td>
+                        <td th:text="${ticket.time}"></td>
+                        <td th:text="${ticket.theatre_name}"></td>
+                        <td th:text="${ticket.seat_row}"></td>
+                        <td th:text="${ticket.seat_nb}"></td>
+                    </div>
+                        <td><button type="submit" class="btn btn-primary">use</button></td>
+                </form>
             </tr>
-        </form>
+
         </tbody>
     </table>
-    <span th:unless="${ticketListSize} == 0" th:text="'no tickets'"></span>
+    </div>
+    <div th:unless="${ticketListSize == null}">
+        <span>no ticketas</span> <!--NOT WORKING-->
+    </div>
+
 
 </div>
 
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script th:if="${param.empty}" >alert("There are no such tickets") </script> <!--NOT WORKING-->
 </body>
 </html>

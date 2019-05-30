@@ -44,6 +44,7 @@ public class TicketRepository {
             ticket.setShowing_id(rs.getInt("showing_id"));
             ticket.setSeat_row(rs.getInt("seat_row"));
             ticket.setSeat_nb(rs.getInt("seat_nb"));
+            ticket.setUsed(rs.getBoolean("used"));
             tickets.add(ticket);
         }
         return tickets;
@@ -65,6 +66,7 @@ public class TicketRepository {
             ticket.setPhone_nb(rs.getString("phone_nb"));
             ticket.setFirst_name(rs.getString("first_name"));
             ticket.setLast_name(rs.getString("last_name"));
+            ticket.setUsed(rs.getBoolean("used"));
             tickets.add(ticket);
         }
         return tickets;
@@ -73,11 +75,12 @@ public class TicketRepository {
     public void insertTicketInDB (Ticket ticket, int showingId){
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
-                    "INSERT INTO ticket VALUES (null, ?, ?, ?, ?)", new String[]{"ticket_id"});
+                    "INSERT INTO ticket VALUES (null, ?, ?, ?, ?, ?)", new String[]{"ticket_id"});
             ps.setInt(1, showingId);
             ps.setInt(2, principal.getPrincipal_id()); //TODO: add a customer id
             ps.setInt(3, ticket.getSeat_row());
             ps.setInt(4, ticket.getSeat_nb());
+            ps.setBoolean(5, false);
 
             return ps;
         };

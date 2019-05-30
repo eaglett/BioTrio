@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
@@ -77,10 +78,13 @@ public class TicketController {
 
         model.addAttribute( "ticketList", ticketList);
         model.addAttribute("ticketListSize", ticketList.size());
-        System.out.print(ticketList);
+            return "select-ticket";
 
-
-        return "select-ticket";
     }
+
+/*    @PostMapping(value = "select-ticket")
+    public String handleSelectTicket(@ModelAttribute Ticket ticket) {
+
+    }*/
 
 }
