@@ -95,6 +95,7 @@ public class ShowingController {
         //because we had problems with modifying arrays through forms
 
         boolean allOK = true;
+        boolean selected = false;
         //first 2 conditions are checking if anything was selected and the 3rd checks if it's already reserved
         if(tickets.getTicket1().getSeat_row() != 0 &&
                 tickets.getTicket1().getSeat_nb() != 0 &&
@@ -107,8 +108,8 @@ public class ShowingController {
             System.out.println(customer.getEmail());
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
-
-        } else
+            selected = true;
+        } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
             allOK = false ;
         if (tickets.getTicket2().getSeat_row() != 0 &&
                 tickets.getTicket2().getSeat_nb() != 0 &&
@@ -120,7 +121,9 @@ public class ShowingController {
             qRwriter.writeQR(tickets.getTicket2(), showingId);
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
-        } else
+
+            selected = true;
+        } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
             allOK = false ;
         if (tickets.getTicket3().getSeat_row() != 0 &&
                 tickets.getTicket3().getSeat_nb() != 0 &&
@@ -128,11 +131,15 @@ public class ShowingController {
 
             ticketRepo.insertTicketInDB(tickets.getTicket3(), showingId);
 
+
             // Write QR message and send to correct recipient
             qRwriter.writeQR(tickets.getTicket3(), showingId);
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
-        } else
+
+            selected = true;
+        } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
+
             allOK = false ;
         if (tickets.getTicket4().getSeat_row() != 0 &&
                 tickets.getTicket4().getSeat_nb() != 0 &&
@@ -140,16 +147,21 @@ public class ShowingController {
 
             ticketRepo.insertTicketInDB(tickets.getTicket4(), showingId);
 
+
             // Write QR message and send to correct recipient
             qRwriter.writeQR(tickets.getTicket4(), showingId);
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
-        } else
+            selected = true;
+        } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
+
             allOK = false ;
-        if( allOK ) {
+        if( allOK && selected) {
             return "redirect:/movies"; //add "you've reserved a ticket" page
-        } else {
+        } else if(!allOK){
             return "redirect:/movies/showings/reserve/{showingId}?fail=true";
+        } else{
+            return "redirect:/movies/showings/reserve/{showingId}?empty=true";
         }
     }
 
