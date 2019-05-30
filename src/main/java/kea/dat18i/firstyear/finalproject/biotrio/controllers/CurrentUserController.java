@@ -64,22 +64,15 @@ public class CurrentUserController {
 
 
 //  Useless for now
-/*
+
     @GetMapping(value = "/logout")
     public String logout() {
+        principal.clearAttributes();
+        System.out.println(principal.toString());
 
-        return "logout";
+        return "redirect:/home?logout";
     }
-*/
 
-/*
-    @PostMapping(value ="/logout")
-    public String handleLogout() {
-
-
-        return "redirect:/login";
-    }
-*/
 
 
 }
