@@ -3,7 +3,6 @@ package kea.dat18i.firstyear.finalproject.biotrio.QRcodeGenerator;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -14,18 +13,17 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Customer;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Showing;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Ticket;
-import kea.dat18i.firstyear.finalproject.biotrio.entities.TicketReservationForm;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.CustomerRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.MovieRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.ShowingRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.TheatreRepository;
+import kea.dat18i.firstyear.finalproject.biotrio.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class QRwriter {
-
-    @Autowired
-    private JdbcTemplate jdbc;
 
     @Autowired
     private ShowingRepository showingRepo;
@@ -39,20 +37,22 @@ public class QRwriter {
     @Autowired
     private CustomerRepository customerRepo;
 
+    private Principal principal = new Principal();
+
 
 
     // Line separator to separate and properly format or QR messages
     private String n = System.lineSeparator();
 
-    // Takes a TicketReservationForm parameter to store text
-    // about all reserved Tickets inside a QR encoding
-    public void writeQR(TicketReservationForm tickets) {
+    // Takes a Ticket parameter to store text
+    // about a reserved Ticket inside a QR encoding
+    public void writeQR(Ticket ticket, int showing_id) {
 
         // Create directory to store our QR code file and fetch it afterwards for emailing
         createDirForQR("QRdir");
 
-        // Write our formatted String, which holds the information of a Customer's Ticket(s), into our QR code
-        String QRmsg = createQRmsg(tickets);
+        // Write our formatted String, which holds the information of a Customer's Ticket, into our QR code
+        String QRmsg = createQRmsg(ticket, showing_id);
 
         try {
             String filePath = "QRdir\\QRCODE5_BioTrioTicket.png";
@@ -83,31 +83,21 @@ public class QRwriter {
 
 
     // Prepare a formatted QR message to write to our QR code
-    private String createQRmsg(TicketReservationForm tickets) {
-
-        String t_one = formattedStr(tickets.getTicket1());
-        String t_two = formattedStr(tickets.getTicket2());
-        String t_three = formattedStr(tickets.getTicket3());
-        String t_four = formattedStr(tickets.getTicket4());
-
-        return String.format("%s %s %s %s", t_one, t_two, t_three, t_four);
-    }
-
     // Insert a Ticket's data into a formatted String to prepare for writing to QR code
-    private String formattedStr(Ticket ticket) {
+    private String createQRmsg(Ticket ticket, int showing_id) {
 
-        Showing showing = showingRepo.findShowingById(ticket.getShowing_id());
-        Customer customer = customerRepo.findCustomer(ticket.getCustomer_id());
+        Showing showing = showingRepo.findShowingById(showing_id);
+        Customer customer = customerRepo.findCustomer(principal.getPrincipal_id());
 
         // Format a part of our message
-        String str = String.format(n + "Theatre: %s" + n +
+        String QRmsg = String.format(n + "Theatre: %s" + n +
                      "Movie: %s" + n +
                      "Date: %s" + n +
                      "Playing time: %s" + n +
                      "Customer name: %s %s" + n +
                      "Email: %s" + n +
                      "Phone number: %s" + n + n,
-                     theatreRepo.findTheatreByShowingId(ticket.getShowing_id()).getName(),
+                     theatreRepo.findTheatreByShowingId(showing_id).getName(),
                      movieRepo.findMovie(showing.getMovie_id()).getMovie_name(),
                      showing.getDate(),
                      showing.getTime(),
@@ -116,7 +106,7 @@ public class QRwriter {
                      customer.getEmail(),
                      customer.getPhoneNumber());
 
-        return str;
+        return QRmsg;
     }
 
 

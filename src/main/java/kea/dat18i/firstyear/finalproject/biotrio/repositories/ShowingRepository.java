@@ -86,7 +86,6 @@ public class ShowingRepository {
         Showing showing = new Showing();
         while(rs.next()) {
             showing = iterateOverShowings(rs);
-
         }
 
         return showing;
