@@ -56,7 +56,7 @@ public class QRsender  {
             BodyPart messageBodyPart = new MimeBodyPart();
 
             // Fill the message
-            messageBodyPart.setText("This is message body");
+            messageBodyPart.setText("Ticket Reservation - Sent from Bio Trio");
 
             // Create a multipar message
             Multipart multipart = new MimeMultipart();
@@ -98,6 +98,9 @@ public class QRsender  {
                 "Just testing to see if we can send SMS with java for our QR code!").create();
         System.out.println(message.getSid());
     }
+
+
+
 
 
 
