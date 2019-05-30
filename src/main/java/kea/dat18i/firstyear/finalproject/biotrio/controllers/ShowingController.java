@@ -26,7 +26,7 @@ import java.util.List;
 public class ShowingController {
 
     @Autowired
-    private JdbcTemplate jdbc;
+    private JdbcTemplate jdbc; //TODO: this is not really necessary here right?
 
     @Autowired
     ShowingRepository showingRepo;

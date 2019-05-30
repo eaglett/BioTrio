@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Find Ticket</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+
+<div>
+    <th:block th:include="fragments/navbar :: navbar"></th:block>
+</div>
+
+<div class="jumbotron">
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Phone nb</th>
+            <th scope="col">Movie</th>
+            <th colspan="2" scope="col">Showing</th>
+            <th scope="col">Theatre</th>
+            <th scope="col">Row</th>
+            <th scope="col">Seat</th>
+            <th scope="col">Used</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ticket: ${ticketList}">
+            <td th:text="${ticket.first_name}"></td>
+            <td th:text="${ticket.last_name}"></td>
+            <td th:text="${ticket.phone_nb}"></td>
+            <td th:text="${ticket.movie_name}"></td>
+            <td th:text="${ticket.date}"></td>
+            <td th:text="${ticket.time}"></td>
+            <td th:text="${ticket.theatre_name}"></td>
+            <td th:text="${ticket.seat_row}"></td>
+            <td th:text="${ticket.seat_nb}"></td>
+            <td>A</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
