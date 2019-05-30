@@ -182,6 +182,7 @@
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <script th:if="${param.fail}" >alert("A seat is already reserved. Please choose another and try again.") </script>
+<script th:if="${param.empty}" >alert("Please select a seat and try again.") </script>
 
 </body>
 </html>

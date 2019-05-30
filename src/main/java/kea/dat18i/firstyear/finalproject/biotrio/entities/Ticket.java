@@ -5,20 +5,21 @@ import java.time.LocalTime;
 
 public class Ticket {
 
-    int ticket_id;
-    int showing_id;
-    int customer_id;
-    int seat_row;
-    int seat_nb;
+    private int ticket_id;
+    private int showing_id;
+    private int customer_id;
+    private int seat_row;
+    private int seat_nb;
+    private boolean used;
     //attributes bellow this are not saved in the DB in ticket table, they are used just as helpers here
-    String phone_nb;
-    String first_name;
-    String last_name;
-    String theatre_name;
-    String movie_name;
-    int movie_id;
-    LocalDate date;
-    LocalTime time;
+    private String phone_nb;
+    private String first_name;
+    private String last_name;
+    private String theatre_name;
+    private String movie_name;
+    private int movie_id;
+    private LocalDate date;
+    private LocalTime time;
 
     public Ticket(int ticket_id, int showing_id, int customer_id, int seat_row, int seat_nb) {
         this.ticket_id = ticket_id;
@@ -135,6 +136,14 @@ public class Ticket {
 
     public void setTime(LocalTime time) {
         this.time = time;
+    }
+
+    public boolean isUsed() {
+        return used;
+    }
+
+    public void setUsed(boolean used) {
+        this.used = used;
     }
 
     public String toString(){

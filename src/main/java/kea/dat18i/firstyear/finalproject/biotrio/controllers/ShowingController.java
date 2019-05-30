@@ -82,39 +82,46 @@ public class ShowingController {
         //because we had problems with modifying arrays through forms
 
         boolean allOK = true;
+        boolean selected = false;
         //first 2 conditions are checking if anything was selected and the 3rd checks if it's already reserved
         if(tickets.getTicket1().getSeat_row() != 0 &&
                 tickets.getTicket1().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket1(), showingId)){
 
             ticketRepo.insertTicketInDB(tickets.getTicket1(), showingId);
-        } else
+            selected = true;
+        } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
             allOK = false ;
         if (tickets.getTicket2().getSeat_row() != 0 &&
                 tickets.getTicket2().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket2(), showingId)){
 
             ticketRepo.insertTicketInDB(tickets.getTicket2(), showingId);
-        } else
+            selected = true;
+        } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
             allOK = false ;
         if (tickets.getTicket3().getSeat_row() != 0 &&
                 tickets.getTicket3().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket3(), showingId)){
 
             ticketRepo.insertTicketInDB(tickets.getTicket3(), showingId);
-        } else
+            selected = true;
+        } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
             allOK = false ;
         if (tickets.getTicket4().getSeat_row() != 0 &&
                 tickets.getTicket4().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket4(), showingId)){
 
             ticketRepo.insertTicketInDB(tickets.getTicket4(), showingId);
-        } else
+            selected = true;
+        } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
             allOK = false ;
-        if( allOK ) {
+        if( allOK && selected) {
             return "redirect:/movies"; //add "you've reserved a ticket" page
-        } else {
+        } else if(!allOK){
             return "redirect:/movies/showings/reserve/{showingId}?fail=true";
+        } else{
+            return "redirect:/movies/showings/reserve/{showingId}?empty=true";
         }
     }
 

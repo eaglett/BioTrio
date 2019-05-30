@@ -76,6 +76,7 @@ public class TicketController {
 
 
         model.addAttribute( "ticketList", ticketList);
+        model.addAttribute("ticketListSize", ticketList.size());
         System.out.print(ticketList);
 
 
