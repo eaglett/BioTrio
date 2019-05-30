@@ -1,10 +1,10 @@
 package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 
+import kea.dat18i.firstyear.finalproject.biotrio.QRcodeGenerator.QRsender;
+import kea.dat18i.firstyear.finalproject.biotrio.QRcodeGenerator.QRwriter;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.*;
-import kea.dat18i.firstyear.finalproject.biotrio.repositories.MovieRepository;
-import kea.dat18i.firstyear.finalproject.biotrio.repositories.ShowingRepository;
-import kea.dat18i.firstyear.finalproject.biotrio.repositories.TheatreRepository;
-import kea.dat18i.firstyear.finalproject.biotrio.repositories.TicketRepository;
+import kea.dat18i.firstyear.finalproject.biotrio.repositories.*;
+import kea.dat18i.firstyear.finalproject.biotrio.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -39,6 +39,17 @@ public class ShowingController {
 
     @Autowired
     TicketRepository ticketRepo;
+
+    @Autowired
+    CustomerRepository customerRepo;
+
+    @Autowired
+    private QRwriter qRwriter = new QRwriter();
+
+    @Autowired
+    private QRsender qRsender = new QRsender();
+
+    private Principal principal = new Principal();
 
 
     // Formatters for LocalDate and LocalTime
@@ -78,6 +89,8 @@ public class ShowingController {
 
     @PostMapping(value = "/movies/showings/reserve/{showingId}")
     public String handleReserve(@ModelAttribute TicketReservationForm tickets, @PathVariable int showingId) {
+        Customer customer = customerRepo.findCustomer(principal.getPrincipal_id());
+
         //we cannot use a loop (which would be more elegant) because of TicketReservationForm format and that is made the way it is
         //because we had problems with modifying arrays through forms
 
@@ -89,6 +102,12 @@ public class ShowingController {
                 ticketRepo.validateTicketAvailability(tickets.getTicket1(), showingId)){
 
             ticketRepo.insertTicketInDB(tickets.getTicket1(), showingId);
+
+            // Write QR message and send to correct recipient
+            qRwriter.writeQR(tickets.getTicket1(), showingId);
+            System.out.println(customer.getEmail());
+            String[] recipients = { customer.getEmail() };
+            qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
             selected = true;
         } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
             allOK = false ;
@@ -97,6 +116,12 @@ public class ShowingController {
                 ticketRepo.validateTicketAvailability(tickets.getTicket2(), showingId)){
 
             ticketRepo.insertTicketInDB(tickets.getTicket2(), showingId);
+
+            // Write QR message and send to correct recipient
+            qRwriter.writeQR(tickets.getTicket2(), showingId);
+            String[] recipients = { customer.getEmail() };
+            qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
+
             selected = true;
         } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
             allOK = false ;
@@ -105,16 +130,31 @@ public class ShowingController {
                 ticketRepo.validateTicketAvailability(tickets.getTicket3(), showingId)){
 
             ticketRepo.insertTicketInDB(tickets.getTicket3(), showingId);
+
+
+            // Write QR message and send to correct recipient
+            qRwriter.writeQR(tickets.getTicket3(), showingId);
+            String[] recipients = { customer.getEmail() };
+            qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
+
             selected = true;
         } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
+
             allOK = false ;
         if (tickets.getTicket4().getSeat_row() != 0 &&
                 tickets.getTicket4().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket4(), showingId)){
 
             ticketRepo.insertTicketInDB(tickets.getTicket4(), showingId);
+
+
+            // Write QR message and send to correct recipient
+            qRwriter.writeQR(tickets.getTicket4(), showingId);
+            String[] recipients = { customer.getEmail() };
+            qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
             selected = true;
         } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
+
             allOK = false ;
         if( allOK && selected) {
             return "redirect:/movies"; //add "you've reserved a ticket" page

@@ -3,6 +3,7 @@ package kea.dat18i.firstyear.finalproject.biotrio.QRcodeGenerator;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import org.springframework.stereotype.Component;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -12,6 +13,7 @@ import javax.mail.internet.*;
 import java.util.Properties;
 
 // Handles the sending of a QRcode .png file through email or SMS
+@Component
 public class QRsender  {
 
     // Find your Account Sid and Token at twilio.com/user/account
@@ -56,15 +58,15 @@ public class QRsender  {
             BodyPart messageBodyPart = new MimeBodyPart();
 
             // Fill the message
-            messageBodyPart.setText("This is message body");
+            messageBodyPart.setText("Ticket Reservation - Sent from Bio Trio");
 
-            // Create a multipar message
+            // Create a multipart message
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(messageBodyPart);
 
             // Attachment
             messageBodyPart = new MimeBodyPart();
-            String filename = "QRdir\\QRCODE5.png";
+            String filename = "QRdir\\QRCODE5_BioTrioTicket.png";
             DataSource source = new FileDataSource(filename);
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(filename);
@@ -98,6 +100,9 @@ public class QRsender  {
                 "Just testing to see if we can send SMS with java for our QR code!").create();
         System.out.println(message.getSid());
     }
+
+
+
 
 
 
