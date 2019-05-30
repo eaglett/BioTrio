@@ -1,30 +1,28 @@
 package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 
-import kea.dat18i.firstyear.finalproject.biotrio.QRcodeGenerator.QRsender;
-import kea.dat18i.firstyear.finalproject.biotrio.QRcodeGenerator.QRwriter;
+import kea.dat18i.firstyear.finalproject.biotrio.security.Principal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
 public class HomeController {
 
+    private Principal principal = new Principal();
+
     @GetMapping(value = {"/", "/home"})
-    public String homePage() {
+    public String homePage(HttpServletRequest servletRequest) {
 
-        QRwriter qRwriter = new QRwriter();
-
-//        qRwriter.writeQR("Supp Yenny, fancy stuff, right?");
-
-        QRsender qRsender = new QRsender();
-
-        String[] recipients = { "madalina.pascariu0305@gmail.com", "saidalisic@gmail.com" };
-//        qRsender.sendEmail( recipients, "QRdir\\QRCODE5.png");
-
-
-
-
-
+        // Clear currently logged user data when logging out
+        try {
+            if(servletRequest.getParameter("logout").equals("true")) {
+                principal.clearAttributes();
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR AT HOME PAGE CLEARING PRINCIPAL");
+        }
 
         return "home";
     }

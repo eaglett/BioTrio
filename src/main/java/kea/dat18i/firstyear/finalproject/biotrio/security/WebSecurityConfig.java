@@ -72,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // keep the user further authenticated in the system
         http.authorizeRequests().and().logout().
                 deleteCookies("remove").logoutUrl("/logout").
-                logoutSuccessUrl("/?logout");
+                logoutSuccessUrl("/home?logout=true");
 
 
         //Handling Access Denied Request
