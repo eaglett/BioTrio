@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Find Ticket</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+
+<div>
+    <th:block th:include="fragments/navbar :: navbar"></th:block>
+</div>
+
+<div class="jumbotron">
+        <form th:action="@{'/findTicket'}" th:object="${ticket}" method="POST">
+            <div class="form-group">
+                <label for="phoneNb">Phone number</label>
+                <input id="phoneNb" class="form-control" placeholder="Enter phone number" th:field="*{phone_nb}">
+            </div>
+            <div class="form-group">
+                <label for="selectMovie">Movie that customer wants to watch</label>
+                <select class="form-control" id="selectMovie" th:field="*{movie_id}" >
+                    <option th:type="hidden" th:text="'Select a movie'" th:value="0"></option>
+                    <option th:type="hidden"
+                            th:each="movie, iter : ${allMovies}"
+                            th:text="${movie.movie_name}"
+                            th:value="${movie.movie_id}"
+                            >
+                    </option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
