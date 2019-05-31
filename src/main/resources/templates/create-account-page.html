@@ -23,28 +23,28 @@
         <div class="form-group">
             <label for="firstName">First Name</label>
             <input type="text" class="form-control" th:placeholder="'First Name'" minlength="1"
-                   id="firstName" aria-describedby="firstName" th:field="*{firstName}"/>
+                   id="firstName" aria-describedby="firstName" th:field="*{firstName}" required/>
         </div>
         <div class="form-group">
             <label for="lastName">Last Name</label>
             <input type="text" class="form-control" th:placeholder="'Last Name'" minlength="1"
-                   id="lastName" aria-describedby="lastName" th:field="*{lastName}"/>
+                   id="lastName" aria-describedby="lastName" th:field="*{lastName}" required/>
         </div>
         <div class="form-group">
             <label for="phoneNumber">Phone Number</label>
             <input type="text" class="form-control" th:placeholder="'10101010'" th:maxlength="15"
-                   id="phoneNumber" aria-describedby="phoneNumber" th:field="*{phoneNumber}"/>
+                   id="phoneNumber" aria-describedby="phoneNumber" th:field="*{phoneNumber}" required/>
         </div>
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email" class="form-control" th:placeholder="'johndoe@johndoe.com'"
-                   id="email" aria-describedby="email" th:field="*{email}"/>
+                   id="email" aria-describedby="email" th:field="*{email}" required/>
         </div>
         <div class="form-group">
             <label for="password">Password - <i>must be between 4 to 20 characters long</i></label>
             <input type="text" class="form-control" th:placeholder="'Password'"
                    th:minlength="4" th:maxlength="20"
-                   id="password" aria-describedby="password" th:field="*{password}"/>
+                   id="password" aria-describedby="password" th:field="*{password}" required/>
         </div>
         <input class="btn btn-info" type="submit" value="Submit" />
         <input class="btn btn-danger" type="reset" value="Reset"/>

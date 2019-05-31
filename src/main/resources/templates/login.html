@@ -25,8 +25,13 @@
         <div th:if="${param.error}">
             Invalid user input, please try again
         </div>
-        <div><label> Email/Username <input id="username" type="text" name="username"/> </label></div>
-        <div><label> Password <input id="password" type="password" name="password"/> </label></div>
+        <div>
+            <label for="username"> Email/Username </label>
+            <input id="username" type="text" name="username"/> </div>
+        <div>
+            <label for="password"> Password  </label>
+            <input id="password" type="password" name="password"/>
+        </div>
         <div><input type="submit" value="Sign In"/></div>
     </form>
 

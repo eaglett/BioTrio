@@ -24,17 +24,17 @@
         <div class="form-group">
             <label for="name">Movie Name</label>
             <input type="text" class="form-control" th:placeholder="'Movie'" minlength="1" maxlength="50"
-                   id="name" aria-describedby="name" th:field="*{movie_name}"/>
+                   id="name" aria-describedby="name" th:field="*{movie_name}" required/>
         </div>
         <div class="form-group">
             <label for="year_of_production">Year of Production</label>
             <input type="number" class="form-control" th:placeholder="2000" minlength="4" maxlength="4"
-                   id="year_of_production" aria-describedby="year_of_production" th:field="*{year_of_production}"/>
+                   id="year_of_production" aria-describedby="year_of_production" th:field="*{year_of_production}" required/>
         </div>
         <div class="form-group">
             <label for="duration">Duration in minutes</label>
             <input type="number" class="form-control" th:placeholder="0" minlength="1" maxlength="3"
-                   id="duration" aria-describedby="duration" th:field="*{duration}"/>
+                   id="duration" aria-describedby="duration" th:field="*{duration}" required/>
         </div>
 
         <input class="btn btn-info" type="submit" value="Submit" />

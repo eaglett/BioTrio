@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Have to make logout redirect to /login or /home with an and().logout().logoutSuccessUrl().
         http.authorizeRequests().and().formLogin()
                 .loginProcessingUrl("/login").loginPage("/login")
-                .defaultSuccessUrl("/").failureUrl("/login?error")
+                .defaultSuccessUrl("/").failureUrl("/login?error=true")
                 .usernameParameter("username").passwordParameter("password");
 
 
