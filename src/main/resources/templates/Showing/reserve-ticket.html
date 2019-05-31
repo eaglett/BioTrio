@@ -31,10 +31,16 @@
                     </tr>
                     <tr th:each="row, iter2 : ${seatMatrix}" >
                         <td th:text=${iter2.count}></td> <!--first cell in each row, row number-->
-                        <td th:each="seat: ${row}">
-                            <input th:if="${seat == 'Available'}" th:type="button" class="btn btn-outline-primary">
-                            <input th:unless="${seat == 'Available'}" th:type="button" class="btn btn-danger" disabled>
-                        </td>
+                        <div th:if="iter2.count==1"/>
+                        <div th:unless="iter2.count==1 ">
+                            <td th:each="seat, iter3 : ${row}">
+                                <div th:if="iter3.count==1"/>
+                                <div th:unless="iter3.count==1">
+                                    <input th:if="${seat == 'Available'}" th:type="button" class="btn btn-outline-primary">
+                                    <input th:unless="${seat == 'Available'}" th:type="button" class="btn btn-danger" disabled>
+                                </div>
+                            </td>
+                        </div>
 
                     </tr>
                 </table>

@@ -32,8 +32,8 @@ public class TicketController {
     TheatreRepository theatreRepo;
 
     private Ticket ticket;
-
     private List<Ticket> ticketList= new ArrayList<>();
+
 
 
     @GetMapping(value = "/findTicket")
@@ -56,6 +56,7 @@ public class TicketController {
     public String selectTicket(Model model){
 
         List<Showing> showingList = showingRepo.findAllShowings(this.ticket.getMovie_id());
+        ticketList.clear();
 
         for (int i = 0; i < showingList.size(); i++) {
             ticketList.addAll(ticketRepo.findTicketsByPhoneNb(showingList.get(i).getShowing_id(), this.ticket.getPhone_nb()));
