@@ -99,9 +99,11 @@ public class ShowingController {
         //first 2 conditions are checking if anything was selected and the 3rd checks if it's already reserved
         if(tickets.getTicket1().getSeat_row() != 0 &&
                 tickets.getTicket1().getSeat_nb() != 0 &&
-                ticketRepo.validateTicketAvailability(tickets.getTicket1(), showingId)){
+                ticketRepo.validateTicketAvailability(tickets.getTicket1(), showingId)){ //ako je nesto oznaceno i slobodna je
 
             ticketRepo.insertTicketInDB(tickets.getTicket1(), showingId);
+            selected = true;
+            System.out.println("ticket1 selected true");
 
             // Write QR message and send to correct recipient
             qRwriter.writeQR(tickets.getTicket1(), showingId);
@@ -109,56 +111,63 @@ public class ShowingController {
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
 
-            qRsender.sendSMS();
+            //qRsender.sendSMS();
 
-            selected = true;
-        } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
-            allOK = false ;
+        } else if(!ticketRepo.validateTicketAvailability(tickets.getTicket1(), showingId)) {
+            allOK = false;
+            System.out.println("ticket1 allok False");
+        }
         if (tickets.getTicket2().getSeat_row() != 0 &&
                 tickets.getTicket2().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket2(), showingId)){
 
             ticketRepo.insertTicketInDB(tickets.getTicket2(), showingId);
+            selected = true;
+            System.out.println("ticket2 selected true");
 
             // Write QR message and send to correct recipient
             qRwriter.writeQR(tickets.getTicket2(), showingId);
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
 
-            selected = true;
-        } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
-            allOK = false ;
+        } else if(!ticketRepo.validateTicketAvailability(tickets.getTicket2(), showingId)) {
+            allOK = false;
+            System.out.println("ticket2 allok False");
+        }
         if (tickets.getTicket3().getSeat_row() != 0 &&
                 tickets.getTicket3().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket3(), showingId)){
 
             ticketRepo.insertTicketInDB(tickets.getTicket3(), showingId);
-
+            selected = true;
+            System.out.println("ticket3 selected true");
 
             // Write QR message and send to correct recipient
             qRwriter.writeQR(tickets.getTicket3(), showingId);
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
 
-            selected = true;
-        } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
+        } else if(!ticketRepo.validateTicketAvailability(tickets.getTicket3(), showingId)) {
 
-            allOK = false ;
+            allOK = false;
+            System.out.println("ticket3 allok False");
+        }
         if (tickets.getTicket4().getSeat_row() != 0 &&
                 tickets.getTicket4().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket4(), showingId)){
 
             ticketRepo.insertTicketInDB(tickets.getTicket4(), showingId);
-
+            selected = true;
+            System.out.println("ticket4 selected true");
 
             // Write QR message and send to correct recipient
             qRwriter.writeQR(tickets.getTicket4(), showingId);
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
-            selected = true;
-        } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
 
+        } else if(!ticketRepo.validateTicketAvailability(tickets.getTicket4(), showingId)){
             allOK = false ;
+            System.out.println("ticket4 allok False");}
         if( allOK && selected) {
             return "redirect:/movies"; //add "you've reserved a ticket" page
         } else if(!allOK){
