@@ -13,6 +13,7 @@ public class Ticket {
     private boolean used;
     //attributes bellow this are not saved in the DB in ticket table, they are used just as helpers here
     // customer
+    private String email;
     private String phone_nb;
     private String first_name;
     private String last_name;
@@ -25,6 +26,8 @@ public class Ticket {
     private LocalDate date;
     private LocalTime time;
 
+
+    // Delete after tests
     public Ticket(int ticket_id, int showing_id, int customer_id, int seat_row, int seat_nb, boolean used) {
         this.ticket_id = ticket_id;
         this.showing_id = showing_id;
@@ -76,6 +79,14 @@ public class Ticket {
 
     public void setSeat_nb(int seat_nb) {
         this.seat_nb = seat_nb;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhone_nb() {

@@ -83,7 +83,14 @@ public class ShowingController {
         //we decided to create an TicketReservaationForm object that contains 4 ticket objects instead of an array because
         //thymeleaf was creating some problems when we wanted to modify the objects inside the array
         model.addAttribute("tickets", new TicketReservationForm());
-        return "/showing/reserve-ticket"; //add "you've reserved a ticket" page
+        try {
+            if(principal.getAccessLevel().equalsIgnoreCase("CUSTOMER")) {
+                return "/showing/reserve-ticket"; //add "you've reserved a ticket" page
+            }
+        } catch(Exception e) {
+            return "/showing/employee-reserve-ticket";
+        }
+        return "/showing/employee-reserve-ticket";
     }
 
 

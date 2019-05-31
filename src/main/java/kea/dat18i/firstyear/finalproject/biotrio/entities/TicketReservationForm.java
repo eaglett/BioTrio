@@ -7,6 +7,8 @@ public class TicketReservationForm {
     private Ticket ticket3 = new Ticket();
     private Ticket ticket4 = new Ticket();
 
+    // A customer to be stored into the DB when employee is reserving tickets for a Customer
+    private Customer customer = new Customer();
 
     public Ticket getTicket1() {
         return ticket1;
@@ -38,5 +40,13 @@ public class TicketReservationForm {
 
     public void setTicket4(Ticket ticket4) {
         this.ticket4 = ticket4;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

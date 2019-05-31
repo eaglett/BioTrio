@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Bio Trio Tickets</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- For button images -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+</head>
+<body>
+
+<div>
+    <th:block th:include="fragments/navbar :: navbar"></th:block>
+</div>
+
+<div class="jumbotron">
+
+
+    <table>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td></td> <!--empty for that corner left empty cell-->
+                        <td th:each="chair, iter: ${seatMatrix[0]}" th:text=${iter.count}></td> <!-- first row, seat numbers-->
+                    </tr>
+                    <tr th:each="row, iter2 : ${seatMatrix}" >
+                        <td th:text=${iter2.count}></td> <!--first cell in each row, row number-->
+                        <td th:each="seat: ${row}">
+                            <input th:if="${seat == 'Available'}" th:type="button" class="btn btn-outline-primary">
+                            <input th:unless="${seat == 'Available'}" th:type="button" class="btn btn-danger" disabled>
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+            <td style="padding: 20px;">
+                <h2 th:text=${movie.movie_name}></h2>
+                <span th:text="${'Starting at: ' + #temporals.format(showing.date, 'dd-MM-yyyy') + ' ' + showing.time}"></span><br/>
+                <span th:text="${'Duration: ' + movie.duration + ' minutes'}"></span><br/>
+                <span th:text="${'Year of Production: ' + movie.year_of_production}"></span><br/>
+
+                <form th:action="@{'/movies/showings/reserve/' + ${showingId}}" th:object="${tickets}" method="POST">
+                    <table style="padding: 20px; border-collapse: separate; border-spacing: 2px;">
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="first_name">First name </label>
+                                    <input type="text" class="form-control" th:placeholder="'John'"
+                                           id="first_name" aria-describedby="first_name" th:field="${tickets.customer.firstName}"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="last_name">Last name </label>
+                                    <input type="text" class="form-control" th:placeholder="'Doe'"
+                                           id="last_name" aria-describedby="last_name"
+                                           th:field="${tickets.customer.lastName}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="phone_nb">Phone Number </label>
+                                    <input type="text" class="form-control" th:placeholder="'10101010'" th:maxlength="15"
+                                           id="phone_nb" aria-describedby="phone_nb"
+                                           th:field="${tickets.customer.phoneNumber}"/>
+                                </div>
+                            </td>
+                            <td><div class="form-group">
+                                <label for="email">Phone Number </label>
+                                <input type="email" class="form-control" th:placeholder="'johndoe@johndoe.com'"
+                                       id="email" aria-describedby="email" th:field="${tickets.customer.email}"/>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><h5>Ticket 1: </h5></td>
+                            <td>
+                                <div class="form-group">
+                                    <select id="row_nb1" name="row_nb1" th:field="${tickets.ticket1.seat_row}">
+                                        <option th:type="hidden" th:text="'Select a row'" th:value="0" ></option>
+                                        <option th:type="hidden"
+                                                th:each="row, iter : ${seatMatrix}"
+                                                th:text="${iter.count}"
+                                                th:value="${iter.count}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <select id="seat_nb1" name="seat_nb1" th:field="${tickets.ticket1.seat_nb}">
+                                        <option th:type="hidden" th:text="'Select a seat'" th:value="0" ></option>
+                                        <option th:type="hidden"
+                                                th:each="chair, iter: ${seatMatrix[0]}"
+                                                th:text="${iter.count}"
+                                                th:value="${iter.count}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><h5>Ticket 2: </h5></td>
+                            <td>
+                                <div class="form-group">
+                                    <select id="row_nb2" name="row_nb2" th:field="${tickets.ticket2.seat_row}">
+                                        <option th:type="hidden" th:text="'Select a row'" th:value="0" ></option>
+                                        <option th:type="hidden"
+                                                th:each="row, iter : ${seatMatrix}"
+                                                th:text="${iter.count}"
+                                                th:value="${iter.count}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <select id="seat_nb2" name="seat_nb2" th:field="${tickets.ticket2.seat_nb}">
+                                        <option th:type="hidden" th:text="'Select a seat'" th:value="0" ></option>
+                                        <option th:type="hidden"
+                                                th:each="chair, iter: ${seatMatrix[0]}"
+                                                th:text="${iter.count}"
+                                                th:value="${iter.count}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><h5>Ticket 3: </h5></td>
+                            <td>
+                                <div class="form-group">
+                                    <select id="row_nb3" name="row_nb3" th:field="${tickets.ticket3.seat_row}">
+                                        <option th:type="hidden" th:text="'Select a row'" th:value="0" ></option>
+                                        <option th:type="hidden"
+                                                th:each="row, iter : ${seatMatrix}"
+                                                th:text="${iter.count}"
+                                                th:value="${iter.count}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <select id="seat_nb3" name="seat_nb3" th:field="${tickets.ticket3.seat_nb}">
+                                        <option th:type="hidden" th:text="'Select a seat'" th:value="0" ></option>
+                                        <option th:type="hidden"
+                                                th:each="chair, iter: ${seatMatrix[0]}"
+                                                th:text="${iter.count}"
+                                                th:value="${iter.count}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><h5>Ticket 4: </h5></td>
+                            <td>
+                                <div class="form-group">
+                                    <select id="row_nb4" name="row_nb4" th:field="${tickets.ticket4.seat_row}">
+                                        <option th:type="hidden" th:text="'Select a row'" th:value="0" ></option>
+                                        <option th:type="hidden"
+                                                th:each="row, iter : ${seatMatrix}"
+                                                th:text="${iter.count}"
+                                                th:value="${iter.count}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <select id="seat_nb4" name="seat_nb4" th:field="${tickets.ticket4.seat_nb}">
+                                        <option th:type="hidden" th:text="'Select a seat'" th:value="0" ></option>
+                                        <option th:type="hidden"
+                                                th:each="chair, iter: ${seatMatrix[0]}"
+                                                th:text="${iter.count}"
+                                                th:value="${iter.count}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="btn btn-info" type="submit" value="Submit" />
+                            </td>
+                            <td>
+                                <input class="btn btn-danger" type="reset" value="Reset"/>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+
+</div>
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<script th:if="${param.fail}" >alert("A seat is already reserved. Please choose another and try again.") </script>
+<script th:if="${param.empty}" >alert("Please select a seat and try again.") </script>
+
+</body>
+</html>
