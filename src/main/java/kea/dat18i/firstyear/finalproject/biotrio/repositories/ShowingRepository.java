@@ -99,15 +99,22 @@ public class ShowingRepository {
 
         List<Ticket> tickets = ticketRepo.findTickets(showing_id);
 
-
-        //inicialization of all seats to available
-        for(int i=0; i<  theatre.getRows(); i++){
-            seatsMatrix.add(new ArrayList<String>());
-            for(int j=0; j<theatre.getSeatsPerRow(); j++){
-                seatsMatrix.get(i).add("Available");
-            }
+        //dummy first row, because index 0 was messing with the seat possition
+        seatsMatrix.add(new ArrayList<String>());
+        for (int i = 0; i<=theatre.getSeatsPerRow(); i++){
+            seatsMatrix.get(0).add("dummy");
         }
 
+        //inicialization of all seats to available
+            for (int i = 1; i <= theatre.getRows(); i++) {
+                seatsMatrix.add(new ArrayList<String>());
+                for (int j = 0; j <= theatre.getSeatsPerRow(); j++) {
+                    if(j == 0)
+                        seatsMatrix.get(i).add("dummy");
+                    else
+                        seatsMatrix.get(i).add("Available");
+                }
+            }
 
         //modifying reserved seats
         for (int i=0; i<tickets.size(); i++){
