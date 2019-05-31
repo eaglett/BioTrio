@@ -95,47 +95,13 @@ INSERT INTO showing ( movie_id, theater_id, start_date_time) VALUES
             WHERE theater_name = 'Orange Theater'), 
 	  '2019-06-06 19:00');
      
-INSERT INTO ticket (showing_id, customer_id, seat_row, seat_nb) VALUES 
-	( (SELECT showing_id 
-			FROM showing 
-            WHERE 
-				movie_id=(
-					SELECT movie_id 
-						FROM movie 
-                        WHERE movie_name = 'Long shot') 
-				AND 
-				start_date_time = '2019-06-05 18:00'), 
-	  (SELECT customer_id 
-			FROM customer 
-            WHERE phone_nb = '00451234567'),
-		10,
-        12),
-	( (SELECT showing_id 
-			FROM showing 
-            WHERE 
-				movie_id=(
-					SELECT movie_id 
-                    FROM movie 
-                    WHERE movie_name = 'Sonic the Hedgehog') 
-				AND 
-                start_date_time = '2019-06-05 21:00'), 
-	  (SELECT customer_id 
-			FROM customer 
-            WHERE phone_nb = '00453245678'), 
-		12,
-        5),
-	( (SELECT showing_id 
-			FROM showing 
-            WHERE 
-            movie_id=(
-				SELECT movie_id 
-                FROM movie 
-                WHERE movie_name = 'Aladdin') 
-			AND 
-            start_date_time = '2019-06-06 18:00'), 
-	  (SELECT customer_id 
-			FROM customer 
-            WHERE phone_nb = '00456783465'),
-		8,
-        17);
+INSERT INTO ticket (showing_id, customer_id, seat_row, seat_nb, used)
+VALUES (2, 3,6 ,4, FALSE),
+       (4, 2, 5, 1, FALSE),
+       (4, 1, 5, 3, FALSE),
+       (5, 2, 1, 1, FALSE),
+       (2, 3, 8, 3, FALSE),
+       (2, 1, 7, 4, FALSE),
+       (8, 2, 2, 2, FALSE),
+       (3, 4, 4, 5, FALSE);
         

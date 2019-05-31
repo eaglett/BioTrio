@@ -100,12 +100,13 @@ public class ShowingController {
         try {
             if (principal.getAccessLevel().equalsIgnoreCase("CUSTOMER")) {
                 customer = customerRepo.findCustomer(principal.getPrincipal_id());
+
             } else {
                 customer = customerRepo.insertCustomer(tickets.getCustomer());
             }
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("EXCEPTION AT handleReserve PRINCIPAL CUSTOMER");
+            customer = customerRepo.insertCustomer(tickets.getCustomer());
         }
 
 
@@ -120,16 +121,14 @@ public class ShowingController {
                 tickets.getTicket1().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket1(), showingId)){ //ako je nesto oznaceno i slobodna je
 
-<<<<<<< HEAD
+
             ticketRepo.insertTicketInDB(tickets.getTicket1(), showingId, customer);
-=======
-            ticketRepo.insertTicketInDB(tickets.getTicket1(), showingId);
             selected = true;
             System.out.println("ticket1 selected true");
->>>>>>> 8143aec03dada7e212dcc4f7a80f441aaf7d8712
+
 
             // Write QR message and send to correct recipient
-            qRwriter.writeQR(tickets.getTicket1(), showingId);
+            qRwriter.writeQR(tickets.getTicket1(), showingId, customer);
             System.out.println(customer.getEmail());
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
@@ -144,16 +143,14 @@ public class ShowingController {
                 tickets.getTicket2().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket2(), showingId)){
 
-<<<<<<< HEAD
+
             ticketRepo.insertTicketInDB(tickets.getTicket2(), showingId, customer);
-=======
-            ticketRepo.insertTicketInDB(tickets.getTicket2(), showingId);
             selected = true;
             System.out.println("ticket2 selected true");
->>>>>>> 8143aec03dada7e212dcc4f7a80f441aaf7d8712
+
 
             // Write QR message and send to correct recipient
-            qRwriter.writeQR(tickets.getTicket2(), showingId);
+            qRwriter.writeQR(tickets.getTicket2(), showingId, customer);
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
 
@@ -165,17 +162,13 @@ public class ShowingController {
                 tickets.getTicket3().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket3(), showingId)){
 
-<<<<<<< HEAD
-            ticketRepo.insertTicketInDB(tickets.getTicket3(), showingId, customer);
 
-=======
-            ticketRepo.insertTicketInDB(tickets.getTicket3(), showingId);
+            ticketRepo.insertTicketInDB(tickets.getTicket3(), showingId, customer);
             selected = true;
             System.out.println("ticket3 selected true");
->>>>>>> 8143aec03dada7e212dcc4f7a80f441aaf7d8712
 
             // Write QR message and send to correct recipient
-            qRwriter.writeQR(tickets.getTicket3(), showingId);
+            qRwriter.writeQR(tickets.getTicket3(), showingId, customer);
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
 
@@ -188,17 +181,14 @@ public class ShowingController {
                 tickets.getTicket4().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket4(), showingId)){
 
-<<<<<<< HEAD
-            ticketRepo.insertTicketInDB(tickets.getTicket4(), showingId, customer);
 
-=======
-            ticketRepo.insertTicketInDB(tickets.getTicket4(), showingId);
+            ticketRepo.insertTicketInDB(tickets.getTicket4(), showingId, customer);
             selected = true;
             System.out.println("ticket4 selected true");
->>>>>>> 8143aec03dada7e212dcc4f7a80f441aaf7d8712
+
 
             // Write QR message and send to correct recipient
-            qRwriter.writeQR(tickets.getTicket4(), showingId);
+            qRwriter.writeQR(tickets.getTicket4(), showingId, customer);
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
 

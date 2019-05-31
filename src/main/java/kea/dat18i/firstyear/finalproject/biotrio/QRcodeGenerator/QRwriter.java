@@ -37,8 +37,6 @@ public class QRwriter {
     @Autowired
     private CustomerRepository customerRepo;
 
-    private Principal principal = new Principal();
-
 
 
     // Line separator to separate and properly format our QR messages
@@ -46,13 +44,13 @@ public class QRwriter {
 
     // Takes a Ticket parameter to store text
     // about a reserved Ticket inside a QR encoding
-    public void writeQR(Ticket ticket, int showing_id) {
+    public void writeQR(Ticket ticket, int showing_id, Customer customer) {
 
         // Create directory to store our QR code file and fetch it afterwards for emailing
         createDirForQR("QRdir");
 
         // Write our formatted String, which holds the information of a Customer's Ticket, into our QR code
-        String QRmsg = createQRmsg(ticket, showing_id);
+        String QRmsg = createQRmsg(ticket, showing_id, customer);
 
         try {
             String filePath = "QRdir\\QRCODE5_BioTrioTicket.png";
@@ -84,10 +82,10 @@ public class QRwriter {
 
     // Prepare a formatted QR message to write to our QR code
     // Insert a Ticket's data into a formatted String to prepare for writing to QR code
-    private String createQRmsg(Ticket ticket, int showing_id) {
+    private String createQRmsg(Ticket ticket, int showing_id, Customer c) {
 
         Showing showing = showingRepo.findShowingById(showing_id);
-        Customer customer = customerRepo.findCustomer(principal.getPrincipal_id());
+        Customer customer = customerRepo.findCustomer(c.getId());
 
         // Format a part of our message
         String QRmsg = String.format(n + "Theatre: %s" + n +

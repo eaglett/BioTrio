@@ -75,6 +75,8 @@ public class TicketRepository {
         return tickets;
     }
 
+
+    // This only works for logged in user reserving tickets
     public void insertTicketInDB (Ticket ticket, int showingId){
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
@@ -97,6 +99,7 @@ public class TicketRepository {
     }
 
 
+    // This works with both our views for reserving tickets
     public void insertTicketInDB (Ticket ticket, int showingId, Customer customer){
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
