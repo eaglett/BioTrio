@@ -64,7 +64,7 @@
                                 <div class="form-group">
                                     <label for="first_name">First name </label>
                                     <input type="text" class="form-control" th:placeholder="'John'"
-                                           id="first_name" aria-describedby="first_name" th:field="${tickets.customer.firstName}"/>
+                                           id="first_name" aria-describedby="first_name" th:field="${tickets.customer.firstName}" required/>
                                 </div>
                             </td>
                             <td>
@@ -72,7 +72,7 @@
                                     <label for="last_name">Last name </label>
                                     <input type="text" class="form-control" th:placeholder="'Doe'"
                                            id="last_name" aria-describedby="last_name"
-                                           th:field="${tickets.customer.lastName}"/>
+                                           th:field="${tickets.customer.lastName}" required/>
                                 </div>
                             </td>
                         </tr>
@@ -82,13 +82,13 @@
                                     <label for="phone_nb">Phone Number </label>
                                     <input type="text" class="form-control" th:placeholder="'10101010'" th:maxlength="15"
                                            id="phone_nb" aria-describedby="phone_nb"
-                                           th:field="${tickets.customer.phoneNumber}"/>
+                                           th:field="${tickets.customer.phoneNumber}" required/>
                                 </div>
                             </td>
                             <td><div class="form-group">
-                                <label for="email">Phone Number </label>
+                                <label for="email">Email </label>
                                 <input type="email" class="form-control" th:placeholder="'johndoe@johndoe.com'"
-                                       id="email" aria-describedby="email" th:field="${tickets.customer.email}"/>
+                                       id="email" aria-describedby="email" th:field="${tickets.customer.email}" required/>
                             </div>
                             </td>
                         </tr>
