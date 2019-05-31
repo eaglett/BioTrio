@@ -120,9 +120,13 @@ public class TicketRepository {
 
     public boolean validateTicketAvailability(Ticket ticket, int showingId){
         ArrayList<ArrayList<String>> seatsMatrix = showingRepo.findTakenSeats(showingId);
-        String availability = seatsMatrix.get(ticket.getSeat_row()).get(ticket.getSeat_nb());
 
-        return availability.equals("Available");
+        String availability = seatsMatrix.get(ticket.getSeat_row()).get(ticket.getSeat_nb());
+        System.out.println("availability" + availability);
+        if (!availability.equals("dummy"))
+            return availability.equals("Available");
+        else
+            return true;
     }
 
 

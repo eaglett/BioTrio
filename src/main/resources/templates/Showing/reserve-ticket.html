@@ -27,15 +27,21 @@
                 <table>
                     <tr>
                         <td></td> <!--empty for that corner left empty cell-->
-                        <td th:each="chair, iter: ${seatMatrix[0]}" th:text=${iter.count}></td> <!-- first row, seat numbers-->
+                        <div th:each="chair, iter: ${seatMatrix[0]}">
+                            <div th:if="${iter.count == 1}">
+                                <td></td>
+
+                            </div>
+                            <td th:if="${iter.count > 1}" th:text=${iter.count-1}></td> <!-- first row, seat numbers-->
+                        </div>
                     </tr>
                     <tr th:each="row, iter2 : ${seatMatrix}" >
-                        <td th:text=${iter2.count}></td> <!--first cell in each row, row number-->
-                        <div th:if="iter2.count==1"/>
-                        <div th:unless="iter2.count==1 ">
+
+                        <td th:if="${iter2.count > 1}" th:text=${iter2.count-1}></td> <!--first cell in each row, row number-->
+                        <div th:if="${iter2.count == 1}"/>
+                        <div th:if="${iter2.count > 1}">
                             <td th:each="seat, iter3 : ${row}">
-                                <div th:if="iter3.count==1"/>
-                                <div th:unless="iter3.count==1">
+                                <div th:if="${iter3.count > 1}">
                                     <input th:if="${seat == 'Available'}" th:type="button" class="btn btn-outline-primary">
                                     <input th:unless="${seat == 'Available'}" th:type="button" class="btn btn-danger" disabled>
                                 </div>
@@ -59,11 +65,13 @@
                             <div class="form-group">
                                 <select id="row_nb1" name="row_nb1" th:field="${tickets.ticket1.seat_row}">
                                     <option th:type="hidden" th:text="'Select a row'" th:value="0" ></option>
+                                    <div th:each="row, iter : ${seatMatrix}">
                                     <option th:type="hidden"
-                                            th:each="row, iter : ${seatMatrix}"
-                                            th:text="${iter.count}"
-                                            th:value="${iter.count}">
+                                            th:if="${iter.index>0}"
+                                            th:text="${iter.index}"
+                                            th:value="${iter.index}">
                                     </option>
+                                    </div>
                                 </select>
                             </div>
                         </td>
@@ -71,11 +79,13 @@
                                 <div class="form-group">
                                     <select id="seat_nb1" name="seat_nb1" th:field="${tickets.ticket1.seat_nb}">
                                         <option th:type="hidden" th:text="'Select a seat'" th:value="0" ></option>
+                                        <div th:each="chair, iter: ${seatMatrix[0]}">
                                         <option th:type="hidden"
-                                                th:each="chair, iter: ${seatMatrix[0]}"
-                                                th:text="${iter.count}"
-                                                th:value="${iter.count}">
+                                                th:if="${iter.index>0}"
+                                                th:text="${iter.index}"
+                                                th:value="${iter.index}">
                                         </option>
+                                        </div>
                                     </select>
                                 </div>
                             </td>
@@ -86,11 +96,13 @@
                                 <div class="form-group">
                                     <select id="row_nb2" name="row_nb2" th:field="${tickets.ticket2.seat_row}">
                                         <option th:type="hidden" th:text="'Select a row'" th:value="0" ></option>
+                                        <div th:each="row, iter : ${seatMatrix}">
                                         <option th:type="hidden"
-                                                th:each="row, iter : ${seatMatrix}"
-                                                th:text="${iter.count}"
-                                                th:value="${iter.count}">
+                                                th:if="${iter.index>0}"
+                                                th:text="${iter.index}"
+                                                th:value="${iter.index}">
                                         </option>
+                                        </div>
                                     </select>
                                 </div>
                             </td>
@@ -98,11 +110,13 @@
                                 <div class="form-group">
                                     <select id="seat_nb2" name="seat_nb2" th:field="${tickets.ticket2.seat_nb}">
                                         <option th:type="hidden" th:text="'Select a seat'" th:value="0" ></option>
-                                        <option th:type="hidden"
-                                                th:each="chair, iter: ${seatMatrix[0]}"
-                                                th:text="${iter.count}"
-                                                th:value="${iter.count}">
-                                        </option>
+                                        <div th:each="chair, iter: ${seatMatrix[0]}">
+                                            <option th:type="hidden"
+                                                    th:if="${iter.index>0}"
+                                                    th:text="${iter.index}"
+                                                    th:value="${iter.index}">
+                                            </option>
+                                        </div>
                                     </select>
                                 </div>
                             </td>
@@ -113,11 +127,13 @@
                                 <div class="form-group">
                                     <select id="row_nb3" name="row_nb3" th:field="${tickets.ticket3.seat_row}">
                                         <option th:type="hidden" th:text="'Select a row'" th:value="0" ></option>
-                                        <option th:type="hidden"
-                                                th:each="row, iter : ${seatMatrix}"
-                                                th:text="${iter.count}"
-                                                th:value="${iter.count}">
-                                        </option>
+                                        <div th:each="row, iter : ${seatMatrix}">
+                                            <option th:type="hidden"
+                                                    th:if="${iter.index>0}"
+                                                    th:text="${iter.index}"
+                                                    th:value="${iter.index}">
+                                            </option>
+                                        </div>
                                     </select>
                                 </div>
                             </td>
@@ -125,11 +141,13 @@
                                 <div class="form-group">
                                     <select id="seat_nb3" name="seat_nb3" th:field="${tickets.ticket3.seat_nb}">
                                         <option th:type="hidden" th:text="'Select a seat'" th:value="0" ></option>
-                                        <option th:type="hidden"
-                                                th:each="chair, iter: ${seatMatrix[0]}"
-                                                th:text="${iter.count}"
-                                                th:value="${iter.count}">
-                                        </option>
+                                        <div th:each="chair, iter: ${seatMatrix[0]}">
+                                            <option th:type="hidden"
+                                                    th:if="${iter.index>0}"
+                                                    th:text="${iter.index}"
+                                                    th:value="${iter.index}">
+                                            </option>
+                                        </div>
                                     </select>
                                 </div>
                             </td>
@@ -140,11 +158,13 @@
                                 <div class="form-group">
                                     <select id="row_nb4" name="row_nb4" th:field="${tickets.ticket4.seat_row}">
                                         <option th:type="hidden" th:text="'Select a row'" th:value="0" ></option>
-                                        <option th:type="hidden"
-                                                th:each="row, iter : ${seatMatrix}"
-                                                th:text="${iter.count}"
-                                                th:value="${iter.count}">
-                                        </option>
+                                        <div th:each="row, iter : ${seatMatrix}">
+                                            <option th:type="hidden"
+                                                    th:if="${iter.index>0}"
+                                                    th:text="${iter.index}"
+                                                    th:value="${iter.index}">
+                                            </option>
+                                        </div>
                                     </select>
                                 </div>
                             </td>
@@ -152,11 +172,13 @@
                                 <div class="form-group">
                                     <select id="seat_nb4" name="seat_nb4" th:field="${tickets.ticket4.seat_nb}">
                                         <option th:type="hidden" th:text="'Select a seat'" th:value="0" ></option>
-                                        <option th:type="hidden"
-                                                th:each="chair, iter: ${seatMatrix[0]}"
-                                                th:text="${iter.count}"
-                                                th:value="${iter.count}">
-                                        </option>
+                                        <div th:each="chair, iter: ${seatMatrix[0]}">
+                                            <option th:type="hidden"
+                                                    th:if="${iter.index>0}"
+                                                    th:text="${iter.index}"
+                                                    th:value="${iter.index}">
+                                            </option>
+                                        </div>
                                     </select>
                                 </div>
                             </td>
