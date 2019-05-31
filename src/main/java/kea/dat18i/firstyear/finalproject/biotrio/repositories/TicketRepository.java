@@ -1,5 +1,6 @@
 package kea.dat18i.firstyear.finalproject.biotrio.repositories;
 
+import kea.dat18i.firstyear.finalproject.biotrio.entities.Customer;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Ticket;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.TicketReservationForm;
 import kea.dat18i.firstyear.finalproject.biotrio.security.Principal;
@@ -80,6 +81,28 @@ public class TicketRepository {
                     "INSERT INTO ticket VALUES (null, ?, ?, ?, ?, ?)", new String[]{"ticket_id"});
             ps.setInt(1, showingId);
             ps.setInt(2, principal.getPrincipal_id()); //TODO: add a customer id
+            ps.setInt(3, ticket.getSeat_row());
+            ps.setInt(4, ticket.getSeat_nb());
+            ps.setBoolean(5, false);
+
+            return ps;
+        };
+
+        try {
+            KeyHolder keyholder = new GeneratedKeyHolder();
+            jdbc.update(psc, keyholder);
+        } catch (NullPointerException e) {
+            System.out.println(e + " at INSERT ticket in our repository");
+        }
+    }
+
+
+    public void insertTicketInDB (Ticket ticket, int showingId, Customer customer){
+        PreparedStatementCreator psc = Connection -> {
+            PreparedStatement ps = Connection.prepareStatement(
+                    "INSERT INTO ticket VALUES (null, ?, ?, ?, ?, ?)", new String[]{"ticket_id"});
+            ps.setInt(1, showingId);
+            ps.setInt(2, customer.getId()); //TODO: add a customer id
             ps.setInt(3, ticket.getSeat_row());
             ps.setInt(4, ticket.getSeat_nb());
             ps.setBoolean(5, false);

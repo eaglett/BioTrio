@@ -96,7 +96,19 @@ public class ShowingController {
 
     @PostMapping(value = "/movies/showings/reserve/{showingId}")
     public String handleReserve(@ModelAttribute TicketReservationForm tickets, @PathVariable int showingId) {
-        Customer customer = customerRepo.findCustomer(principal.getPrincipal_id());
+        Customer customer = new Customer();
+        try {
+            if (principal.getAccessLevel().equalsIgnoreCase("CUSTOMER")) {
+                customer = customerRepo.findCustomer(principal.getPrincipal_id());
+            } else {
+                customer = customerRepo.insertCustomer(tickets.getCustomer());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("EXCEPTION AT handleReserve PRINCIPAL CUSTOMER");
+        }
+
+
 
         //we cannot use a loop (which would be more elegant) because of TicketReservationForm format and that is made the way it is
         //because we had problems with modifying arrays through forms
@@ -108,7 +120,7 @@ public class ShowingController {
                 tickets.getTicket1().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket1(), showingId)){
 
-            ticketRepo.insertTicketInDB(tickets.getTicket1(), showingId);
+            ticketRepo.insertTicketInDB(tickets.getTicket1(), showingId, customer);
 
             // Write QR message and send to correct recipient
             qRwriter.writeQR(tickets.getTicket1(), showingId);
@@ -116,7 +128,7 @@ public class ShowingController {
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
 
-            qRsender.sendSMS();
+            //qRsender.sendSMS();
 
             selected = true;
         } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
@@ -125,7 +137,7 @@ public class ShowingController {
                 tickets.getTicket2().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket2(), showingId)){
 
-            ticketRepo.insertTicketInDB(tickets.getTicket2(), showingId);
+            ticketRepo.insertTicketInDB(tickets.getTicket2(), showingId, customer);
 
             // Write QR message and send to correct recipient
             qRwriter.writeQR(tickets.getTicket2(), showingId);
@@ -139,7 +151,7 @@ public class ShowingController {
                 tickets.getTicket3().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket3(), showingId)){
 
-            ticketRepo.insertTicketInDB(tickets.getTicket3(), showingId);
+            ticketRepo.insertTicketInDB(tickets.getTicket3(), showingId, customer);
 
 
             // Write QR message and send to correct recipient
@@ -155,7 +167,7 @@ public class ShowingController {
                 tickets.getTicket4().getSeat_nb() != 0 &&
                 ticketRepo.validateTicketAvailability(tickets.getTicket4(), showingId)){
 
-            ticketRepo.insertTicketInDB(tickets.getTicket4(), showingId);
+            ticketRepo.insertTicketInDB(tickets.getTicket4(), showingId, customer);
 
 
             // Write QR message and send to correct recipient
