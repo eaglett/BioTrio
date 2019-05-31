@@ -33,12 +33,16 @@ public class CurrentUserController {
         return "login";
     }
 
+
+    // Probably gonna delete this
     @GetMapping (value="/customer-login")
     public String customerLogin(Model m){
         m.addAttribute("loginform", new Customer());
         return "customer-login";
     }
 
+
+    // Probably gonna delete this
     @PostMapping("/loginCustomer")
     public String loginCustomer(@ModelAttribute Customer customer){
 
@@ -46,33 +50,13 @@ public class CurrentUserController {
         return "redirect:/";
     }
 
+
+    // Probably gonna delete this
     @GetMapping (value="employee-login")
     public String employeeLogin(Model m){
         m.addAttribute("loginform", new Employee());
         return "employee-login";
     }
-
-    // Don't need this with our new login - but let's keep it here for now
-//    @PostMapping("/loginEmployee")
-////    @ResponseBody
-//    public String loginEmployee(@ModelAttribute Employee employee){
-//        Employee logingEmployee = EmployeeRepository.findEmployee(employee);
-//        /* Car carInserted = carRepo.insert(car);*/
-////        return "Your data is saved and secured don't worry about GDPR." + employeeInserted;
-//        return "redirect:/";
-//    }
-
-
-//  Useless for now
-//
-//    @GetMapping(value = "/logout")
-//    public String logout() {
-//        principal.clearAttributes();
-//        System.out.println(principal.toString());
-//
-//        return "redirect:/home?logout";
-//    }
-
 
 
 }

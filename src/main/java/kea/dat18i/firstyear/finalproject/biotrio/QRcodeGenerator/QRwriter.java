@@ -41,7 +41,7 @@ public class QRwriter {
 
 
 
-    // Line separator to separate and properly format or QR messages
+    // Line separator to separate and properly format our QR messages
     private String n = System.lineSeparator();
 
     // Takes a Ticket parameter to store text

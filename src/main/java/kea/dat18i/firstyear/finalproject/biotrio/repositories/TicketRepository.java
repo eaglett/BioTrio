@@ -52,8 +52,10 @@ public class TicketRepository {
 
     public List<Ticket> findTicketsByPhoneNb(int showing_id, String phone_nb){
         List<Ticket> tickets = new ArrayList<>();
-        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM ticket INNER JOIN customer ON ticket.customer_id = customer.customer_id WHERE (showing_id=" + showing_id
-                + " AND phone_nb=" + phone_nb +")");
+        SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM ticket " +
+                "INNER JOIN customer ON ticket.customer_id = customer.customer_id " +
+                "WHERE (showing_id = " + showing_id
+                + " AND phone_nb = " + phone_nb +")");
         // Iterate over every row in our ticket table by using a while loop
         // and checking if next row exists
         while(rs.next()) {
@@ -100,5 +102,19 @@ public class TicketRepository {
         return availability.equals("Available");
     }
 
+
+    public void updateTicketStatus(Ticket ticket) {
+        PreparedStatementCreator psc = Connection -> {
+            PreparedStatement ps = Connection.prepareStatement(
+                    "UPDATE ticket SET used = ? WHERE ticket_id = ?");
+            ps.setBoolean(1, true);
+            ps.setInt(2, ticket.getTicket_id());
+
+            return ps;
+        };
+
+        jdbc.update(psc);
+
+    }
 
 }

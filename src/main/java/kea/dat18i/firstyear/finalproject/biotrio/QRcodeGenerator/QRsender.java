@@ -3,6 +3,15 @@ package kea.dat18i.firstyear.finalproject.biotrio.QRcodeGenerator;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import kea.dat18i.firstyear.finalproject.biotrio.entities.Customer;
+import kea.dat18i.firstyear.finalproject.biotrio.entities.Showing;
+import kea.dat18i.firstyear.finalproject.biotrio.entities.Ticket;
+import kea.dat18i.firstyear.finalproject.biotrio.repositories.CustomerRepository;
+import kea.dat18i.firstyear.finalproject.biotrio.repositories.MovieRepository;
+import kea.dat18i.firstyear.finalproject.biotrio.repositories.ShowingRepository;
+import kea.dat18i.firstyear.finalproject.biotrio.repositories.TheatreRepository;
+import kea.dat18i.firstyear.finalproject.biotrio.security.Principal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.activation.DataHandler;
@@ -15,6 +24,10 @@ import java.util.Properties;
 // Handles the sending of a QRcode .png file through email or SMS
 @Component
 public class QRsender  {
+
+
+    // Line separator to separate and properly format our SMS messages
+    private String n = System.lineSeparator();
 
     // Find your Account Sid and Token at twilio.com/user/account
     private static final String ACCOUNT_SID = "AC6002544ad3a247125120e3216feda403";
@@ -94,16 +107,14 @@ public class QRsender  {
 
 
     public void sendSMS() {
-
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Message message = Message.creator(new PhoneNumber("+4553634060"), new PhoneNumber("+13304002981"),
-                "Just testing to see if we can send SMS with java for our QR code!").create();
+                "Just testing to see if we can send SMS with java for our QR code!" + n +
+                     "Theatre: Red Theatre" + n +
+                     "Movie: Avengers: Endgame" + n +
+                     "Row: 4" + n +
+                     "Seat 7" + n +
+                     "Phone number: +yyxxxxxxxx").create();
         System.out.println(message.getSid());
     }
-
-
-
-
-
-
 }

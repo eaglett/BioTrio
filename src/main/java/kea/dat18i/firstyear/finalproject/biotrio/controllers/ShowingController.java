@@ -108,6 +108,9 @@ public class ShowingController {
             System.out.println(customer.getEmail());
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
+
+            qRsender.sendSMS();
+
             selected = true;
         } else if(tickets.getTicket2().getSeat_row() != 0 && tickets.getTicket2().getSeat_nb() != 0)
             allOK = false ;

@@ -12,11 +12,15 @@ public class Ticket {
     private int seat_nb;
     private boolean used;
     //attributes bellow this are not saved in the DB in ticket table, they are used just as helpers here
+    // customer
     private String phone_nb;
     private String first_name;
     private String last_name;
+    // theatre
     private String theatre_name;
+    // movie
     private String movie_name;
+    // showing
     private int movie_id;
     private LocalDate date;
     private LocalTime time;
