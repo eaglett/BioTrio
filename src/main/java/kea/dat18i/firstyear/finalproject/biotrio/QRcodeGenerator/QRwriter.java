@@ -41,7 +41,7 @@ public class QRwriter {
 
 
 
-    // Line separator to separate and properly format or QR messages
+    // Line separator to separate and properly format our QR messages
     private String n = System.lineSeparator();
 
     // Takes a Ticket parameter to store text
@@ -94,6 +94,8 @@ public class QRwriter {
                      "Movie: %s" + n +
                      "Date: %s" + n +
                      "Playing time: %s" + n +
+                     "Row: %s" + n +
+                     "Seat: %s" + n +
                      "Customer name: %s %s" + n +
                      "Email: %s" + n +
                      "Phone number: %s" + n + n,
@@ -101,6 +103,8 @@ public class QRwriter {
                      movieRepo.findMovie(showing.getMovie_id()).getMovie_name(),
                      showing.getDate(),
                      showing.getTime(),
+                     ticket.getSeat_row(),
+                     ticket.getSeat_nb(),
                      customer.getFirstName(),
                      customer.getLastName(),
                      customer.getEmail(),
