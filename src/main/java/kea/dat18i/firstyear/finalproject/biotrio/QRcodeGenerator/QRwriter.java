@@ -38,7 +38,6 @@ public class QRwriter {
     private CustomerRepository customerRepo;
 
 
-
     // Line separator to separate and properly format our QR messages
     private String n = System.lineSeparator();
 

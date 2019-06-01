@@ -21,6 +21,7 @@
 <div class="jumbotron">
 
     <div th:if="${param.error}" class="alert alert-warning">Something went wrong, please try again.</div>
+    <div th:if="${param.distantDate}" class="alert alert-warning">The date you have chosen exceeds the max date limit</div>
     <form th:action="@{'/movies/add_showing'}" th:object="${newShowing}" method="POST">
         <div class="form-group">
             <label for="theatre_id"></label>

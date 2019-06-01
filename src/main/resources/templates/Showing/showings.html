@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Bio Trio Showings</title>
+    <link rel="stylesheet" href="/css/style.css">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -12,26 +13,30 @@
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 </head>
-<body>
+<body id="bootstrap-override-background">
 
 <div>
     <th:block th:include="fragments/navbar :: navbar"></th:block>
 </div>
 
-<div class="jumbotron">
-    <a th:href="@{'/movies/add_showing'}" class="btn btn-success">Add Showing</a>
-    <h1>Still have to polish this part by displaying the actual theatre name</h1>
-    <table class="table table-striped">
+<div style="max-width: 100vw; align-content: center; padding-top: 20px; padding-bottom: 20px; justify-content: center; display: flex;">
+    <a th:href="@{'/movies/add_showing'}" class="btn btn-primary" style="width:90%;">Add Showing</a>
+</div>
+<div th:object="${movie}"  style="padding: 2rem;">
+
+     <h2 th:text="${'All showings for: ' + movie.movie_name}" style="color: white"></h2>
+
+     <table class="table table-striped" style="padding: 5%; background-color: white">
         <thead>
             <tr>
-                <th class="col">Movie</th>
-                <th class="col">Theatre</th>
-                <th class="col">Duration</th>
-                <th class="col">Date</th>
-                <th class="col">Playing Time</th>
+                <th class="col"style="min-width: 180px">Movie</th>
+                <th class="col"style="min-width: 180px">Theatre</th>
+                <th class="col"style="min-width: 180px">Duration</th>
+                <th class="col" style="min-width: 180px">Date</th>
+                <th class="col"style="min-width: 180px">Playing Time</th>
             </tr>
         </thead>
-        <tr th:each="showing, iter : ${showingsList}" th:object="${movie}">
+        <tr th:each="showing, iter : ${showingsList}" >
             <td th:text="${showing.movie_name}" ></td>
             <td th:text="${showing.theatre_name}"></td>
             <td th:text="${showing.duration + ' Minutes'}"></td>

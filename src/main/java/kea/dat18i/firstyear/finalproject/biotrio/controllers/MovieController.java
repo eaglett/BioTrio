@@ -2,6 +2,7 @@ package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Movie;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.MovieRepository;
+import kea.dat18i.firstyear.finalproject.biotrio.repositories.ShowingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -23,13 +24,18 @@ public class MovieController {
     @Autowired
     private MovieRepository movieRepo;
 
+    @Autowired
+    private ShowingRepository showingRepo;
+
     private List<Movie> movieList = new ArrayList<>();
 
+
+    // Deletes past showings
     @GetMapping(value = "/movies")
     public String movies(Model model) {
+        showingRepo.deletePastShowings();
         movieList = movieRepo.findAllMovies();
         model.addAttribute("movieList", movieList);
-
 
         return "movies-page";
 
