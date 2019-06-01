@@ -22,9 +22,9 @@
 <div style="max-width: 100vw; align-content: center; padding-top: 20px; padding-bottom: 20px; justify-content: center; display: flex;">
     <a th:href="@{'/movies/add_showing'}" class="btn btn-primary" style="width:90%;">Add Showing</a>
 </div>
-<div  style="padding: 2rem;">
+<div th:object="${movie}"  style="padding: 2rem;">
 
-     <h2 th:text="${'All showings for: ' + showingsList[0].movie_name}" style="color: white"></h2>
+     <h2 th:text="${'All showings for: ' + movie.movie_name}" style="color: white"></h2>
 
      <table class="table table-striped" style="padding: 5%; background-color: white">
         <thead>
@@ -36,7 +36,7 @@
                 <th class="col"style="min-width: 180px">Playing Time</th>
             </tr>
         </thead>
-        <tr th:each="showing, iter : ${showingsList}" th:object="${movie}">
+        <tr th:each="showing, iter : ${showingsList}" >
             <td th:text="${showing.movie_name}" ></td>
             <td th:text="${showing.theatre_name}"></td>
             <td th:text="${showing.duration + ' Minutes'}"></td>

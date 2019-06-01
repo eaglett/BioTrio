@@ -106,8 +106,17 @@ public class MovieRepository {
 
     // Deleting a movie inside the MySQL database with JDBCtemplate.update(String query)
     public void deleteMovie(Movie movie) {
-        String query = "DELETE FROM movie WHERE movie_id = " + movie.getMovie_id();
-        jdbc.update(query);
+
+        PreparedStatementCreator psc = Connection -> {
+            PreparedStatement ps = Connection.prepareStatement(
+                    "DELETE FROM movie WHERE movie_id = ?");
+            ps.setInt(1, movie.getMovie_id());
+
+            return ps;
+        };
+
+        jdbc.update(psc);
+
     }
 
 

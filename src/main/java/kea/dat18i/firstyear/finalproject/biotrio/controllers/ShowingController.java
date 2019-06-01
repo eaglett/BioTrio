@@ -20,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.time.temporal.ChronoUnit.DAYS;
 
 
 @Controller
@@ -68,7 +69,7 @@ public class ShowingController {
         showingList = showingRepo.findAllShowings(movieId);
 
         model.addAttribute("showingsList", showingDisplayForms);
-        model.addAttribute("movie", movieRepo.findMovie(movieId));
+        model.addAttribute("movie", movieRepo.findMovie(movieId)); // might not need this
         return "/showing/showings";
 
     }
@@ -219,11 +220,15 @@ public class ShowingController {
 
         Showing showing = new Showing();
         try {
+
             // Setting values of a Showing to the values passed in the form of the view
             showing.setTheatre_id(showingFormObject.getTheatre_id());
             showing.setMovie_id((showingFormObject.getMovie_id()));
             showing.setDate(LocalDate.parse(showingFormObject.getStart_date(), dateFormatter));
             showing.setTime(LocalTime.parse(showingFormObject.getStart_time(), timeFormatter));
+            if(DAYS.between(LocalDate.now(), showing.getDate()) > 30) {
+                return "redirect:/movies/add_showing?distantDate";
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/movies/add_showing?error";

@@ -144,7 +144,7 @@ public class ShowingRepository {
         try {
             KeyHolder keyholder = new GeneratedKeyHolder();
             jdbc.update(psc, keyholder);
-            showing.setMovie_id(keyholder.getKey().intValue());
+            showing.setShowing_id(keyholder.getKey().intValue());
         } catch (NullPointerException e) {
             System.out.println(e + " at INSERT showing in our repository");
         }
@@ -161,6 +161,18 @@ public class ShowingRepository {
                     "DELETE FROM showing WHERE showing_id = ?");
             ps.setInt(1, showing.getShowing_id());
 
+            return ps;
+        };
+
+        jdbc.update(psc);
+    }
+
+    // Deletes all showings behind the current date
+    public void deletePastShowings() {
+
+        PreparedStatementCreator psc = Connection -> {
+            PreparedStatement ps = Connection.prepareStatement(
+                    "DELETE FROM showing WHERE start_date_time < CURRENT_TIMESTAMP");
             return ps;
         };
 
