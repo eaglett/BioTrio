@@ -2,6 +2,9 @@
     background-color: #22276d;
     color: white;
 }
+#bootstrap-override-background{
+    background-color: #22276d;
+}
 
 .textShadow{
     text-shadow: 1px 1px 2px black;
