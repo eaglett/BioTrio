@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Spring Security Cross-Site Request Forgery disabled.
         // Have to check if it will mess anything up if enabled
-        http.csrf().disable();
+        //http.csrf().disable();
 
 
         // If another URL needs to be accessed by all users just add it as a String URL
