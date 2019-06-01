@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="carousel-home" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- Bootstrap stylesheet link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+
+
+</head>
+<body>
+
+<div class="bd-example" style="height: 80vh">
+    <div id="carouselCaptions" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#building" data-slide-to="0" class="active"></li>
+            <li data-target="#theatre" data-slide-to="1"></li>
+            <li data-target="#snacks" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div id="building" class="carousel-item active">
+                <img src="/images/biotrio-building.jpg" class="d-block w-100" alt="BioTrio Building" style="height: 80vh">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2 class="textShadow">Welcome to BioTrio</h2>
+                    <p class="textShadow">The best movie theater in Copenhagen.</p>
+                </div>
+            </div>
+            <div id="theatre" class="carousel-item">
+                <img src="/images/biotrio-theater.jpg" class="d-block w-100" alt="BioTrio theater" style="height: 80vh">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2 class="textShadow">Modern theaters with the best sound</h2>
+                    <p class="textShadow">We upgrade our technology frequently to offer the best experience to our customers.</p>
+                </div>
+            </div>
+            <div id="snacks" class="carousel-item">
+                <img src="/images/snacks.jpg" class="d-block w-100" alt="Snacks" style="height: 80vh">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2 class="textShadow">Delicious snacks</h2>
+                    <p class="textShadow">We offer salty popcorn, caramel popcorn, gummy bears and much more.</p>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselCaptions" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselCaptions" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+</body>
+</html>

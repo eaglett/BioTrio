@@ -4,44 +4,49 @@
     <meta charset="UTF-8">
     <title>Bio Trio Home</title>
 
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"-->
-<!--          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <!-- For button images -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/css/test.css">
+
+
 </head>
-<body>
+<body id="bootstrap-overrides">
 
-<!--    <div>-->
-<!--        <th:block th:include="fragments/navbar :: navbar"></th:block>-->
-<!--    </div>-->
+    <div>
+        <th:block th:include="fragments/navbar :: navbar"></th:block>
+    </div>
 
-    <h1>asidbajnjdsajdnALKLSDNSALDNASLD</h1>
+    <div>
+        <th:block th:include="fragments/carousel-home :: carousel-home"></th:block>
+    </div>
 
-<!--    <div class="jumbotron">-->
+    <div >
 
-<!--        <h1>Welcome to Bio Trio</h1>-->
-<!--        <i>Movies for our customer rubies</i>-->
+        <h1>Welcome to Bio Trio</h1>
+        <i>Movies for our customer rubies</i>
 
-<!--    </div>-->
-<!--    <div th:if="${param.logout}" class="alert alert-success">Successfully logged out!</div>-->
+    </div>
+    <div th:if="${param.logout}" class="alert alert-success">Successfully logged out!</div>
 
-<!--    <div th:if="${param.unauthorized}" class="alert alert-warning">Unauthorized access</div>-->
+    <div th:if="${param.unauthorized}" class="alert alert-warning">Unauthorized access</div>
 
 
-<!--    <ul>-->
-<!--        <li><b>Temporary links for testing</b></li>-->
-<!--        <li>Showings are located through a movie's "Select" button - Select the movies link for it</li>-->
-<!--        <li><a href="/movies">Movies link</a></li>-->
-<!--        <li><a href="/employees">Employees link</a></li>-->
-<!--        <li><a href="/theatres">Theatres link</a></li>-->
-<!--        <li><a href="/findTicket">Find tickets</a> </li>-->
-<!--        <li><a href="/logout" >Logout link</a></li>-->
-<!--        <li><a href="/customers/account">Customer account link - a customer needs to be logged in</a></li>-->
-<!--    </ul>-->
+    <ul>
+        <li><b>Temporary links for testing</b></li>
+        <li>Showings are located through a movie's "Select" button - Select the movies link for it</li>
+        <li><a href="/movies">Movies link</a></li>
+        <li><a href="/employees">Employees link</a></li>
+        <li><a href="/theatres">Theatres link</a></li>
+        <li><a href="/findTicket">Find tickets</a> </li>
+        <li><a href="/logout" >Logout link</a></li>
+        <li><a href="/customers/account">Customer account link - a customer needs to be logged in</a></li>
+    </ul>
 
 
 
