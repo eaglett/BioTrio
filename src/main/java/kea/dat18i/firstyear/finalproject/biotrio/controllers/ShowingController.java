@@ -85,7 +85,7 @@ public class ShowingController {
         model.addAttribute("tickets", new TicketReservationForm());
         try {
             if(principal.getAccessLevel().equalsIgnoreCase("CUSTOMER")) {
-                return "/showing/reserve-ticket"; //add "you've reserved a ticket" page
+                return "/showing/reserve-ticket";
             }
         } catch(Exception e) {
             return "/showing/employee-reserve-ticket";
