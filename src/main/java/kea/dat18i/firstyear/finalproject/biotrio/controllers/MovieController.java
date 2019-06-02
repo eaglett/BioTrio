@@ -19,21 +19,35 @@ import java.util.List;
 @Controller
 public class MovieController {
 
-    @Autowired
-    private JdbcTemplate jdbc;
-
+    /**
+     * autowired MovieRepository as movieRepo
+     */
     @Autowired
     private MovieRepository movieRepo;
 
+
+    /**
+     * autowired ShowingRepository as showingRepo
+     */
     @Autowired
     private ShowingRepository showingRepo;
 
+    /**
+     * movie list helper
+     */
     private List<Movie> movieList = new ArrayList<>();
 
+    /**
+     * principal object - contains currently logged in user
+     */
     private Principal principal = new Principal();
 
 
-    // Deletes past showings
+    /**
+     * maps movies page, deletes all of the showings that are in the past, finds all movies and passes movieList and principal to the template
+     * @param model passes attributes to the template
+     * @return movies page
+     */
     @GetMapping(value = "/movies")
     public String movies(Model model) {
         showingRepo.deletePastShowings();
@@ -45,7 +59,11 @@ public class MovieController {
 
     }
 
-
+    /**
+     * maps the add movie page, sends movie and principal objects to the template
+     * @param model passes attributes to the template
+     * @return add a movie page
+     */
     // render the html template add-movie-page.html and create a view for adding a movie
     @GetMapping(value = "/movies/add_movie")
     public String addMovie(Model model) {
@@ -56,15 +74,24 @@ public class MovieController {
         return "add-movie-page";
     }
 
+    /**
+     * post maps the add a movie page and inserts a new movie to database
+     * @param movie new movie object passed from the template form
+     * @return redirects to the all movies page
+     */
     @PostMapping(value = "/movies/add_movie")
     public String handleAddMovie(@ModelAttribute Movie movie) {
         movieRepo.insertMovie(movie);
 
-
         return "redirect:/movies";
     }
 
-
+    /**
+     * maps the edit a movie page with the help of the index, sends index, movie and principal object to the template
+     * @param index index of the movie in the movieList
+     * @param model passes attributes to the template
+     * @return returns edit a movie page
+     */
     // render the html template edit-movie-page.html and create a view for editing a movie
     @GetMapping(value = "/movies/edit/{index}")
     public String editMovie(@PathVariable int index, Model model) {
@@ -76,6 +103,12 @@ public class MovieController {
         return "edit-movie-page";
     }
 
+    /**
+     * post maps the edit a movie page, updates the movie in the database
+     * @param movie edited object passed back from the template
+     * @param index index of the movie from the movie list
+     * @return redirects to the movies page
+     */
     @PostMapping(value = "/movies/edit/{index}")
     public String handleEditMovie(@ModelAttribute Movie movie, @PathVariable int index) {
         movie.setMovie_id(movieList.get(index).getMovie_id());
@@ -85,6 +118,11 @@ public class MovieController {
         return "redirect:/movies";
     }
 
+    /**
+     * maps the delete movie page with the help of the indexs, deletes a movie from the database
+     * @param index index of the movie from the movie list
+     * @return redirects to the movies page
+     */
     @GetMapping(value = "/movies/delete/{index}")
     public String deleteMovie(@PathVariable int index) {
         movieRepo.deleteMovie(movieList.get(index));

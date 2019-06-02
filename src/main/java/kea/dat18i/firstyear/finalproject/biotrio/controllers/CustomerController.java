@@ -20,25 +20,22 @@ import java.util.List;
 @Controller
 public class CustomerController {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
+    /**
+     * @param customerRepo(CustomerRepository) autowire the customerRepo
+     */
     @Autowired
     private CustomerRepository customerRepo = new CustomerRepository();
 
-    // don't need it
-    private List<Customer> customerList = new ArrayList<>();
-
+    /**
+     * @param principal(Principal) helper principal object, stores currently logged user
+     */
     private Principal principal = new Principal();
 
-
-//    @GetMapping(value = "/customers")
-//    public String customers(Model model){
-//        model.addAttribute("customers", customerList);
-//
-//        return "customers-page";
-//    }
-
+    /**
+     * maps Create account page to "create_Account" and sends principal and customer objects through model
+     * @param model passes attributes to the template
+     * @return create account html page
+     */
     @GetMapping(value = "/create_Account")
     public String createAccount(Model model) {
         model.addAttribute("newCustomer", new Customer());
@@ -47,7 +44,11 @@ public class CustomerController {
         return "create-account-page";
     }
 
-
+    /**
+     * post maps "create_Account", receives customer from the template and inserts customer into database
+     * @param customer passed back from a template form
+     * @return redirects to the home page
+     */
     @PostMapping(value = "/create_Account")
     public String handleCreateAccount(@ModelAttribute Customer customer) {
         customerRepo.insertCustomer(customer);
@@ -55,6 +56,12 @@ public class CustomerController {
         return "redirect:/";
     }
 
+    /**
+     * maps account overview page to "/customers/account", sends principal object to the template as well as customer after
+     * finding the customer with the help of customerRepo and principal id.
+     * @param model passes attributes to the template
+     * @return if there is an exception it returns the home page and if everything works fine returns the customer account overview page
+     */
     @GetMapping(value = "/customers/account")
     public String customerAccount(Model model){
         model.addAttribute("principal", principal);
@@ -70,6 +77,12 @@ public class CustomerController {
         return "/customer/customer-account";
     }
 
+    /**
+     * maps account editing to "/customer/account/edit", sends principal object to the template as well as a customer object after
+     * finding the customer with the help of customerRepo and principal id
+     * @param model passes attributes to the template
+     * @return if there is an exception it returns the home page and if everything works fine returns the customer edit page
+     */
     @GetMapping(value = "/customers/account/edit")
     public String editAccount(Model model){
         model.addAttribute("principal", principal);
@@ -85,6 +98,11 @@ public class CustomerController {
     }
 
 
+    /**
+     * post maps the edit customer page, updates the customer in the database
+     * @param customer receives a customer object from the template with the changed info
+     * @return redirects to the customer overview page
+     */
     @PostMapping(value = "/customers/account/edit")
     public String handleEditAccount(@ModelAttribute Customer customer) {
 
@@ -98,9 +116,5 @@ public class CustomerController {
 
         return "redirect:/customers/account";
     }
-
-
-
-
 
 }
