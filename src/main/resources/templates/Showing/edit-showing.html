@@ -27,7 +27,7 @@
         <div class="form-group">
             <label for="theatre_id"></label>
             <select id="theatre_id" name="theatre_id">
-                <option th:text="'Please select a theatre'" th:value="'0'"></option>
+                <option th:text="'Please select a theatre'" th:value="*{theatre_id}"></option>
                 <option th:type="hidden"
                         th:each="theatre : ${theatres}"
                         th:text="${theatre.name}"
@@ -38,7 +38,7 @@
         <div class="form-group">
             <label for="movie_id"></label>
             <select id="movie_id" name="movie_id">
-                <option th:text="'Please select a movie'" th:value="'0'"></option>
+                <option th:text="'Please select a movie'" th:value="*{movie_id}"></option>
                 <option th:type="hidden"
                         th:each="movie : ${movies}"
                         th:text="${movie.movie_name}"

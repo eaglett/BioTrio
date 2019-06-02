@@ -228,14 +228,17 @@ public class ShowingController {
             showing.setMovie_id((showingFormObject.getMovie_id()));
             showing.setDate(LocalDate.parse(showingFormObject.getStart_date(), dateFormatter));
             showing.setTime(LocalTime.parse(showingFormObject.getStart_time(), timeFormatter));
+
             if(DAYS.between(LocalDate.now(), showing.getDate()) > 30) {
                 return "redirect:/movies/add_showing?distantDate";
+            } else {
+                showingRepo.insertShowing(showing);
             }
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/movies/add_showing?error";
         }
-        showingRepo.insertShowing(showing);
+
 
         return "redirect:/movies";
     }

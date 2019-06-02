@@ -52,7 +52,7 @@ public class CustomAuth implements AuthenticationProvider {
             principal.setUsername(employee.getUsername());
             principal.setPassword(employee.getPassword());
             principal.setPhonenumber(null);
-            principal.setAccessLevel(employee.getAccessLevel());
+            principal.setAccessLevel(employee.getAccessLevel().toUpperCase());
         } else if (customer != null) {
             principal.setPrincipal_id(customer.getId());
             principal.setUsername(customer.getEmail());
