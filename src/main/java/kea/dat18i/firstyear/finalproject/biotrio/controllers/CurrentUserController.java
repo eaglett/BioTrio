@@ -11,53 +11,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-// Trying to create a session controller for handling log ins and log outs
 @Controller
 public class CurrentUserController {
 
-    @Autowired
-    CustomerRepository customerRepo;
-
+    /**
+     * @param principal(Principal) helper Principal object, stores currently logged user
+     */
     private Principal principal = new Principal();
 
-
-//    @GetMapping(value ="/login_check")
-//    public String loginCheck() {
-//
-//        return "login-page";
-//    }
-
+    /** maps login page to "/login" and sends principal object through model to the page
+     * @param model used to pass attributes to the templates
+     * @return login html page
+     */
     @GetMapping(value ="/login")
     public String login(Model model) {
         model.addAttribute("principal", principal);
 
         return "login";
     }
-
-
-//    // Probably gonna delete this
-//    @GetMapping (value="/customer-login")
-//    public String customerLogin(Model m){
-//        m.addAttribute("loginform", new Customer());
-//        return "customer-login";
-//    }
-
-
-//    // Probably gonna delete this
-//    @PostMapping("/loginCustomer")
-//    public String loginCustomer(@ModelAttribute Customer customer){
-//
-//
-//        return "redirect:/";
-//    }
-//
-//
-//    // Probably gonna delete this
-//    @GetMapping (value="employee-login")
-//    public String employeeLogin(Model m){
-//        m.addAttribute("loginform", new Employee());
-//        return "employee-login";
-//    }
-
 
 }

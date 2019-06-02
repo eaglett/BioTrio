@@ -26,23 +26,25 @@
     <table>
         <tr>
             <td style="min-width: 500px; padding: 50px">
-                <table
+                <table>
                     <tr>
-                        <td></td> <!--empty for that corner left empty cell-->
+                        <td></td> <!--empty for that corner left empty cell, on (0,0) position-->
                         <div th:each="chair, iter: ${seatMatrix[0]}">
                             <div th:if="${iter.count == 1}">
-                                <td></td>
+                                <td></td> <!--if it is the first iteration over the seatMatrix[0] we are putting an empty td as
+                                bot space holder and table formating helper-->
 
                             </div>
                             <td th:if="${iter.count > 1}" th:text=${iter.count-1}></td> <!-- first row, seat numbers-->
                         </div>
                     </tr>
-                    <tr th:each="row, iter2 : ${seatMatrix}" >
+                    <tr th:each="row, iter2 : ${seatMatrix}" > <!--row iteration-->
 
                         <td th:if="${iter2.count > 1}" th:text=${iter2.count-1}></td> <!--first cell in each row, row number-->
-                        <div th:if="${iter2.count == 1}"/>
+                        <!--<div th:if="${iter2.count == 1}"/> --><!--if its the first iteration we are skipping addition as those seats
+                        are actually in the 0 row-->
                         <div th:if="${iter2.count > 1}">
-                            <td th:each="seat, iter3 : ${row}">
+                            <td th:each="seat, iter3 : ${row}"> <!--seat iteration-->
                                 <div th:if="${iter3.count > 1}">
                                     <input th:if="${seat == 'Available'}" th:type="button" class="btn btn-outline-primary">
                                     <input th:unless="${seat == 'Available'}" th:type="button" class="btn btn-danger" disabled>
