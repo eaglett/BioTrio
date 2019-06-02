@@ -29,19 +29,19 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Home </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item active">
                     <a class="nav-link" href="/movies">Movies</a>
                 </li>
-                <li class="nav-item " th:if="${user == 'CUSTOMER'}">
+                <li class="nav-item active" th:if="${user == 'CUSTOMER'}">
                     <a class="nav-link" href="/customers/account">My Account</a>
                 </li>
-                <li class="nav-item " th:if="${user == 'ADMIN'}">
+                <li class="nav-item active" th:if="${user == 'ADMIN'}">
                     <a class="nav-link" href="/theatres">Theaters</a>
                 </li>
-                <li class="nav-item " th:if="${user == 'BASIC' or user == 'ADMIN'}">
+                <li class="nav-item active" th:if="${user == 'BASIC' or user == 'ADMIN'}">
                     <a class="nav-link" href="/employees">Employees</a>
                 </li>
-                <li class="nav-item " th:if="${user == 'BASIC' or user == 'ADMIN'}">
+                <li class="nav-item active" th:if="${user == 'BASIC' or user == 'ADMIN'}">
                     <a class="nav-link" href="/findTicket">Find tickets</a>
                 </li>
             </ul>
@@ -49,7 +49,7 @@
                 <span class="navbar-text" th:case="'CUSTOMER'"><a href="/home?logout=true">Log out</a></span>
                 <span class="navbar-text" th:case="'ADMIN'"><a href="/home?logout=true">Log out</a></span>
                 <span class="navbar-text" th:case="'BASIC'"><a href="/home?logout=true">Log out</a></span>
-                <span class="navbar-text" th:case="''"><a href="/login_check">Log in</a></span>
+                <span class="navbar-text" th:case="''"><a href="/login">Log in</a></span>
                 <span class="navbar-text" th:if="${user == ''}"><a href="/create_Account">Create Account</a></span>
             </div>
     <!--        <span class="navbar-text" style="padding-right: 20px">-->

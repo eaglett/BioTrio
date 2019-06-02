@@ -3,6 +3,7 @@ package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Employee;
 
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.EmployeeRepository;
+import kea.dat18i.firstyear.finalproject.biotrio.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -26,17 +27,21 @@ public class EmployeeController {
 
     private List<Employee> employeeList = new ArrayList<>();
 
+    private Principal principal = new Principal();
+
 
     @GetMapping(value = "/employees")
     public String employees(Model model) {
         employeeList = employeeRepo.findAllEmployees();
         model.addAttribute("employees", employeeList);
+        model.addAttribute("principal", principal);
         return "employees-page";
     }
 
     @GetMapping(value = "/employees/add_employee")
     public String addEmployee (Model model) {
         model.addAttribute("newEmployee", new Employee ());
+        model.addAttribute("principal", principal);
         return "add-employee-page";
     }
 
@@ -58,6 +63,7 @@ public class EmployeeController {
         Employee editEmployee = employeeList.get(index);
         model.addAttribute("index", index);
         model.addAttribute("editEmployee", editEmployee);
+        model.addAttribute("principal", principal);
         return "edit-employee-page";
     }
 
