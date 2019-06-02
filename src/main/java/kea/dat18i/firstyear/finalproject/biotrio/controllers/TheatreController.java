@@ -29,7 +29,11 @@ public class TheatreController {
 
     private Principal principal = new Principal();
 
-
+    /**
+     * maps the theatres page, shows all of the teatres
+     * @param model passes the attributes to the template
+     * @return theatres page
+     */
     @GetMapping(value = "/theatres")
     public String theatres(Model model) {
         theatreList = theatreRepo.findAllTheatres();
@@ -39,6 +43,11 @@ public class TheatreController {
         return "theatres-page";
     }
 
+    /**
+     * maps the add a theatre page
+     * @param model passes the attributes to the template
+     * @return returns the add a theatre page
+     */
     @GetMapping(value = "/theatres/add_theatre")
     public String addTheatre(Model model) {
         model.addAttribute("newTheatre", new Theatre());
@@ -47,6 +56,11 @@ public class TheatreController {
         return "add-theatre-page";
     }
 
+    /**
+     * post maps the add a theatre page, adds the theatre to the database
+     * @param theatre passed from the template, contains the new theatre info
+     * @return redirects to the theatres page
+     */
     @PostMapping(value = "/theatres/add_theatre")
     public String handleAddTheatre(@ModelAttribute Theatre theatre) {
         theatre = theatreRepo.insertTheatre(theatre);
@@ -56,7 +70,12 @@ public class TheatreController {
     }
 
 
-
+    /**
+     * maps the edit a theatre page
+     * @param index of the theatre that needs to be edited, from the theatreList
+     * @param model passes the attributes to the template
+     * @return edit theatre page
+     */
     // View of editing a theatre
     @GetMapping("/theatres/edit/{index}")
     public String editTheatre(@PathVariable int index, Model model) {
@@ -68,6 +87,12 @@ public class TheatreController {
     }
 
 
+    /**
+     * post maps the edit theatre page, updates the theatre in the database
+     * @param index of the edited theatre from the theatreList
+     * @param theatre object containing the updated values
+     * @return redirects to the theatres pages
+     */
     // Edit theatre from MySQL database and redirect back to /theatres
     @PostMapping(value = "/theatres/edit/{index}")
     public String handleEditTheatre(@PathVariable int index, @ModelAttribute Theatre theatre) {

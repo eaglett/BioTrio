@@ -20,15 +20,9 @@ import java.util.List;
 @Controller
 public class CustomerController {
 
-    /**
-     * @param customerRepo(CustomerRepository) autowire the customerRepo
-     */
     @Autowired
     private CustomerRepository customerRepo = new CustomerRepository();
 
-    /**
-     * @param principal(Principal) helper principal object, stores currently logged user
-     */
     private Principal principal = new Principal();
 
     /**
