@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Bio Trio Home</title>
 
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -12,20 +13,23 @@
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 </head>
-<body>
+<body id="bootstrap-override-background">
 
 <div>
     <th:block th:include="fragments/navbar :: navbar"></th:block>
 </div>
 
-<div class="jumbotron">
-    <a th:href="@{'/theatres/add_theatre'}" class="btn btn-success">Add Theatre</a>
-    <table class="table table-striped">
+<div style="padding: 5%;">
+
+    <div style="max-width: 100vw; align-content: center; padding-top: 20px; justify-content: center; display: flex; padding-bottom: 50px">
+        <a th:href="@{'/theatres/add_theatre'}" class="btn btn-primary" style="width:90%;">Add Theater</a>
+    </div>
+    <table class="table table-striped" style="padding: 2rem;background-color: white">
         <thead>
         <th class="col">Theatre Name</th>
-        <th class="col">Number Of Rows</th>
-        <th class="col">Seats Per Row</th>
-        <th class="col">Edit Theatre</th>
+        <th class="col" style="min-width: 180px">Number Of Rows</th>
+        <th class="col" style="min-width: 180px">Seats Per Row</th>
+        <th class="col" >Edit Theatre</th>
         <th class="col">Delete Theatre</th>
         </thead>
         <tr th:each="theatre, iter : ${theatres}">
