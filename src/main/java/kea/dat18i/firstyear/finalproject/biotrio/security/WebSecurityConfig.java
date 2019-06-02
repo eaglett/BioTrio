@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Grant access for specified URLs to all users
         http.authorizeRequests().antMatchers(
                 "/", "/home", "/movies", "/movies/showings/**",
-                "/movies/showings/reserve/**", "/create_account", "/login", "/logout")
+                "/create_account", "/login", "/logout")
                 .permitAll();
 
         // Grant CRUD operation access for movies and showings
@@ -41,6 +41,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(
                 "/movies/**", "/movies/**/**", "/movies/showings/edit/**")
                 .hasAnyAuthority("ADMIN", "BASIC");
+
+
+        // Grant only logged in users the ticket-reservation privileges
+        http.authorizeRequests().antMatchers(
+                "/movies/showings/reserve/**")
+                .hasAnyAuthority("ADMIN", "BASIC", "CUSTOMER");
 
 
         // Grant CRUD operation access for theatres and employees
