@@ -22,12 +22,11 @@ import java.util.Set;
 @Configuration
 public class CustomAuth implements AuthenticationProvider {
 
-
-
     // For getting an employee from our database by their username
     @Autowired
     EmployeeRepository employeeRepo;
 
+    // For getting a customer from our database by their email
     @Autowired
     CustomerRepository customerRepo;
 
@@ -35,8 +34,6 @@ public class CustomAuth implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
-
-
 
         // Get username and password from our login form
         String username = auth.getName();
@@ -49,7 +46,7 @@ public class CustomAuth implements AuthenticationProvider {
         Customer customer = customerRepo.findCustomerByEmail(username);
 
         // Check if user is recognized as either an employee or customer
-        // in our database and store information into our Logger.
+        // in our database and store information into our Prinpical.
         if(employee != null) {
             principal.setPrincipal_id(employee.getId());
             principal.setUsername(employee.getUsername());

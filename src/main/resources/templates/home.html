@@ -18,8 +18,13 @@
 </head>
 <body id="bootstrap-overrides">
 
-    <div>
-        <th:block th:include="fragments/navbar :: navbar"></th:block>
+<!--    <div>-->
+<!--        <th:block th:include="fragments/navbar :: navbar"></th:block>-->
+<!--    </div>-->
+
+        <!--   Dynamic navbar   -->
+    <div th:object="${principal}">
+        <th:block th:include="fragments/navbar :: navbar(user = *{accessLevel.toUpperCase()})"></th:block>
     </div>
 
     <div>
@@ -44,7 +49,7 @@
             </div>
         </div>
         <div style="width: 60%">
-            <!--google maps snipet-->
+            <!--google maps snippet-->
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2249.3363583167275!2d12.57729691176259!3d55.683139692984234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4652531a46f1c5c9%3A0x2e675f225a78cc09!2sGothersgade+55%2C+1123+K%C3%B8benhavn!5e0!3m2!1sda!2sdk!4v1559395264885!5m2!1sda!2sdk" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
         </div>
     </div>
@@ -63,6 +68,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
+<script th:if="${param.logout}" >alert("Logout successful!") </script>
 
 </body>
 </html>

@@ -15,49 +15,54 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1c205a; box-shadow: 0px 5px 20px black;">
-    <a class="navbar-brand" href="#">Bio Trio</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-            aria-controls="navbarText"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1c205a; box-shadow: 0px 5px 20px black;">
+        <a class="navbar-brand" href="#">Bio Trio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
 
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Home </a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="/movies">Movies</a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="/customers/account">My Account</a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="/theatres">Theaters</a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="/employees">Employees</a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="/findTicket">Find tickets</a>
-            </li>
-        </ul>
-        <span class="navbar-text" style="padding-right: 20px">
-            <a href="/home?logout=true">Log out</a>
-        <span class="navbar-text" style="padding-right: 20px">
-            <a href="/login_check">Log in</a>
-
-        </span>
-        <span class="navbar-text">
-            <a href="/create_Account">Create Account</a>
-
-
-        </span>
-    </div>
-</nav>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/movies">Movies</a>
+                </li>
+                <li class="nav-item " th:if="${user == 'CUSTOMER'}">
+                    <a class="nav-link" href="/customers/account">My Account</a>
+                </li>
+                <li class="nav-item " th:if="${user == 'ADMIN'}">
+                    <a class="nav-link" href="/theatres">Theaters</a>
+                </li>
+                <li class="nav-item " th:if="${user == 'BASIC' or user == 'ADMIN'}">
+                    <a class="nav-link" href="/employees">Employees</a>
+                </li>
+                <li class="nav-item " th:if="${user == 'BASIC' or user == 'ADMIN'}">
+                    <a class="nav-link" href="/findTicket">Find tickets</a>
+                </li>
+            </ul>
+            <div th:switch="${user}">
+                <span class="navbar-text" th:case="'CUSTOMER'"><a href="/home?logout=true">Log out</a></span>
+                <span class="navbar-text" th:case="'ADMIN'"><a href="/home?logout=true">Log out</a></span>
+                <span class="navbar-text" th:case="'BASIC'"><a href="/home?logout=true">Log out</a></span>
+                <span class="navbar-text" th:case="''"><a href="/login_check">Log in</a></span>
+                <span class="navbar-text" th:if="${user == ''}"><a href="/create_Account">Create Account</a></span>
+            </div>
+    <!--        <span class="navbar-text" style="padding-right: 20px">-->
+    <!--            <a href="/home?logout=true">Log out</a>-->
+    <!--        </span>-->
+    <!--        <span class="navbar-text" style="padding-right: 20px">-->
+    <!--            <a href="/login_check">Log in</a>-->
+    <!--        </span>-->
+    <!--            <span class="navbar-text">-->
+    <!--                <a href="/create_Account">Create Account</a>-->
+    <!--            </span>-->
+        </div>
+    </nav>
 
 </body>
 </html>
