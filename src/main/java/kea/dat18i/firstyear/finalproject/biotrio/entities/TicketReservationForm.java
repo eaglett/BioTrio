@@ -1,6 +1,14 @@
 package kea.dat18i.firstyear.finalproject.biotrio.entities;
 
+
+/**
+ * An HtmlFormObject used to store reserved tickets into our database.
+ * This class is not an actual Entity but more of a "Helper" class to help us
+ * properly parse the data from our reserve-ticket template view to our backend
+ * and store the tickets into our database.
+ */
 public class TicketReservationForm {
+
 
     private Ticket ticket1 = new Ticket();
     private Ticket ticket2 = new Ticket();
