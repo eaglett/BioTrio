@@ -9,7 +9,7 @@ public class Principal {
     private static String username;     // Can be either Employee username or Customer email
     private static String password;
     private static String phonenumber;
-    private static String accessLevel;
+    private static String accessLevel = "";
 
     public Principal() {
     }
@@ -74,7 +74,7 @@ public class Principal {
         username = null;
         password = null;
         phonenumber = null;
-        accessLevel = null;
+        accessLevel = "";
     }
 
 

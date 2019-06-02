@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Bio Trio Home</title>
 
+    <link rel="stylesheet" href="/css/style.css">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -12,18 +14,22 @@
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 </head>
-<body>
+<body id="bootstrap-override-background">
 
 <div>
     <th:block th:include="fragments/navbar :: navbar"></th:block>
 </div>
 
-<div class="jumbotron">
-    <a th:href="@{'/employees/add_employee'}" class="btn btn-success">Add Employee</a>
-    <table class="table table-striped">
+<div style="padding: 5%;">
+
+    <div style="max-width: 100vw; align-content: center; padding-top: 20px; justify-content: center; display: flex; padding-bottom: 50px">
+        <a th:href="@{'/employees/add_employee'}" class="btn btn-primary" style="width:90%;">Add Employee</a>
+    </div>
+
+    <table class="table table-striped" style="padding: 2rem;background-color: white">
         <thead>
         <th class="col">Employee Username</th>
-        <th class="col">Employee Access-Level</th>
+        <th class="col" style="min-width: 230px">Employee Access-Level</th>
         <th class="col">Edit Employee</th>
         <th class="col">Delete Employee</th>
         </thead>
