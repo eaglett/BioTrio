@@ -21,6 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
+/**
+ * Handles creation of a QR code as well as formatting of a Ticket object's information into a proper String
+ * to insert into our QR code ticket.
+ * Annotated with the Spring annotation @Component to connect the class to our Spring Web Application
+ */
 @Component
 public class QRwriter {
 
@@ -37,11 +42,20 @@ public class QRwriter {
     private CustomerRepository customerRepo;
 
 
-    // Line separator to separate and properly format our QR messages
+    /**
+     * Line separator to separate and properly format our QR code messages
+     */
     private String n = System.lineSeparator();
 
-    // Takes a Ticket parameter to store text
-    // about a reserved Ticket inside a QR encoding
+    /**
+     *
+     *  Takes a Ticket and Customer parameter to store text about a reserved
+     *  Ticket and it's corresponding Customer inside a QR encoding
+     *
+     * @param ticket(Ticket)
+     * @param showing_id(int)
+     * @param customer(Customer)
+     */
     public void writeQR(Ticket ticket, int showing_id, Customer customer) {
 
         // Create directory to store our QR code file and fetch it afterwards for emailing
@@ -50,8 +64,9 @@ public class QRwriter {
         // Write our formatted String, which holds the information of a Customer's Ticket, into our QR code
         String QRmsg = createQRmsg(ticket, showing_id, customer);
 
+        // Creating a QR code file and inserting text into it
         try {
-            String filePath = "QRdir\\QRCODE5_BioTrioTicket.png";
+            String filePath = "QRdir\\QRCODE5_BioTrioTicket.png"; // File to write QR image to
             String charset = "UTF-8"; // or "ISO-8859-1"
             Map < EncodeHintType, ErrorCorrectionLevel > hintMap = new HashMap < EncodeHintType, ErrorCorrectionLevel > ();
             hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
@@ -60,32 +75,44 @@ public class QRwriter {
                     BarcodeFormat.QR_CODE, 200, 200, hintMap);
             MatrixToImageWriter.writeToFile(matrix, filePath.substring(filePath
                     .lastIndexOf('.') + 1), new File(filePath));
-            System.out.println("QR Code image created successfully!");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("QR code creation malfunctioned");
         }
 
     }
 
-    // Creates a new directory to store our QR code files into
+    /**
+     * Creates a new directory to store our QR code files into
+     * if the directory does not already exit
+     *
+     * @param dirName(String) name for directory
+     */
     private void createDirForQR(String dirName) {
         File dir = new File(dirName);
         if(!dir.exists()) {
             dir.mkdir();
-            System.out.println("Directory " + dirName + " has been created!");
         }
     }
 
 
-    // Prepare a formatted QR message to write to our QR code
-    // Insert a Ticket's data into a formatted String to prepare for writing to QR code
+    /**
+     * Prepare a formatted QR message to write to our QR code
+     * Insert a Ticket's data into a formatted String to prepare for writing to QR code
+     *
+     * @param ticket(Ticket)
+     * @param showing_id(int)
+     * @param c(Customer)
+     * @return QRmsg(String)
+     */
     private String createQRmsg(Ticket ticket, int showing_id, Customer c) {
 
+        // Find the correct Showing's information by showing_id and store it into a Showing object
         Showing showing = showingRepo.findShowingById(showing_id);
+
+        // Find the correct Customer's information by customer_id and store it into a Customer object
         Customer customer = customerRepo.findCustomer(c.getId());
 
-        // Format a part of our message
+        // Format our QR code ticket text
         String QRmsg = String.format(n + "Theatre: %s" + n +
                      "Movie: %s" + n +
                      "Date: %s" + n +
