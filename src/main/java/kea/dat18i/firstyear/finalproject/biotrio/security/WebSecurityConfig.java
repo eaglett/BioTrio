@@ -39,7 +39,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Grant CRUD operation access for movies and showings
         // to all employees with BASIC and ADMIN level authority
         http.authorizeRequests().antMatchers(
-                "/movies/**", "/movies/**/**", "/movies/showings/edit/**")
+                "/movies/**", "/movies/**/**", "/movies/showings/edit/**",
+                "/findTicket", "/select-ticket")
                 .hasAnyAuthority("ADMIN", "BASIC");
 
 
