@@ -38,7 +38,7 @@
                 <li class="nav-item active" th:if="${user == 'ADMIN'}">
                     <a class="nav-link" href="/theatres">Theaters</a>
                 </li>
-                <li class="nav-item active" th:if="${user == 'BASIC' or user == 'ADMIN'}">
+                <li class="nav-item active" th:if="${user == 'ADMIN'}">
                     <a class="nav-link" href="/employees">Employees</a>
                 </li>
                 <li class="nav-item active" th:if="${user == 'BASIC' or user == 'ADMIN'}">

@@ -18,10 +18,6 @@
 </head>
 <body id="bootstrap-overrides">
 
-<!--    <div>-->
-<!--        <th:block th:include="fragments/navbar :: navbar"></th:block>-->
-<!--    </div>-->
-
         <!--   Dynamic navbar - Pass parameter to navbar fragment-->
     <div th:object="${principal}">
         <th:block th:include="fragments/navbar :: navbar(user = *{accessLevel.toUpperCase()})"></th:block>
@@ -69,6 +65,7 @@
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <script th:if="${param.logout}" >alert("Logout successful!") </script>
+<script th:if="${param.unauthorized}" >alert("Unauthorized access!") </script>
 
 </body>
 </html>
