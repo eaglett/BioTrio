@@ -20,11 +20,12 @@
     <th:block th:include="fragments/navbar :: navbar(user = *{accessLevel.toUpperCase()})"></th:block>
 </div>
 
-<div style="max-width: 100vw; align-content: center; padding-top: 20px; justify-content: center; display: flex;">
+<div style="max-width: 100vw; align-content: center; padding-top: 20px; justify-content: center; display: flex;"
+     th:if="${principal.accessLevel == 'BASIC' or principal.accessLevel == 'ADMIN'}">
     <a th:href="@{'/movies/add_movie'}" class="btn btn-primary" style="width:90%;">Add Movie</a>
 </div>
 
-<div style="display: flex; max-width: 100vw; padding:2%; color: black;">
+<div style="display: flex; max-width: 100vw; padding:2%; color: black;" th:object="${principal}">
     <div style="width: 100vw; flex-wrap: wrap; display:flex; flex-direction: row; justify-content: space-around">
     <div th:each="movie, iter : ${movieList}" style="padding-bottom: 1%" >
 
@@ -36,41 +37,16 @@
                 <p class="card-text" th:text="${'Duration: ' + movie.duration + ' mins'}"></p>
                 <a th:href="@{'/movies/showings/' + ${movie.movie_id}}" class="btn btn-primary" style="margin-bottom: 3%">All Showings</a>
                 </br>
-                <a th:href="@{'/movies/edit/' + ${iter.index}}" class="btn btn-primary" style="padding: 5px"> Edit</a>
-                <a th:href="@{'/movies/delete/' + ${iter.index}}" class="btn btn-danger" style="padding: 5px">Delete</a>
+                <a th:if="${principal.accessLevel == 'BASIC' or principal.accessLevel == 'ADMIN'}"
+                   th:href="@{'/movies/edit/' + ${iter.index}}" class="btn btn-primary" style="padding: 5px"> Edit</a>
+                <a th:if="${principal.accessLevel == 'BASIC' or principal.accessLevel == 'ADMIN'}"
+                   th:href="@{'/movies/delete/' + ${iter.index}}" class="btn btn-danger" style="padding: 5px">Delete</a>
             </div>
         </div>
 
     </div>
     </div>
 </div>
-<!--
-<div class="jumbotron">
-    <a th:href="@{'/movies/add_movie'}" class="btn btn-success">Add Movie</a>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th class="col">Movie Name</th>
-                <th class="col">Year of production</th>
-                <th class="col">Duration in minutes</th>
-                <th class="col">Showings </th>
-                <th class="col">Edit</th>
-                <th class="col">Delete</th>
-            </tr>
-
-        </thead>
-        <tr th:each="movie, iter : ${movieList}">
-            <td th:text="${movie.movie_name}" ></td>
-            <td th:text="${movie.year_of_production}"></td>
-            <td th:text="${movie.duration}"></td>
-            <td><a th:href="@{'/movies/showings/' + ${movie.movie_id}}" class="btn btn-info fa fa-align-justify"></a></td>
-            <td><a th:href="@{'/movies/edit/' + ${iter.index}}" class="btn btn-info fas fa-pen"></a></td>
-            <td><a th:href="@{'/movies/delete/' + ${iter.index}}" class="btn btn-danger fas fa-trash"></a></td>
-        </tr>
-    </table>
-    <div th:if="${param.error}" class="alert alert-warning">Something went wrong, please try again.</div>
-
-</div>-->
 
 
 <script th:if="${param.error}" >alert("Something went wrong, please try again.") </script>
