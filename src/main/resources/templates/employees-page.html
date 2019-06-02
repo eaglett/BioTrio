@@ -14,7 +14,7 @@
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 </head>
-<body id="bootstrap-override-background">
+<body id="bootstrap-overrides">
 
 <!--   Dynamic navbar - Pass parameter to navbar fragment-->
 <div th:object="${principal}">
@@ -27,7 +27,7 @@
         <a th:href="@{'/employees/add_employee'}" class="btn btn-primary" style="width:90%;">Add Employee</a>
     </div>
 
-    <table class="table table-striped" style="padding: 2rem;background-color: white">
+    <table class="table table-striped" style="padding: 2rem;">
         <thead>
         <th class="col">Employee Username</th>
         <th class="col" style="min-width: 230px">Employee Access-Level</th>
