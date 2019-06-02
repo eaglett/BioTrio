@@ -1,9 +1,12 @@
 package kea.dat18i.firstyear.finalproject.biotrio.entities;
 
+/**
+ *  A "Customer" entity that can, either book Bio Trio show tickets by registering
+ *  over the Bio Trio website as a User or calling a Bio Trio over the phone and booking a
+ *  ticket
+ *
+ */
 
-// A "Customer" entity that can, either book Bio Trio show tickets by registering
-// over the Bio Trio website as a User or calling a Bio Trio over the phone and booking a
-// ticket
 public class Customer extends User {
 
     private String phoneNumber;

@@ -1,15 +1,9 @@
 package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 
-import kea.dat18i.firstyear.finalproject.biotrio.entities.Customer;
-import kea.dat18i.firstyear.finalproject.biotrio.entities.Employee;
-import kea.dat18i.firstyear.finalproject.biotrio.repositories.CustomerRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.security.Principal;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class CurrentUserController {

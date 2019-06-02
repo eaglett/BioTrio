@@ -8,28 +8,34 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 
+/**
+ * @configuration
+ * @WebSecurity
+ * Our very own Custom Web Security Configuration which extends Spring Security's own
+ * base Web Security Configuration, enabling us to permit certain sections of
+ * our web application to specific users with individual "Authorities"
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
+    /**
+     * @param customAuth(CustomAuth) autowire our CustomAuth - Custom Authentication Provider
+     */
     @Autowired
     private CustomAuth customAuth;
 
-
-    // Custom configuration for our HttpSecurity to check a username and password
-    // from a loginForm() as well as restrict/permit access to specific users
+    /**
+     * @param http(HttpSecurity)
+     * @Override configure(WebSecurityConfigurerAdapter) from our parent class
+     *
+     * Custom configuration for our HttpSecurity to check a username and password
+     * from a loginForm() as well as restrict/permit access to specific users
+     */
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
 
 
-        // Spring Security Cross-Site Request Forgery disabled.
-        // Have to check if it will mess anything up if enabled
-        //http.csrf().disable();
-
-
-        // If another URL needs to be accessed by all users just add it as a String URL
-        // in the antMatchers(String URL) parameters
         // Grant access for specified URLs to all users
         http.authorizeRequests().antMatchers(
                 "/", "/home", "/movies", "/movies/showings/*",
@@ -60,7 +66,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAuthority("ADMIN");
 
 
-        // Works; need to create an html file for editing the customer account
+        // Grant users with CUSTOMER level authority access to
+        // view and edit their own account information
         http.authorizeRequests().antMatchers(
                 "/customers/account", "/customers/account/edit")
                 .hasAuthority("CUSTOMER");
@@ -68,8 +75,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Login and logout configuration
         // username and password parameters must match the username and password parameter in the
-        // login form in our login html file(s).
-        // Have to make logout redirect to /login or /home with an and().logout().logoutSuccessUrl().
+        // login form in our login html file.
+        // If login attempt is unsuccessful the login form
+        // will display an error message.
         http.authorizeRequests().and().formLogin()
                 .loginProcessingUrl("/login").loginPage("/login")
                 .defaultSuccessUrl("/").failureUrl("/login?error=true")
@@ -77,22 +85,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
-        // For logging user out of system and deleting and cookies that might
+        // For logging user out of system and deleting any cookies that might
         // keep the user further authenticated in the system
         http.authorizeRequests().and().logout().
                 deleteCookies("remove").logoutUrl("/logout").
                 logoutSuccessUrl("/home?logout=true");
 
 
-        //Handling Access Denied Request
+        // Handling Access Denied Request if a user attempts to access
+        // a URL which they do not have permission to access
+        // and redirects them to the home page as well as displays an error message
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/home?unauthorized");
 
 
     }
 
-    // Allows our custom authentication to authenticate users
-    // and provide usernames, passwords, and roles to our HttpSecurity
-    // in our overridden configure(HttpSecurity http) method
+    /**
+     * Allows our custom authentication to authenticate users
+     * and provide usernames, passwords, and roles to our HttpSecurity
+     * in our overridden configure(HttpSecurity http) method
+     *
+     * @param auth(AuthenticationManagerBuilder)
+     */
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(customAuth);

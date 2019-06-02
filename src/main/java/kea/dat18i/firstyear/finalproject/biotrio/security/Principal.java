@@ -1,15 +1,21 @@
 package kea.dat18i.firstyear.finalproject.biotrio.security;
 
 
-// Stores our current logged-in user as well as is used to check whether this user
-// exists in our database when authenticating a user in our CustomAuth class
+/**
+ *  Stores our current logged-in user as well as is used to check whether this user
+ *  exists in our database when authenticating a user in our CustomAuth class.
+ *  Furthermore, the accessLevel attribute is used to make our navbar in
+ *  our templates/fragments/ folder dynamic by checking which type of user
+ *  is currently authenticated
+ *
+ */
 public class Principal {
 
     private static int principal_id;
-    private static String username;     // Can be either Employee username or Customer email
+    private static String username;         // Can be either Employee username or Customer email
     private static String password;
-    private static String phonenumber;
-    private static String accessLevel = "";
+    private static String phonenumber;      // Will be kept as null for employees as they don't have a phone number
+    private static String accessLevel = ""; // Set to empty String value "" to avoid if-statement errors in our templates
 
     public Principal() {
     }
@@ -68,7 +74,11 @@ public class Principal {
                 '}';
     }
 
-    // Used to clear all stored data of a user from the Principal
+    /**
+     * Used to clear all stored data of a user from the Principal
+     * to insure the integrity of our users data and provide robust
+     * web security for our web application
+     */
     public void clearAttributes() {
         principal_id = 0;
         username = null;

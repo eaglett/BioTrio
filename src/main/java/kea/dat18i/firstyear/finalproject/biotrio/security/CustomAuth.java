@@ -32,6 +32,16 @@ public class CustomAuth implements AuthenticationProvider {
 
     private Principal principal = new Principal();
 
+    /**
+     * @Override authenticate(AuthenticationProvider) from our parent class
+     * @param auth(Authentication)
+     * @throws AuthenticationException
+     * @return new UsernamePasswordAuthenticationToken(username, password, authorities)
+     *
+     * Custom authentication method which helps us get the currently authenticating user's
+     * credentials and return an authenticated user and their credentials
+     *
+     */
     @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
 
@@ -65,8 +75,8 @@ public class CustomAuth implements AuthenticationProvider {
             throw new BadCredentialsException("Invalid username");
         }
 
-        // Check if user password matches password of
-        // corresponding user in the database
+        // Check if authenticating user's password matches
+        // password of a user in the database
         if(!password.equals(principal.getPassword())) {
             principal.clearAttributes();
             throw new BadCredentialsException("Invalid password");
@@ -84,9 +94,16 @@ public class CustomAuth implements AuthenticationProvider {
 
     }
 
-    // Implementing AuthenticationProvider means we have to override this method.
-    // Returning true indicates that the AuthenticationProvider will support a closer evaluation of
-    // of authenticating the presented instance of the Authentication class.
+    /**
+     * @Override supports(AuthenticationProvider) from our parent class
+     * @param arg0(Class<?>)
+     * @return true
+     *
+     * Implementing AuthenticationProvider means we have to override this method.
+     * Returning true indicates that the AuthenticationProvider will support a closer evaluation of
+     * of authenticating the presented instance of the Authentication class.
+     *
+     */
     @Override
     public boolean supports(Class<?> arg0) {
         return true;
