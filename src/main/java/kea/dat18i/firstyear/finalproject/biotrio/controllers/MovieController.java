@@ -3,6 +3,7 @@ package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Movie;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.MovieRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.ShowingRepository;
+import kea.dat18i.firstyear.finalproject.biotrio.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,8 @@ public class MovieController {
 
     private List<Movie> movieList = new ArrayList<>();
 
+    private Principal principal = new Principal();
+
 
     // Deletes past showings
     @GetMapping(value = "/movies")
@@ -36,6 +39,7 @@ public class MovieController {
         showingRepo.deletePastShowings();
         movieList = movieRepo.findAllMovies();
         model.addAttribute("movieList", movieList);
+        model.addAttribute("principal", principal);
 
         return "movies-page";
 
@@ -46,6 +50,7 @@ public class MovieController {
     @GetMapping(value = "/movies/add_movie")
     public String addMovie(Model model) {
         model.addAttribute("newMovie", new Movie());
+        model.addAttribute("principal", principal);
 
 
         return "add-movie-page";
@@ -66,6 +71,7 @@ public class MovieController {
         Movie editMovie = movieList.get(index);
         model.addAttribute("index", index);
         model.addAttribute("editMovie", editMovie);
+        model.addAttribute("principal", principal);
 
         return "edit-movie-page";
     }

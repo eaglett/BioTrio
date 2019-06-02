@@ -26,21 +26,23 @@ public class CustomerController {
     @Autowired
     private CustomerRepository customerRepo = new CustomerRepository();
 
+    // don't need it
     private List<Customer> customerList = new ArrayList<>();
 
     private Principal principal = new Principal();
 
 
-    @GetMapping(value = "/customers")
-    public String customers(Model model){
-        model.addAttribute("customers", customerList);
-
-        return "customers-page";
-    }
+//    @GetMapping(value = "/customers")
+//    public String customers(Model model){
+//        model.addAttribute("customers", customerList);
+//
+//        return "customers-page";
+//    }
 
     @GetMapping(value = "/create_Account")
     public String createAccount(Model model) {
         model.addAttribute("newCustomer", new Customer());
+        model.addAttribute("principal", principal);
 
         return "create-account-page";
     }
@@ -49,13 +51,13 @@ public class CustomerController {
     @PostMapping(value = "/create_Account")
     public String handleCreateAccount(@ModelAttribute Customer customer) {
         customerRepo.insertCustomer(customer);
-        customerList.add(customer);
 
         return "redirect:/";
     }
 
     @GetMapping(value = "/customers/account")
     public String customerAccount(Model model){
+        model.addAttribute("principal", principal);
 
         // Get account information of currently logged in user
         try {
@@ -70,6 +72,7 @@ public class CustomerController {
 
     @GetMapping(value = "/customers/account/edit")
     public String editAccount(Model model){
+        model.addAttribute("principal", principal);
 
         // Get account information of currently logged in user
         try {

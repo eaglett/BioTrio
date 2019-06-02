@@ -2,6 +2,7 @@ package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 
 import kea.dat18i.firstyear.finalproject.biotrio.entities.*;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.*;
+import kea.dat18i.firstyear.finalproject.biotrio.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +33,9 @@ public class TicketController {
     TheatreRepository theatreRepo;
 
     private Ticket ticket;
-    private List<Ticket> ticketList= new ArrayList<>();
+    private List<Ticket> ticketList = new ArrayList<>();
+
+    private Principal principal = new Principal();
 
 
 
@@ -40,6 +43,7 @@ public class TicketController {
     public String findTicket(Model model){
         model.addAttribute("allMovies", movieRepo.findAllMovies());
         model.addAttribute("ticket", new Ticket());
+        model.addAttribute("principal", principal);
         return "find-ticket";
     }
 
@@ -78,18 +82,19 @@ public class TicketController {
 
 
         model.addAttribute( "ticketList", ticketList);
-
         model.addAttribute("ticketListSize", ticketList.size());
-            return "select-ticket";
+        model.addAttribute("principal", principal);
+
+        return "select-ticket";
 
     }
 
     @GetMapping(value = "select-ticket/{index}")
-    public String handleSelectTicket(@PathVariable int index) {
+    public String handleSelectTicket(@PathVariable int index, Model model) {
         // Need some method that updates availability status of a ticket (Used/Unused)
         ticketRepo.updateTicketStatus(ticketList.get(index));
 
-
+        model.addAttribute("principal", principal);
 
         return "redirect:/select-ticket";
     }

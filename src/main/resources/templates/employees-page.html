@@ -16,8 +16,9 @@
 </head>
 <body id="bootstrap-override-background">
 
-<div>
-    <th:block th:include="fragments/navbar :: navbar"></th:block>
+<!--   Dynamic navbar - Pass parameter to navbar fragment-->
+<div th:object="${principal}">
+    <th:block th:include="fragments/navbar :: navbar(user = *{accessLevel.toUpperCase()})"></th:block>
 </div>
 
 <div style="padding: 5%;">
@@ -37,7 +38,13 @@
             <td th:text="${employee.username}" ></td>
             <td th:text="${employee.accessLevel}"></td>
             <td><a th:href="@{'/employees/edit/' + ${iter.index}}" class="btn btn-info fas fa-pen"></a></td>
-            <td><a th:href="@{'/employees/delete/' + ${iter.index}}" class="btn btn-danger fas fa-trash"></a></td>
+            <td th:if="${employee.accessLevel.toUpperCase() == 'BASIC'}">
+                <a th:href="@{'/employees/delete/' + ${iter.index}}" class="btn btn-danger fas fa-trash"></a>
+            </td>
+            <td th:if="${employee.accessLevel.toUpperCase() == 'ADMIN'}">
+                <button th:href="@{'/employees/delete/' + ${iter.index}}" class="btn btn-danger fas fa-trash" disabled>
+                </button>
+            </td>
         </tr>
     </table>
 

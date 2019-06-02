@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // in the antMatchers(String URL) parameters
         // Grant access for specified URLs to all users
         http.authorizeRequests().antMatchers(
-                "/", "/home", "/movies", "/movies/showings/**",
+                "/", "/home", "/movies", "/movies/showings/*",
                 "/create_account", "/login", "/logout")
                 .permitAll();
 

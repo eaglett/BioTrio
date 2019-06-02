@@ -3,6 +3,7 @@ package kea.dat18i.firstyear.finalproject.biotrio.controllers;
 import kea.dat18i.firstyear.finalproject.biotrio.entities.Theatre;
 
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.TheatreRepository;
+import kea.dat18i.firstyear.finalproject.biotrio.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -26,11 +27,14 @@ public class TheatreController {
 
     private List<Theatre> theatreList = new ArrayList<>();
 
+    private Principal principal = new Principal();
+
 
     @GetMapping(value = "/theatres")
     public String theatres(Model model) {
         theatreList = theatreRepo.findAllTheatres();
         model.addAttribute("theatres", theatreList);
+        model.addAttribute("principal", principal);
 
         return "theatres-page";
     }
@@ -38,6 +42,7 @@ public class TheatreController {
     @GetMapping(value = "/theatres/add_theatre")
     public String addTheatre(Model model) {
         model.addAttribute("newTheatre", new Theatre());
+        model.addAttribute("principal", principal);
 
         return "add-theatre-page";
     }
@@ -58,6 +63,7 @@ public class TheatreController {
         Theatre editTheatre = theatreList.get(index);
         model.addAttribute("index", index);
         model.addAttribute("editTheatre", editTheatre);
+        model.addAttribute("principal", principal);
         return "edit-theatre-page";
     }
 
