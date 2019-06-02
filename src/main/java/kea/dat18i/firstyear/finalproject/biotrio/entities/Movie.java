@@ -1,11 +1,16 @@
 package kea.dat18i.firstyear.finalproject.biotrio.entities;
 
+/**
+ *  An entity defined as "Movie" which has the movie name, the year of production
+ *  and the duration in minutes.
+ */
+
 public class Movie {
 
     private int movie_id;
     private String movie_name;
     private int year_of_production;
-    private int duration; //in minutes
+    private int duration;
 
 
     public Movie() {

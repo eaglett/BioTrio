@@ -3,6 +3,13 @@ package kea.dat18i.firstyear.finalproject.biotrio.entities;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ *  An entity defined as "Ticket" which holds:
+ *  the specific showing as well as the specific customer
+ *  row and seat number
+ *  a boolean attribute which defines whether the ticket is used or not
+ */
+
 public class Ticket {
 
     private int ticket_id;

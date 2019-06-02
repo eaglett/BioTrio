@@ -3,8 +3,11 @@ package kea.dat18i.firstyear.finalproject.biotrio.entities;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-// An entity defined as a "Showing" which has a name that describes which movie is showing,
-// a date and time of the showing, and the ticket price
+/**
+ * An entity defined as a "Showing" which has a name that describes which movie is showing,
+ *  a date and time of the showing.
+ */
+
 public class Showing {
     private int showing_id;
     private int movie_id;

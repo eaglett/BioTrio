@@ -3,6 +3,12 @@ package kea.dat18i.firstyear.finalproject.biotrio.entities;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ *  An object to use in our form tag when displaying a Showing
+ *  It holds the movie and the theatre name
+ *  as well as the date, time and location.
+ */
+
 public class ShowingDisplayForm {
 
     private int showing_id;
