@@ -18,8 +18,8 @@ public class HomeController {
 
     /**
      * maps the home page, sends the principal object to the template and clears a currently logged user data when logging out
-     * @param servletRequest
-     * @param model passes attributes to the template
+     * @param servletRequest(HttpServletRequest) for retrieving a specified parameter passed to the URL
+     * @param model(Model) passes attributes to the template
      * @return home page
      */
     @GetMapping(value = {"/", "/home"})
@@ -30,12 +30,11 @@ public class HomeController {
 
         // Clear currently logged user data when logging out
         try {
-            System.out.println(principal.getAccessLevel());
             if(servletRequest.getParameter("logout").equals("true")) {
                 principal.clearAttributes();
             }
         } catch (Exception e) {
-            System.out.println("ERROR AT HOME PAGE CLEARING PRINCIPAL");
+            e.printStackTrace();
         }
 
         return "home";

@@ -17,7 +17,6 @@ import kea.dat18i.firstyear.finalproject.biotrio.repositories.CustomerRepository
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.MovieRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.ShowingRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.TheatreRepository;
-import kea.dat18i.firstyear.finalproject.biotrio.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

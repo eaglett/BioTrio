@@ -5,7 +5,6 @@ import kea.dat18i.firstyear.finalproject.biotrio.entities.Employee;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.EmployeeRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
