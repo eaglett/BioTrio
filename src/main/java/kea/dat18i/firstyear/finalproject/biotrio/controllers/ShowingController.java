@@ -64,12 +64,12 @@ public class ShowingController {
     @GetMapping(value = "/movies/showings/{movieId}")
     public String showings(Model model, @PathVariable int movieId) {
 
-
         showingDisplayForms = showingRepo.findShowingsByMovieId(movieId);
         showingList = showingRepo.findAllShowings(movieId);
 
         model.addAttribute("showingsList", showingDisplayForms);
-        model.addAttribute("movie", movieRepo.findMovie(movieId)); // might not need this
+        model.addAttribute("movie", movieRepo.findMovie(movieId));
+        model.addAttribute("principal", principal);
         return "/showing/showings";
 
     }
@@ -77,6 +77,7 @@ public class ShowingController {
     @GetMapping(value = "/movies/showings/reserve/{showingId}")
     public String reserve(Model model, @PathVariable int showingId) {
 
+        model.addAttribute("principal", principal);
         model.addAttribute("movie", movieRepo.findMovieByShowingId(showingId));
         model.addAttribute("theater", theatreRepo.findTheatreByShowingId(showingId));
         model.addAttribute("seatMatrix", showingRepo.findTakenSeats(showingId));
@@ -256,6 +257,7 @@ public class ShowingController {
         model.addAttribute("movies", movieRepo.findAllMovies());
         model.addAttribute("theatres", theatreRepo.findAllTheatres());
         model.addAttribute("editShowing", showingFormObject);
+        model.addAttribute("principal", principal);
 
         return "/showing/edit-showing";
     }

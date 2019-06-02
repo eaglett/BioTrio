@@ -32,14 +32,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // in the antMatchers(String URL) parameters
         // Grant access for specified URLs to all users
         http.authorizeRequests().antMatchers(
-                "/", "/home", "/movies", "/movies/showings/**",
+                "/", "/home", "/movies", "/movies/showings/*",
                 "/create_account", "/login", "/logout")
                 .permitAll();
 
         // Grant CRUD operation access for movies and showings
         // to all employees with BASIC and ADMIN level authority
         http.authorizeRequests().antMatchers(
-                "/movies/**", "/movies/**/**", "/movies/showings/edit/**")
+                "/movies/**", "/movies/**/**", "/movies/showings/edit/**",
+                "/findTicket", "/select-ticket")
                 .hasAnyAuthority("ADMIN", "BASIC");
 
 

@@ -15,8 +15,9 @@
 </head>
 <body id="bootstrap-overrides">
 
-<div>
-    <th:block th:include="fragments/navbar :: navbar"></th:block>
+<!--   Dynamic navbar - Pass parameter to navbar fragment-->
+<div th:object="${principal}">
+    <th:block th:include="fragments/navbar :: navbar(user = *{accessLevel.toUpperCase()})"></th:block>
 </div>
 
     <div style="padding: 5%">

@@ -21,42 +21,43 @@ public class CurrentUserController {
     private Principal principal = new Principal();
 
 
-    @GetMapping(value ="/login_check")
-    public String loginCheck() {
-
-        return "login-page";
-    }
+//    @GetMapping(value ="/login_check")
+//    public String loginCheck() {
+//
+//        return "login-page";
+//    }
 
     @GetMapping(value ="/login")
-    public String login() {
+    public String login(Model model) {
+        model.addAttribute("principal", principal);
 
         return "login";
     }
 
 
-    // Probably gonna delete this
-    @GetMapping (value="/customer-login")
-    public String customerLogin(Model m){
-        m.addAttribute("loginform", new Customer());
-        return "customer-login";
-    }
+//    // Probably gonna delete this
+//    @GetMapping (value="/customer-login")
+//    public String customerLogin(Model m){
+//        m.addAttribute("loginform", new Customer());
+//        return "customer-login";
+//    }
 
 
-    // Probably gonna delete this
-    @PostMapping("/loginCustomer")
-    public String loginCustomer(@ModelAttribute Customer customer){
-
-
-        return "redirect:/";
-    }
-
-
-    // Probably gonna delete this
-    @GetMapping (value="employee-login")
-    public String employeeLogin(Model m){
-        m.addAttribute("loginform", new Employee());
-        return "employee-login";
-    }
+//    // Probably gonna delete this
+//    @PostMapping("/loginCustomer")
+//    public String loginCustomer(@ModelAttribute Customer customer){
+//
+//
+//        return "redirect:/";
+//    }
+//
+//
+//    // Probably gonna delete this
+//    @GetMapping (value="employee-login")
+//    public String employeeLogin(Model m){
+//        m.addAttribute("loginform", new Employee());
+//        return "employee-login";
+//    }
 
 
 }
