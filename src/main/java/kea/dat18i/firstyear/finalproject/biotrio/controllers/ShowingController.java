@@ -6,7 +6,6 @@ import kea.dat18i.firstyear.finalproject.biotrio.entities.*;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.*;
 import kea.dat18i.firstyear.finalproject.biotrio.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,9 +50,8 @@ public class ShowingController {
 
 
     /**
-     * DateTime formatter
+     * Formatters for LocalDate and LocalTime
      */
-    // Formatters for LocalDate and LocalTime
     private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     /**
@@ -154,6 +152,7 @@ public class ShowingController {
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
 
+            // Send SMS to a phone number verified at our Twilio account - god help me vs the spam...
             qRsender.sendSMS();
 
         } else if(!ticketRepo.validateTicketAvailability(tickets.getTicket1(), showingId)) {
