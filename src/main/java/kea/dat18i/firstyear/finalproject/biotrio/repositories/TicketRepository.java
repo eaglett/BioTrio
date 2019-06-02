@@ -143,7 +143,7 @@ public class TicketRepository {
         else
             return true;
     }
-    
+
     /**
      * Updates a ticket's "used" status in our database by setting it to true
      *
