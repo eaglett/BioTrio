@@ -1,7 +1,10 @@
 package kea.dat18i.firstyear.finalproject.biotrio.entities;
 
 /**
- *  An object to use in our form tag when adding a Showing in our add-showing template
+ *  An object to use in our form tag when adding a Showing in our add-showing template.
+ *  This class is not an actual Entity, but used as as "Helper" class to properly parse
+ *  data from our add-showing and edit-showing template views and check for errors before
+ *  storing data about a Showing into our database.
  */
 
 public class ShowingFormObject {
@@ -10,7 +13,6 @@ public class ShowingFormObject {
     private int theatre_id;
     private String start_date;
     private String start_time;
-
 
     public int getMovie_id() {
         return movie_id;

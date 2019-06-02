@@ -12,21 +12,6 @@ public class Employee extends User {
     private String accessLevel;
 
     public Employee() {
-
-    }
-
-    public Employee(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    // Constructor for testing purposes, add username and remove first and last name
-    public Employee(String firstName, String lastName, String username, String password, String accessLevel) {
-        super.firstName = firstName;
-        super.lastName = lastName;
-        this.username = username;
-        this.password = password;
-        this.accessLevel = accessLevel;
     }
 
     public String getPassword() {

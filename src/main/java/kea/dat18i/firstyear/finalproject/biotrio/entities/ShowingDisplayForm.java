@@ -18,7 +18,6 @@ public class ShowingDisplayForm {
     private LocalTime time;
     private int Duration;
 
-
     public ShowingDisplayForm() {
     }
 

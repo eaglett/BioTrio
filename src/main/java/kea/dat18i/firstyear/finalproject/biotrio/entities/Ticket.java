@@ -18,7 +18,7 @@ public class Ticket {
     private int seat_row;
     private int seat_nb;
     private boolean used;
-    //attributes bellow this are not saved in the DB in ticket table, they are used just as helpers here
+    // attributes bellow this are not saved in the DB in ticket table, they are used just as helpers here
     // customer
     private String email;
     private String phone_nb;
@@ -32,18 +32,6 @@ public class Ticket {
     private int movie_id;
     private LocalDate date;
     private LocalTime time;
-
-
-    // Delete after tests
-    public Ticket(int ticket_id, int showing_id, int customer_id, int seat_row, int seat_nb, boolean used) {
-        this.ticket_id = ticket_id;
-        this.showing_id = showing_id;
-        this.customer_id = customer_id;
-        this.seat_row = seat_row;
-        this.seat_nb = seat_nb;
-        this.used = used;
-    }
-
 
     public Ticket() {
     }

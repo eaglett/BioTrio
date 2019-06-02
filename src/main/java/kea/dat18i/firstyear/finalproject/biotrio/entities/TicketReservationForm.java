@@ -9,7 +9,6 @@ package kea.dat18i.firstyear.finalproject.biotrio.entities;
  */
 public class TicketReservationForm {
 
-
     private Ticket ticket1 = new Ticket();
     private Ticket ticket2 = new Ticket();
     private Ticket ticket3 = new Ticket();

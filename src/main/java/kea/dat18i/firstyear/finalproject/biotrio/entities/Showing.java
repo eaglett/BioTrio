@@ -9,6 +9,7 @@ import java.time.LocalTime;
  */
 
 public class Showing {
+
     private int showing_id;
     private int movie_id;
     private int theatre_id;

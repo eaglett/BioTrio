@@ -14,23 +14,7 @@ public class Customer extends User {
     private String password;
 
     public Customer() {
-
     }
-
-    public Customer(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-
-    // Constructor for testing purposes
-    public Customer(String firstName, String lastName, String phoneNumber, String email, String password) {
-        super.firstName = firstName;
-        super.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.password = password;
-    }
-
 
     public String getPhoneNumber() {
         return phoneNumber;

@@ -14,32 +14,6 @@ public class Movie {
 
 
     public Movie() {
-
-    }
-
-    //when cleaning the code in the end, delete the constructors that are not in use
-
-
-    public Movie(String movie_name, int year_of_production, int duration) {
-        this.movie_name = movie_name;
-        this.year_of_production = year_of_production;
-        this.duration = duration;
-    }
-
-    public Movie(String movie_name) {
-        this.movie_name = movie_name;
-    }
-
-    public Movie(int movie_id, String movie_name, int year_of_production, int duration) {
-        this.movie_id = movie_id;
-        this.movie_name = movie_name;
-        this.year_of_production = year_of_production;
-        this.duration = duration;
-    }
-
-    public Movie(int movie_id, String movie_name) {
-        this.movie_id = movie_id;
-        this.movie_name = movie_name;
     }
 
     public int getMovie_id() {
