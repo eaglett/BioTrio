@@ -26,40 +26,75 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @Controller
 public class ShowingController {
 
-    @Autowired
-    private JdbcTemplate jdbc; //TODO: this is not really necessary here right?
-
+    /**
+     * autowired ShowingRepository as showingRepo
+     */
     @Autowired
     ShowingRepository showingRepo;
 
+    /**
+     * autowired MovieRepository as movieRepo
+     */
     @Autowired
     MovieRepository movieRepo;
 
+    /**
+     * autowired TheatreRepository as theatreRepo
+     */
     @Autowired
     TheatreRepository theatreRepo;
 
+    /**
+     * autowired TicketRepository as ticketRepo
+     */
     @Autowired
     TicketRepository ticketRepo;
 
+    /**
+     * autowired CustomerRepository as customerRepo
+     */
     @Autowired
     CustomerRepository customerRepo;
 
+    /**
+     * autowired QR code writer and instantiated
+     */
     @Autowired
     private QRwriter qRwriter = new QRwriter();
 
+    /**
+     * autowired QR code sender and instantiated
+     */
     @Autowired
     private QRsender qRsender = new QRsender();
 
+    /**
+     * principal object instantiated - holds current user info
+     */
     private Principal principal = new Principal();
 
 
+    /**
+     * DateTime formatter
+     */
     // Formatters for LocalDate and LocalTime
     private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-
+    /**
+     * showingList containing all of the showings
+     */
     private List<Showing> showingList = new ArrayList<>();
+    /**
+     * showing helper display form
+     */
     private List<ShowingDisplayForm> showingDisplayForms = new ArrayList<>();
 
+    /**
+     * maps the showing view with the help of the movieId
+     * @param model passes attributes (showingsList, movie, principal) to the template
+     * @param movieId id of the movie to whom that showing belongs to
+     * @return showing template,
+     */
     // View for showings of one particular showing
     @GetMapping(value = "/movies/showings/{movieId}")
     public String showings(Model model, @PathVariable int movieId) {

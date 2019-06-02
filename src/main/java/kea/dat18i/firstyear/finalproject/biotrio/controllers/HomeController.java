@@ -11,8 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class HomeController {
 
+    /**
+     * @param principal - principal object that holds the info about the currently logged in user
+     */
     private Principal principal = new Principal();
 
+    /**
+     * maps the home page, sends the principal object to the template and clears a currently logged user data when logging out
+     * @param servletRequest
+     * @param model passes attributes to the template
+     * @return home page
+     */
     @GetMapping(value = {"/", "/home"})
     public String homePage(HttpServletRequest servletRequest, Model model) {
 
