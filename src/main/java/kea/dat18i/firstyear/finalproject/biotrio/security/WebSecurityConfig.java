@@ -60,7 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Works; need to create an html file for editing the customer account
         http.authorizeRequests().antMatchers(
-                "/customers/account", "/customers/account/edit")
+                "/customers/account", "/customers/account/edit",
+                "/movies/showings/reserve/**")
                 .hasAuthority("CUSTOMER");
 
 
