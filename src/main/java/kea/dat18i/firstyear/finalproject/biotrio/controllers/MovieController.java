@@ -19,27 +19,14 @@ import java.util.List;
 @Controller
 public class MovieController {
 
-    /**
-     * autowired MovieRepository as movieRepo
-     */
     @Autowired
     private MovieRepository movieRepo;
 
-
-    /**
-     * autowired ShowingRepository as showingRepo
-     */
     @Autowired
     private ShowingRepository showingRepo;
 
-    /**
-     * movie list helper
-     */
     private List<Movie> movieList = new ArrayList<>();
 
-    /**
-     * principal object - contains currently logged in user
-     */
     private Principal principal = new Principal();
 
 

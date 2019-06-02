@@ -1,6 +1,9 @@
 package kea.dat18i.firstyear.finalproject.biotrio.entities;
 
-// An object to use in our form tag when adding a Showing in our add-showing template
+/**
+ *  An object to use in our form tag when adding a Showing in our add-showing template
+ */
+
 public class ShowingFormObject {
 
     private int movie_id;

@@ -19,20 +19,11 @@ import java.util.List;
 @Controller
 public class EmployeeController {
 
-    /**
-     * autowired EmployeeRepository as employeeRepo
-     */
     @Autowired
     private EmployeeRepository employeeRepo;
 
-    /**
-     * employeeList - helper list that contains employee objects
-     */
     private List<Employee> employeeList = new ArrayList<>();
 
-    /**
-     * helper principal object, stores currently logged in user
-     */
     private Principal principal = new Principal();
 
 
