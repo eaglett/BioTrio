@@ -13,41 +13,46 @@
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 </head>
-<body id="bootstrap-override-background">
+<body id="bootstrap-overrides">
 
 <div>
     <th:block th:include="fragments/navbar :: navbar"></th:block>
 </div>
 
-<div style="max-width: 100vw; align-content: center; padding-top: 20px; padding-bottom: 20px; justify-content: center; display: flex;">
-    <a th:href="@{'/movies/add_showing'}" class="btn btn-primary" style="width:90%;">Add Showing</a>
-</div>
-<div th:object="${movie}"  style="padding: 2rem;">
+    <div style="padding: 5%">
+    <div style="max-width: 100vw; align-content: center; padding-top: 20px; padding-bottom: 20px; justify-content: center; display: flex;">
+        <a th:href="@{'/movies/add_showing'}" class="btn btn-primary" style="width:90%;">Add Showing</a>
+    </div>
+    <div th:object="${movie}"  style="padding: 2rem;">
 
-     <h2 th:text="${'All showings for: ' + movie.movie_name}" style="color: white"></h2>
+         <h2 th:text="${'All showings for: ' + movie.movie_name}" style="color: white"></h2>
 
-     <table class="table table-striped" style="padding: 5%; background-color: white">
-        <thead>
-            <tr>
-                <th class="col"style="min-width: 180px">Movie</th>
-                <th class="col"style="min-width: 180px">Theatre</th>
-                <th class="col"style="min-width: 180px">Duration</th>
-                <th class="col" style="min-width: 180px">Date</th>
-                <th class="col"style="min-width: 180px">Playing Time</th>
+         <table class="table table-striped" style="padding: 5%;">
+            <thead>
+                <tr>
+                    <th class="col"style="min-width: 180px">Movie</th>
+                    <th class="col"style="min-width: 180px">Theatre</th>
+                    <th class="col"style="min-width: 180px">Duration</th>
+                    <th class="col" style="min-width: 180px">Date</th>
+                    <th class="col"style="min-width: 180px">Playing Time</th>
+                    <th></th> <!--space servers-->
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tr th:each="showing, iter : ${showingsList}" >
+                <td th:text="${showing.movie_name}" ></td>
+                <td th:text="${showing.theatre_name}"></td>
+                <td th:text="${showing.duration + ' Minutes'}"></td>
+                <td th:text="${#temporals.format(showing.date, 'dd-MM-yyyy')}"></td>
+                <td th:text="${showing.time}"></td>
+                <td><a th:href="@{'/movies/showings/reserve/' + ${showing.showing_id}}" class="btn btn-info">reserve</a></td>
+                <td><a th:href="@{'/movies/showings/edit/' + ${iter.index}}" class="btn btn-info fas fa-pen"></a></td>
+                <td><a th:href="@{'/movies/showings/delete/' + ${iter.index}}" class="btn btn-danger fas fa-trash"></a></td>
             </tr>
-        </thead>
-        <tr th:each="showing, iter : ${showingsList}" >
-            <td th:text="${showing.movie_name}" ></td>
-            <td th:text="${showing.theatre_name}"></td>
-            <td th:text="${showing.duration + ' Minutes'}"></td>
-            <td th:text="${#temporals.format(showing.date, 'dd-MM-yyyy')}"></td>
-            <td th:text="${showing.time}"></td>
-            <td><a th:href="@{'/movies/showings/reserve/' + ${showing.showing_id}}" class="btn btn-info">reserve</a></td>
-            <td><a th:href="@{'/movies/showings/edit/' + ${iter.index}}" class="btn btn-info fas fa-pen"></a></td>
-            <td><a th:href="@{'/movies/showings/delete/' + ${iter.index}}" class="btn btn-danger fas fa-trash"></a></td>
-        </tr>
-    </table>
+        </table>
 
+    </div>
 </div>
 
 

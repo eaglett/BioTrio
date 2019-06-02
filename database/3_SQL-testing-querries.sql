@@ -2,9 +2,6 @@ USE biotrio;
 
 # selecting all the customers
 SELECT * FROM customer;
-# inserting a customer
-INSERT INTO customer (first_name, last_name, customer_password, email, phone_nb) 
-			VALUES ('Bobby', 'Jones', 'Iambob', 'bob@gmail.com', '0093446291');
 # selecting a specific customer
 SELECT * FROM customer WHERE customer_id = 2;
 # finding a customer by email
@@ -15,9 +12,6 @@ UPDATE customer SET first_name = 'Frank', last_name = 'Jonsons', customer_passwo
 
 # selecting all the employees
 SELECT * FROM employee;
-# inserting an employee
-INSERT INTO employee (username, employee_password, access_level) 
-			VALUES('Christian', 'chris123', 'admin');
 # deleting an employee
 DELETE FROM employee WHERE employee_id  = 3;
 # updating an employee
@@ -34,9 +28,6 @@ INNER JOIN showing ON showing.movie_id = movie.movie_id
 WHERE showing_id = 1;
 # finding all movies
 SELECT * FROM movie;
-# inserting a movie
-INSERT INTO movie (movie_name, year_of_production, duration) 
-			VALUES ('IT', 2017, 130);
 # deleting a movie 
 DELETE FROM movie WHERE movie_id = 5;
 # updating a movie 
@@ -50,15 +41,6 @@ INNER JOIN movie m ON showing.movie_id = m.movie_id
 WHERE m.movie_id = 1;
 # finding a showing by id
 SELECT * FROM showing WHERE showing_id = 2;
-# inserting a showing
-INSERT INTO showing ( movie_id, theater_id, start_date_time) VALUES
-	( (SELECT movie_id 
-			FROM movie 
-            WHERE movie_name = 'Long Shot'),
-	  (SELECT theater_id 
-			FROM theater 
-            WHERE theater_name = 'Red Theater'),
-	  '2019-06-05 18:00');
 # deleting a showing
 DELETE FROM showing WHERE showing_id = 2;
 # updating a showing
@@ -74,9 +56,6 @@ WHERE m.movie_id = 1;
 SELECT * FROM theater;
 # finding theater by showing_id
 SELECT * FROM theater WHERE theater_id = 3; 
-# inserting a theater
-INSERT INTO theater (theater_name, nb_of_rows, seats_per_row) 
-			VALUES('Purple', 10, 5);
 # deleting a theater
 DELETE from theater WHERE theater_id = 3;
 # updating a theater
@@ -89,8 +68,5 @@ SELECT * FROM ticket WHERE showing_id = 2;
 SELECT * FROM ticket
 INNER JOIN customer ON ticket.customer_id = customer.customer_id
 WHERE (showing_id = 2  AND phone_nb = '00465738254');
-# inserting a ticket 
-INSERT INTO ticket (showing_id, customer_id, seat_row, seat_nb, used)
-			VALUES (2, 4, 6 , 4, FALSE);
 # updating the ticket status
 UPDATE ticket SET used = TRUE where ticket_id = 2;
