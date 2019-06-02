@@ -22,7 +22,7 @@
 <!--        <th:block th:include="fragments/navbar :: navbar"></th:block>-->
 <!--    </div>-->
 
-        <!--   Dynamic navbar   -->
+        <!--   Dynamic navbar - Pass parameter to navbar fragment-->
     <div th:object="${principal}">
         <th:block th:include="fragments/navbar :: navbar(user = *{accessLevel.toUpperCase()})"></th:block>
     </div>
