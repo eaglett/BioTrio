@@ -33,28 +33,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Grant access for specified URLs to all users
         http.authorizeRequests().antMatchers(
                 "/", "/home", "/movies", "/movies/showings/*",
-                "/create_account", "/login", "/logout")
+                          "/create_account", "/login", "/logout")
                 .permitAll();
 
         // Grant CRUD operation access for movies and showings
         // to all employees with BASIC and ADMIN level authority
         http.authorizeRequests().antMatchers(
-                "/movies/**", "/movies/**/**", "/movies/showings/edit/**",
-                "/findTicket", "/select-ticket")
+                "/movies/*", "/movies/edit/*", "/movies/delete/*",
+                          "/movies/showings/edit/*", "/findTicket", "/select-ticket",
+                          "/movies/showings/delete/*")
                 .hasAnyAuthority("ADMIN", "BASIC");
 
 
         // Grant only logged in users the ticket-reservation privileges
         http.authorizeRequests().antMatchers(
-                "/movies/showings/reserve/**")
+                "/movies/showings/reserve/*")
                 .hasAnyAuthority("ADMIN", "BASIC", "CUSTOMER");
 
 
         // Grant CRUD operation access for theatres and employees
         // to all employees with ADMIN level authority
         http.authorizeRequests().antMatchers(
-                "/theatres", "/theatres/**", "/theatres/**/**",
-                          "/employees", "/employees/**", "/employees/**/**")
+                "/theatres", "/theatres/**", "/theatres/**/*",
+                          "/employees", "/employees/*", "/employees/edit/*",
+                          "/employees/delete/*")
                 .hasAuthority("ADMIN");
 
 

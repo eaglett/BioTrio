@@ -212,6 +212,7 @@ public class ShowingController {
         model.addAttribute("movies", movieRepo.findAllMovies());
         model.addAttribute("theatres", theatreRepo.findAllTheatres());
         model.addAttribute("newShowing", new ShowingFormObject());
+        model.addAttribute("principal", principal);
 
         return "/showing/add-showing";
     }
