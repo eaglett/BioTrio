@@ -21,19 +21,27 @@ public class TheatreRepository {
 
     private ShowingRepository showingRepo;
 
-    @Autowired // Handle this field and create the object that needs to be created
+    /**
+     * @Autowired to connect our Spring application to our database
+     */
+
+    @Autowired
     private JdbcTemplate jdbc;
 
-
-    // Lazy initialization to create Bean when called and not on build time
+    /**
+     * @Lazy initialization to create Bean when called and not on build time
+     * @param showingRepo
+     */
     @Autowired
     public TheatreRepository(@Lazy ShowingRepository showingRepo) {
         this.showingRepo = showingRepo;
     }
 
 
-
-    // Find all Theatres from database BioTrio and table theater
+    /**
+     * Finding all Theatres from database BioTrio and table theater
+     * @return all the theatre entities
+     */
     public List<Theatre> findAllTheatres() {
         SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM theater");
         List<Theatre> theatreList = new ArrayList<>();
@@ -47,8 +55,11 @@ public class TheatreRepository {
         }
         return theatreList;
     }
-
-    // Find Theaters by ID from database BioTrio and table theater
+    /**
+     * Finding a theatre by id
+     * @param id
+     * @return the theatre entity with the given id from the theatre table
+     */
     public Theatre findTheatreByShowingId(int id) {
         Showing showing = showingRepo.findShowingById(id);
 
@@ -66,8 +77,12 @@ public class TheatreRepository {
         return theatre;
     }
 
-
-    // Inserting data into table theater by using a PreparedStatement
+    /**
+     * Inserting data into table theater by using a PreparedStatement
+     * @param theatre(Theatre)
+     * @return a theatre entity
+     * @throws NullPointerException
+     */
     public Theatre insertTheatre(Theatre theatre) throws NullPointerException {
 
 
@@ -78,8 +93,6 @@ public class TheatreRepository {
             ps.setString(1, theatre.getName());
             ps.setInt(2, theatre.getRows());
             ps.setInt(3, theatre.getSeatsPerRow());
-
-            System.out.println("ps Inserted Successfully!");
             return ps;
         };
 
@@ -88,15 +101,16 @@ public class TheatreRepository {
             jdbc.update(psc, keyholder);
             theatre.setTheatre_id(keyholder.getKey().intValue());
         } catch (NullPointerException e) {
-            System.out.println(e + " at INSERT theatre in our repository");
         }
 
         return theatre;
 
     }
 
-
-    // Deleting a theatre inside the MySQL database with JDBCTemplate.update(String query)
+    /**
+     * Deleting a theatre inside the MySQL database with JDBCTemplate.update(String query)
+     * @param theatre(Theatre)
+     */
     public void deleteTheatre(Theatre theatre) {
 
         PreparedStatementCreator psc = Connection -> {
@@ -111,8 +125,10 @@ public class TheatreRepository {
     }
 
 
-
-    // Editing a theatre inside the MySQL database with JDBCtemplate.update
+    /**
+     * Editing a theatre inside the MySQL database with JDBCtemplate.update
+     * @param theatre(Theatre)
+     */
     public void editTheatre(Theatre theatre) {
 
         PreparedStatementCreator psc = Connection -> {

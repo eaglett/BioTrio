@@ -138,14 +138,12 @@ public class TicketRepository {
         ArrayList<ArrayList<String>> seatsMatrix = showingRepo.findTakenSeats(showingId);
 
         String availability = seatsMatrix.get(ticket.getSeat_row()).get(ticket.getSeat_nb());
-        System.out.println("availability" + availability);
         if (!availability.equals("dummy"))
             return availability.equals("Available");
         else
             return true;
     }
-
-
+    
     /**
      * Updates a ticket's "used" status in our database by setting it to true
      *

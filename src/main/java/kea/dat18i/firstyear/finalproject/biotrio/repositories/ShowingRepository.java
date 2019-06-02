@@ -21,15 +21,24 @@ import java.util.List;
 @Repository
 public class ShowingRepository {
 
+    /**
+     * @Autowired to connect our Spring application to our database
+     */
+
     @Autowired
     private JdbcTemplate jdbc;
+
     @Autowired
     private TheatreRepository theatreRepo;
 
-    // Lazy initialization to create Bean when called and not on build time
-
+    /**
+     * @Lazy initialization to create Bean when called and not on build time
+     */
     private TicketRepository ticketRepo;
 
+    /**
+     * @param ticketRepo
+     */
     @Autowired
     public ShowingRepository(@Lazy TicketRepository ticketRepo) {
         this.ticketRepo = ticketRepo;
@@ -40,10 +49,12 @@ public class ShowingRepository {
     private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
-
-
-    // Finds and stores all data from our showing table from our MySQL database
-    // into an ArrayList of Showing objects to pass to our ShowingController
+    /**
+     * Finds and stores all data from our showing table from our MySQL database
+     * into an ArrayList of Showing objects to pass to our ShowingController
+     * @param id
+     * @return
+     */
     public List<Showing> findAllShowings(int id) {
         List<Showing> showings = new ArrayList<>();
         SqlRowSet rs = jdbc.queryForRowSet("SELECT "
@@ -62,11 +73,15 @@ public class ShowingRepository {
 
     }
 
+    /**
+     * Creates a new Showing object every iteration while next
+     * row exists and store data fro our showing table per row
+     * into the object which we add into our showings ArrayList
+     * @param rs
+     * @return showing(Showing)
+     */
     private Showing iterateOverShowings(SqlRowSet rs) {
 
-        // Create new Showing object every iteration while next
-        // row exists and store data from our showing table per row
-        // into the object which we add into our showings ArrayList
         Showing showing = new Showing();
 
         showing.setShowing_id(rs.getInt("showing_Id"));
@@ -79,6 +94,11 @@ public class ShowingRepository {
         return showing;
     }
 
+    /**
+     * Finding a showing by id
+     * @param id
+     * @return the showing entity with the given id from the showing table
+     */
     public Showing findShowingById(int id) {
 
         SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM showing WHERE showing_id = " + id);
@@ -92,7 +112,11 @@ public class ShowingRepository {
 
     }
 
-
+    /**
+     * Finding the taken seats when reserving a ticket
+     * @param showing_id
+     * @return the seat matrix
+     */
     public ArrayList<ArrayList<String>> findTakenSeats(int showing_id){
         ArrayList<ArrayList<String>> seatsMatrix = new ArrayList<ArrayList<String>>();
         Theatre theatre = theatreRepo.findTheatreByShowingId(showing_id);
@@ -126,8 +150,11 @@ public class ShowingRepository {
     }
 
 
-
-    // have to turn LocalDateTime into a TIMESTAMP as well as in database
+    /**
+     * @param showing(Showing) passed to retrieve information from a Showing object
+     *                         and insert data into our showing table from the database
+     * @throws NullPointerException
+     */
     public void insertShowing(Showing showing) throws NullPointerException {
 
         PreparedStatementCreator psc = Connection -> {
@@ -146,14 +173,15 @@ public class ShowingRepository {
             jdbc.update(psc, keyholder);
             showing.setShowing_id(keyholder.getKey().intValue());
         } catch (NullPointerException e) {
-            System.out.println(e + " at INSERT showing in our repository");
         }
 
     }
 
 
-
-    // Deleting a movie inside the MySQL database with JDBCTemplate.update(String query)
+    /**
+     * Deleting a showing inside the MySQL database with JDBCTemplate.update(String query)
+     * @param showing(Showing)
+     */
     public void deleteShowing(Showing showing) {
 
         PreparedStatementCreator psc = Connection -> {
@@ -167,7 +195,9 @@ public class ShowingRepository {
         jdbc.update(psc);
     }
 
-    // Deletes all showings behind the current date
+    /**
+     * Deletes all showings behind the current date
+     */
     public void deletePastShowings() {
 
         PreparedStatementCreator psc = Connection -> {
@@ -179,7 +209,10 @@ public class ShowingRepository {
         jdbc.update(psc);
     }
 
-
+    /**
+     * @param showing(Showing) passed to retrieve information from a Showing object
+     *                         and update data into our showing table from the database
+     */
     public void updateShowing(Showing showing) {
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
@@ -197,8 +230,11 @@ public class ShowingRepository {
 
     }
 
-
-    // Find all showings by movie_name and properly display using our ShowingDisplayForm objects in our view
+    /**
+     * Finding all showings by movie_name and properly display using our ShowingDisplayForm objects in our view
+     * @param id
+     * @return the showing entity with the given id from the showing table
+     */
     public ArrayList<ShowingDisplayForm> findShowingsByMovieId(int id) {
         ArrayList<ShowingDisplayForm> showings = new ArrayList<>();
         SqlRowSet rs = jdbc.queryForRowSet("SELECT "

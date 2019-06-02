@@ -18,11 +18,18 @@ import java.util.List;
 @Repository
 public class MovieRepository {
 
+    /**
+     * @Autowired to connect our Spring application to our database
+     */
+
     @Autowired
     private JdbcTemplate jdbc;
 
-
-    // Finds a specific movie in movie table from database biotrio by movie_id = id
+    /**
+     * Finding a specific movie in the movie table from the database by the movie_id
+     * @param id
+     * @return the instance of the movie with the given id
+     */
     public Movie findMovie(int id){
         // Create query for sql and parse an object into class
         SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM movie WHERE movie_id = " + id);
@@ -38,7 +45,11 @@ public class MovieRepository {
         return movie;
     }
 
-    // Finds a specific movie in movie table from database biotrio by showing_id = id
+    /**
+     * Finding a specific movie in the movie table from the database by showing_id
+     * @param id
+     * @return the instance of the movie with the given showing id
+     */
     public Movie findMovieByShowingId(int id){
         // Create query for sql and parse an object into class
         SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM showing WHERE showing_id = " + id);
@@ -53,8 +64,12 @@ public class MovieRepository {
         return movie;
     }
 
-    // Finds and stores all data from our movie table in our MySQL database
-    // into an ArrayList of Movie objects to pass to our MovieController
+
+    /**
+     * Finds and stores all data from our movie table in our MySQL database
+     * into an ArrayList of Movie objects to pass to our MovieController
+     * @return all instances of a movie
+     */
     public List<Movie> findAllMovies() {
         ArrayList<Movie> movies = new ArrayList<>();
         SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM movie");
@@ -78,7 +93,11 @@ public class MovieRepository {
 
     }
 
-
+    /**
+     * @param movie(Movie) passed to retrieve information from a Movie object and insert data into our database
+     * @return the entity of the movie inserted
+     * @throws NullPointerException
+     */
     public Movie insertMovie(Movie movie) throws NullPointerException {
 
         PreparedStatementCreator psc = Connection -> {
@@ -96,15 +115,16 @@ public class MovieRepository {
             jdbc.update(psc, keyholder);
             movie.setMovie_id(keyholder.getKey().intValue());
         } catch (NullPointerException e) {
-            System.out.println(e + " at INSERT movie in our repository");
         }
 
 
         return movie;
     }
 
-
-    // Deleting a movie inside the MySQL database with JDBCtemplate.update(String query)
+    /**
+     * Deleting a movie inside the MySQL database with JDBCtemplate.update(String query)
+     * @param movie(Movie)
+     */
     public void deleteMovie(Movie movie) {
 
         PreparedStatementCreator psc = Connection -> {
@@ -119,7 +139,11 @@ public class MovieRepository {
 
     }
 
-
+    /**
+     *
+     * @param movie(Movie) passed to retrieve information from a Movie object
+     *                     and update data into our movie table from the database
+     */
     public void editMovie(Movie movie) {
 
         PreparedStatementCreator psc = Connection -> {

@@ -16,13 +16,23 @@ import java.sql.PreparedStatement;
 @Repository
 public class CustomerRepository {
 
+    /**
+     * @Autowired to connect our Spring application to our database
+     */
+
     @Autowired
     private JdbcTemplate jdbc;
 
-    // Inserting data into table customer by using a PreparedStatement
+    /**
+     * @param customer(Customer) passed to retrieve information from a Customer object and insert data into our database
+     * Inserting the data into the table is done using a preparedStatement
+     */
     public Customer insertCustomer(Customer customer) throws NullPointerException{
-        // Lambda expression to create a Connection to our database and then a preparedStatement
-        // to set each field's data to the passed Customer object's data
+
+    /**
+     * Lambda expression to create a Connection to our database and then a preparedStatement
+     * to set each field's data to the passed Customer object's data
+    */
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
                     "INSERT INTO customer VALUES (null, ?, ?, ?, ?, ?)", new String[]{"customer_id"});
@@ -34,7 +44,6 @@ public class CustomerRepository {
             ps.setString(4, customer.getEmail());
             ps.setString(5, customer.getPhoneNumber());
 
-            System.out.println("ps Inserted Successfully!");
             return ps;
         };
         try {
@@ -42,19 +51,22 @@ public class CustomerRepository {
             jdbc.update(psc, keyholder);
             customer.setId(keyholder.getKey().intValue());
         } catch (NullPointerException e) {
-            System.out.println(e + " at INSERT customer in our repository");
         }
         return customer;
     }
 
-    // Finds a specific customer in customer table from database biotrio by customer.getId()
-    // Can also replace customer.getId() by putting an "int id" parameter instead of
-    // "Customer customer" in the method parameters
+
+    /**
+     *Finds a specific customer in customer table from the database by customer.getId()
+     *Can also replace customer.getId() by putting an "int id" parameter instead of
+     *"Customer customer" in the method parameters
+     * @param id must not be null
+     * @return the customer entity with the given id from the customer table in the database
+     */
     public Customer findCustomer(int id) {
         // Create query for sql and parse an object into class
         SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM customer WHERE customer_id = " + id);
 
-        // Can change this to "customer" if we change the method parameter
         Customer customer = new Customer();
         while (rs.next()) {
             customer.setId(rs.getInt("customer_id"));
@@ -70,9 +82,13 @@ public class CustomerRepository {
 
     }
 
-        // For Spring Security authentication validation
-        // we need to find an customer by their email
-        public Customer findCustomerByEmail(String email) {
+    /**
+     *For Spring Security authentication validation
+     *Finding an customer by their email is needed
+     * @param email
+     * @return the customer entity with the given email from the customer table
+     */
+    public Customer findCustomerByEmail(String email) {
             SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM customer WHERE email = '" + email + "';" );
 
             // Create an employee object of null value which will be
@@ -93,6 +109,11 @@ public class CustomerRepository {
             return customer;
         }
 
+    /**
+     *
+     * @param customer(Customer) passed to retrieve information from a Customer object
+     *                           and update data into our customer table from the database
+     */
     public void updateCustomer(Customer customer) {
 
         PreparedStatementCreator psc = Connection -> {

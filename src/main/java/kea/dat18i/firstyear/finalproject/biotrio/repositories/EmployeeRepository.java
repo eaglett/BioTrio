@@ -16,16 +16,17 @@ import java.util.List;
 @Repository
 public class EmployeeRepository {
 
-    @Autowired // Handle this field and create the object that needs to be created
+    /**
+     * @Autowired to connect our Spring application to our database
+     */
+
+    @Autowired
     private JdbcTemplate jdbc;
 
-
-    public static Employee findEmployee(Employee employee){
-        System.out.println(employee.toString());
-        return employee;
-    }
-
-    // Find all the Employees from database
+    /**
+     * Finds all the Employees from database
+     * @return all the Employee entities
+     */
     public List<Employee> findAllEmployees() {
         SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM employee");
         List<Employee> employeeList = new ArrayList<>();
@@ -40,7 +41,13 @@ public class EmployeeRepository {
         return employeeList;
     }
 
-    //insert data in the db using the PreparedStatement
+    /**
+     * Insert data in the database using the PreparedStatement
+     * @param employee(Employee) passed to retrieve information from a Employee object
+     *                           and insert data into our employee table from the database
+     * @return an employee entity
+     * @throws NullPointerException
+     */
     public Employee insertEmployee(Employee employee) throws NullPointerException{
 
         PreparedStatementCreator psc = Connection -> {
@@ -50,7 +57,6 @@ public class EmployeeRepository {
             ps.setString(2, employee.getPassword());
             ps.setString(3, employee.getAccessLevel());
 
-            System.out.println("ps Inserted Successfully!");
             return ps;
         };
 
@@ -59,14 +65,16 @@ public class EmployeeRepository {
             jdbc.update(psc, keyholder);
             employee.setId(keyholder.getKey().intValue());
         } catch (NullPointerException e) {
-            System.out.println(e + " at INSERT employee in our repository");
         }
 
         return employee;
 
     }
 
-    // Delete an employee inside the db
+    /**
+     * Deleting an employee inside the database
+     * @param employee(Employee)
+     */
     public void deleteEmployee(Employee employee) {
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
@@ -78,9 +86,12 @@ public class EmployeeRepository {
         jdbc.update(psc);
     }
 
-    //edit an employee inside the db
+    /**
+     *
+     * @param employee(Employee) passed to retrieve information from an Employee object
+     *                           and edit data into our employee table from the database
+     */
     public void editEmployee(Employee employee) {
-
 
         PreparedStatementCreator psc = Connection -> {
             PreparedStatement ps = Connection.prepareStatement(
@@ -96,18 +107,22 @@ public class EmployeeRepository {
         jdbc.update(psc);
     }
 
-
-    // For Spring Security authentication validation
-    // we need to find an employee by their username
+    /**
+     *      For Spring Security authentication validation
+     *      Finding an employee by their username is needed
+     * @param username
+     * @return the employee entity with the given username from the employee table
+     */
     public Employee findEmployeeByUsername(String username) {
         SqlRowSet rs = jdbc.queryForRowSet("SELECT * FROM employee WHERE username = '" + username + "';" );
 
-        // Create an employee object of null value which will be
-        // returned if no employee with specified username exists
+    /**
+     * Create an employee object of null value which will be
+     * returned if no employee with specified username exists.
+     * The CustomAuth (AuthenticationProvider) only needs username, password, and access_level
+     * to be able to authenticate a user
+     */
         Employee employee = null;
-
-        // Our CustomAuth (AuthenticationProvider) only needs username, password, and access_level
-        // to be able to authenticate a user
         if(rs.first()) {
             employee = new Employee();
             employee.setId(rs.getInt("employee_id"));
