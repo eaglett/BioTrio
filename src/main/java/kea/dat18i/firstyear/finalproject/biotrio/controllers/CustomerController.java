@@ -31,7 +31,7 @@ public class CustomerController {
         model.addAttribute("newCustomer", new Customer());
         model.addAttribute("principal", principal);
 
-        return "create-account-page";
+        return "/customer/create-account-page";
     }
 
     /**

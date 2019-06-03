@@ -48,7 +48,7 @@ public class TicketController {
         model.addAttribute("allMovies", movieRepo.findAllMovies());
         model.addAttribute("ticket", new Ticket());
         model.addAttribute("principal", principal);
-        return "find-ticket";
+        return "/ticket/find-ticket";
     }
 
     /**
@@ -98,7 +98,7 @@ public class TicketController {
         model.addAttribute("ticketListSize", ticketList.size());
         model.addAttribute("principal", principal);
 
-        return "select-ticket";
+        return "/ticket/select-ticket";
 
     }
 

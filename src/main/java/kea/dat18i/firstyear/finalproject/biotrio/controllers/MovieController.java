@@ -5,7 +5,6 @@ import kea.dat18i.firstyear.finalproject.biotrio.repositories.MovieRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.repositories.ShowingRepository;
 import kea.dat18i.firstyear.finalproject.biotrio.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +41,7 @@ public class MovieController {
         model.addAttribute("movieList", movieList);
         model.addAttribute("principal", principal);
 
-        return "movies-page";
+        return "/movie/movies-page";
 
     }
 
@@ -58,7 +57,7 @@ public class MovieController {
         model.addAttribute("principal", principal);
 
 
-        return "add-movie-page";
+        return "/movie/add-movie-page";
     }
 
     /**
@@ -87,7 +86,7 @@ public class MovieController {
         model.addAttribute("editMovie", editMovie);
         model.addAttribute("principal", principal);
 
-        return "edit-movie-page";
+        return "/movie/edit-movie-page";
     }
 
     /**

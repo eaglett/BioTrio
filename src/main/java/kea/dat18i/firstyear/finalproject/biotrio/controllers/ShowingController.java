@@ -148,7 +148,6 @@ public class ShowingController {
 
             // Write QR message and send to correct recipient
             qRwriter.writeQR(tickets.getTicket1(), showingId, customer);
-            System.out.println(customer.getEmail());
             String[] recipients = { customer.getEmail() };
             qRsender.sendEmail(recipients, "QRCODE5_BioTrioTicket");
 

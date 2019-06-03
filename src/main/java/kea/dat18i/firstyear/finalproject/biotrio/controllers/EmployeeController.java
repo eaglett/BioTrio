@@ -37,7 +37,7 @@ public class EmployeeController {
         employeeList = employeeRepo.findAllEmployees();
         model.addAttribute("employees", employeeList);
         model.addAttribute("principal", principal);
-        return "employees-page";
+        return "/employee/employees-page";
     }
 
     /**
@@ -50,7 +50,7 @@ public class EmployeeController {
     public String addEmployee (Model model) {
         model.addAttribute("newEmployee", new Employee ());
         model.addAttribute("principal", principal);
-        return "add-employee-page";
+        return "/employee/add-employee-page";
     }
 
     /**
@@ -90,7 +90,7 @@ public class EmployeeController {
         model.addAttribute("index", index);
         model.addAttribute("editEmployee", editEmployee);
         model.addAttribute("principal", principal);
-        return "edit-employee-page";
+        return "/employee/edit-employee-page";
     }
 
     /**

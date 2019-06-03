@@ -40,7 +40,7 @@ public class TheatreController {
         model.addAttribute("theatres", theatreList);
         model.addAttribute("principal", principal);
 
-        return "theatres-page";
+        return "/theatre/theatres-page";
     }
 
     /**
@@ -53,7 +53,7 @@ public class TheatreController {
         model.addAttribute("newTheatre", new Theatre());
         model.addAttribute("principal", principal);
 
-        return "add-theatre-page";
+        return "/theatre/add-theatre-page";
     }
 
     /**
@@ -83,7 +83,7 @@ public class TheatreController {
         model.addAttribute("index", index);
         model.addAttribute("editTheatre", editTheatre);
         model.addAttribute("principal", principal);
-        return "edit-theatre-page";
+        return "/theatre/edit-theatre-page";
     }
 
 
