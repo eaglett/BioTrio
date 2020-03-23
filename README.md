@@ -1,3 +1,5 @@
+<h1>BioTrio</h1>
+
 BioTrio was a 2nd semester final project. It's created fully in Java Spring.
 
 We created a cinema system that allows users to create an account(and do all CRUD functions), view movies that are currently in the cinema and buy tickets.
